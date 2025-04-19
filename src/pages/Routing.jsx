@@ -1,16 +1,15 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import '../assets/styles/main/App.css';
-import App from '../App';
+import BoardList from './board/page/BoardList';
 
 function Routing() {
   return (
-    <div className="App">
+    <section>
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<App />} />
+          <Route path='/' element={<BoardList />} />
         </Routes>
       </BrowserRouter>
-    </div>
+    </section>
   );
 }
 
