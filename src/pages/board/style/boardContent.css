@@ -1,0 +1,41 @@
+.board-content {
+  padding: 0 10px;
+  padding-top: 10px;
+}
+
+.board-content-data {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.board-content-box {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  word-wrap: break-word;
+}
+
+.board-content-date {
+  text-align: left;
+}
+
+.board-info-more {
+  flex: 100px;
+}
+
+.board-date {
+  color: #444;
+  font-size: 14px;
+  text-align: left;
+}
+
+.board-user-name {
+  font-weight: bold;
+  margin-right: 5px;
+  width: 100%;
+
+}
+
+.board-data {}

@@ -1,16 +1,17 @@
 import { React } from 'react';
 import '../style/footer.css';
-import FooterButton from '../component/FooterButton';
+import IconButton from '../../../components/IconButton';
+import { faHouse, faSearch, faAdd, faFilm, faUser } from "@fortawesome/free-solid-svg-icons";
 
 function Footer() {
   return (
     <footer>
       <div className="footer">
-        <FooterButton icon="아이콘" title="menu1" />
-        <FooterButton icon="아이콘" title="menu2" />
-        <FooterButton icon="아이콘" title="menu3" />
-        <FooterButton icon="아이콘" title="menu4" />
-        <FooterButton icon="아이콘" title="menu5" />
+        <IconButton icon={faHouse} />
+        <IconButton icon={faSearch} />
+        <IconButton icon={faAdd} />
+        <IconButton icon={faFilm} />
+        <IconButton icon={faUser} />
       </div>
     </footer>
   )

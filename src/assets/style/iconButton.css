@@ -1,0 +1,19 @@
+.icon-btn {
+  flex: 1;
+}
+
+.icon-btn button {
+  width: 100%;
+}
+
+.icon-btn button * {
+  font-size: 24px;
+}
+
+.icon-btn.true svg {
+  color: royalblue;
+}
+
+.icon-btn.false svg {
+  color: #999;
+}

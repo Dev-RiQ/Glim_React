@@ -1,0 +1,19 @@
+.board-icon-box {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+}
+
+.board-icon-box .icon-left {
+  display: flex;
+}
+
+.board-icon-box svg {
+  font-size: 20px;
+  padding: 5px;
+}
+
+.board-middle-count {
+  margin: auto;
+  margin-right: 5px;
+}

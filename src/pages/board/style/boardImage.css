@@ -1,0 +1,43 @@
+.file-box {
+  width: 100%;
+  height: 100%;
+  max-height: 500px;
+  display: flex;
+  align-items: center;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  background-color: black;
+  overscroll-behavior-x: none;
+  align-items: center;
+}
+
+.file-box>div {
+  min-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.board-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.file-count-list {
+  width: 0;
+  display: flex;
+  position: relative;
+  left: 50%;
+  justify-content: center;
+  margin-top: 5px;
+}
+
+.file-count-list * {
+  width: 12px;
+}
+
+.file-count-list svg {
+  padding: 3px;
+  font-size: 7px;
+}
