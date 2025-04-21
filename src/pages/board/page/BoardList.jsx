@@ -1,6 +1,6 @@
 import React, { useEffect, useState, } from 'react';
 import '../style/boardList.css';
-import BoardInfo from './BoardInfo';
+import BoardInfo from '../component/BoardInfo';
 
 function BoardList() {
   const [boards, setBoards] = useState(null);

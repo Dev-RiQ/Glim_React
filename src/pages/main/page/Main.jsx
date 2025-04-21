@@ -1,7 +1,7 @@
 import React from 'react';
 import '../style/main.css';
 import StoryList from '../../story/component/StoryList';
-import BoardList from '../../board/component/BoardList';
+import BoardList from '../../board/page/BoardList';
 
 function Main() {
   return (

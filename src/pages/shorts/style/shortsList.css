@@ -1,0 +1,8 @@
+.shorts-list-box {
+  overscroll-behavior-x: none;
+}
+
+.shorts-list-box>div {
+  width: 100%;
+  height: 100%;
+}

@@ -11,7 +11,7 @@ function IconButton(props) {
       <button>
         <FontAwesomeIcon icon={props.icon} />
       </button>
-    </div>
+    </div >
   )
 };
 
