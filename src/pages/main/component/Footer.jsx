@@ -11,9 +11,9 @@ function Footer(props) {
     let footerIcon = [];
     footerIcon = [...footerIcon, getButton(faHouse, '/', uri === '/' ? true : '')];
     footerIcon = [...footerIcon, getButton(faSearch, '/search', uri === '/search' ? true : '')];
-    footerIcon = [...footerIcon, getButton(faAdd, '/add', uri === '/add' ? true : '')];
+    footerIcon = [...footerIcon, getButton(faAdd, '/addBoard', uri === '/addBoard' ? true : '')];
     footerIcon = [...footerIcon, getButton(faFilm, '/shorts', uri === '/shorts' ? true : '')];
-    footerIcon = [...footerIcon, getButton(faUser, '/mypage', uri === '/mypage' ? true : '')];
+    footerIcon = [...footerIcon, getButton(faUser, '/myPage', uri === '/myPage' ? true : '')];
     setFooter(footerIcon);
   }, [uri])
 

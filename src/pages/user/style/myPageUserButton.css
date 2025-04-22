@@ -1,0 +1,21 @@
+.user-button-box {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  padding-top: 10px;
+}
+
+.user-btn {
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 0px 55px;
+}
+
+.user-add-btn {
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+.user-add-btn svg {
+  font-size: 14px;
+}

@@ -14,7 +14,7 @@ function SearchImg(props) {
   let link = testlist[parseInt(Math.random() * 8.9)];
   return (
     <div className="search-img-box">
-      <img className='search-img' src={link} alt="SEARCH-IMG" />
+      <img className='search-img' src={link} alt="SEARCH-IMG" width="100%" height="100%" decoding="async" loading="lazy" />
     </div>
   );
 }

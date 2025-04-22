@@ -141,6 +141,21 @@ input[type='number'] {
   -moz-appearance: textfield;
 }
 
+img,
+video {
+  content-visibility: auto;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+}
+
 a {
   text-decoration: none;
   color: black;
@@ -166,12 +181,28 @@ section {
   overflow-y: scroll;
   display: flex;
   justify-content: center;
+  scroll-behavior: smooth;
 }
 
-section>div {
-  width: 100%;
-  max-width: 500px;
+@media screen and (min-width:1024px) {
+  section>div {
+    width: 100%;
+    max-width: 500px;
+  }
 }
+
+@media screen and (min-width:768px) and (max-width: 1023px) {
+  section>div {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  section>div {
+    width: 100%;
+  }
+}
+
 
 svg {
   padding: 10px;

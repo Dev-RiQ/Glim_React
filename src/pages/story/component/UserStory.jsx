@@ -8,7 +8,7 @@ function UserStory(props) {
       <div className="story-user-img">
         <UserImage link={props.link} />
       </div>
-      <p>{props.name}</p>
+      <p className="story-user-name">{props.name}</p>
     </div>
   )
 };

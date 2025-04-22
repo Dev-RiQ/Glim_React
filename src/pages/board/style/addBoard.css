@@ -1,0 +1,15 @@
+.add-board-box {
+  margin: auto;
+}
+
+.add-board-box svg {
+  font-size: 50px;
+  border: 5px dotted black;
+  border-radius: 20%;
+  padding: 20px;
+  margin-bottom: 15px;
+}
+
+.add-file-input {
+  display: none;
+}

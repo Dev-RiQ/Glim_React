@@ -4,15 +4,37 @@
   max-height: 500px;
   display: flex;
   align-items: center;
-  overflow-x: scroll;
-  overflow-y: hidden;
+  overflow: hidden;
   background-color: black;
+  scroll-behavior: smooth;
   overscroll-behavior-x: none;
   align-items: center;
 }
 
+@media screen and (min-width:1024px) {
+  .file-box {
+    max-height: 100vw;
+    aspect-ratio: 1/1;
+  }
+}
+
+@media screen and (min-width:768px) and (max-width: 1023px) {
+  .file-box {
+    max-height: 100vw;
+    aspect-ratio: 1/1;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .file-box {
+    max-height: 500px;
+    aspect-ratio: 1/1;
+  }
+}
+
 .file-box>div {
   min-width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;

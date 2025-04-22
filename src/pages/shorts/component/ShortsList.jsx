@@ -16,8 +16,9 @@ function ShortsList() {
     });
     setShorts(shortsBoxes)
     setTimeout(() => {
-      document.querySelector('.shorts-list-box').firstChild.firstChild.firstChild.play();
-    }, 100)
+      const video = document.querySelector('.shorts-list-box').firstChild.firstChild.firstChild;
+      // video.play();
+    }, 100);
   }, []);
 
   function setShortsBox(element) {
@@ -29,16 +30,52 @@ function ShortsList() {
   }
 
   const [page, movePage] = useState(0);
+  let touchStart = 0;
+  let touchEnd = 0;
 
-  function scrollOne(e) {
-    const section = document.querySelector('section');
-    const height = window.innerHeight - 100;
-    if (section.scrollTop > page * height + 10) {
+  function onTouch(e) {
+    if (e.touches)
+      touchStart = e.touches[0].clientY;
+    else
+      touchStart = e.clientY;
+
+  }
+
+  function endTouch(e) {
+    if (e.touches)
+      touchEnd = e.changedTouches[0].clientY;
+    else
+      touchEnd = e.clientY;
+    const diff = touchStart - touchEnd;
+    if (diff > 50) scrollUp(e);
+    else if (diff < -50) scrollDown(e);
+    else reScroll();
+  }
+
+  const section = document.querySelector('section');
+  const height = window.innerHeight - 100;
+  function reScroll() {
+    section.scrollTop = page * height;
+  }
+
+  function scrollUp(e) {
+    if (e.target.parentNode.parentNode.nextSibling) {
       section.scrollTop = (page + 1) * height
       e.target.pause();
       e.target.parentNode.parentNode.nextSibling.firstChild.firstChild.play();
       movePage(page + 1);
-    } else if (section.scrollTop < page * height - 10) {
+    }
+    else {
+      movePage(0);
+    }
+    section.style.overflowY = 'hidden'
+    setTimeout(() => {
+      section.style.overflowY = 'scroll'
+    }, 100);
+  }
+
+  function scrollDown(e) {
+    if (e.target.parentNode.parentNode.previousSibling) {
       section.scrollTop = (page - 1) * height
       e.target.pause();
       e.target.parentNode.parentNode.previousSibling.firstChild.firstChild.play();
@@ -46,10 +83,29 @@ function ShortsList() {
     } else {
       section.scrollTop = page * height;
     }
+    section.style.overflowY = 'hidden'
+    setTimeout(() => {
+      section.style.overflowY = 'scroll'
+    }, 100);
+  }
+
+  let [isWheel, setWheel] = useState(false);
+  function wheelScroll(e) {
+    if (!isWheel) {
+      setWheel(true);
+      switch (e.nativeEvent.deltaY) {
+        case 100: scrollUp(e); break;
+        case -100: scrollDown(e); break;
+        default: break;
+      }
+      setTimeout(() => {
+        setWheel(false)
+      }, 300);
+    }
   }
 
   return (
-    <div className="shorts-list-box" onTouchEnd={e => scrollOne(e)}>
+    <div className="shorts-list-box" onWheel={e => wheelScroll(e)} onMouseUp={e => endTouch(e)} onMouseDown={e => onTouch(e)} onTouchStart={e => onTouch(e)} onTouchEnd={e => endTouch(e)}>
       {shorts}
     </div>
   );

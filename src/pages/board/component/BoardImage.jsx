@@ -40,7 +40,7 @@ function BoardImage(props) {
         const link = testlist[i];
         list = [...list,
         <div key={i}>
-          <img className="board-img" src={link} alt="BOARD_IMG" />
+          <img className="board-img" src={link} width="100%" height="100%" alt="BOARD_IMG" decoding="async" loading="lazy" />
         </div>]
       }
       return list;
@@ -48,21 +48,46 @@ function BoardImage(props) {
     setImage(imageList());
   }, [])
 
-  function scrollOne(e) {
-    if (e.currentTarget.scrollLeft > page * window.innerWidth + 80) {
-      e.currentTarget.scrollLeft = (page + 1) * window.innerWidth;
-      movePage(page + 1);
-    } else if (e.currentTarget.scrollLeft < page * window.innerWidth - 80) {
-      e.currentTarget.scrollLeft = (page - 1) * window.innerWidth;
-      movePage(page - 1);
-    } else {
-      e.currentTarget.scrollLeft = page * window.innerWidth;
-    }
+  let touchStart = 0;
+  let touchEnd = 0;
+  function onTouch(e) {
+    if (e.touches)
+      touchStart = e.touches[0].clientX;
+    else
+      touchStart = e.clientX;
+
+  }
+
+  function endTouch(e) {
+    if (e.touches)
+      touchEnd = e.changedTouches[0].clientX;
+    else
+      touchEnd = e.clientX;
+    const diff = touchStart - touchEnd;
+    if (diff > 50) scrollRight(e);
+    else if (diff < -50) scrollLeft(e);
+    else reScroll(e);
+  }
+
+  function reScroll(e) {
+    e.currentTarget.scrollLeft = page * e.currentTarget.firstChild.firstChild.width;
+  }
+
+  function scrollRight(e) {
+    if (page === totalPage - 1) return;
+    e.currentTarget.scrollLeft = (page + 1) * e.currentTarget.firstChild.firstChild.width;
+    movePage(page + 1);
+  }
+
+  function scrollLeft(e) {
+    if (page === 0) return;
+    e.currentTarget.scrollLeft = (page - 1) * e.currentTarget.firstChild.firstChild.width;
+    movePage(page - 1);
   }
 
   return (
     <div className='board-info-images'>
-      <div className="file-box" onTouchEnd={e => scrollOne(e)}>
+      <div className="file-box" onMouseUp={e => endTouch(e)} onMouseDown={e => onTouch(e)} onTouchStart={e => onTouch(e)} onTouchEnd={e => endTouch(e)}>
         {image}
       </div>
       <div className="file-count-list">

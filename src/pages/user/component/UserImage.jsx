@@ -12,7 +12,7 @@ function UserImage(props) {
   return (
     <div className="user-image">
       <button className="user-img-btn">
-        <img className="user-img" src={rd} alt="USER_IMG" />
+        <img className="user-img" src={rd} alt="USER_IMG" width="100%" height="100%" decoding="async" loading="lazy" />
       </button>
     </div>
   )

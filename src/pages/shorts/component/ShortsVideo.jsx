@@ -12,15 +12,17 @@ function ShortsVideo(props) {
   }, [])
 
   function control(e) {
-    if (e.target.paused)
+    if (e.target.paused) {
       e.target.play();
+      e.target.muted = false;
+    }
     else
       e.target.pause();
   }
 
   return (
     <div className="shorts-video-box">
-      <video className='shorts-video' poster={thumbnail} src={link} loop onClick={((e) => control(e))} />
+      <video className='shorts-video' poster={thumbnail} src={link} playsInline loop width="100%" height="100%" decoding="async" loading="lazy" onClick={((e) => control(e))} />
     </div>
   );
 }

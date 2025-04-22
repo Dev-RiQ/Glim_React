@@ -22,8 +22,13 @@ function StoryList() {
     )
   }
 
+  function clickDrag(e) {
+    console.log(e)
+    console.log(e.target)
+  }
+
   return (
-    <div className="story-list-box">
+    <div className="story-list-box" onDragStart={e => clickDrag(e)}>
       {stories}
     </div>
   )
