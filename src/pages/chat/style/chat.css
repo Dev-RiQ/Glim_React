@@ -1,0 +1,17 @@
+.chat-box {
+  padding: 10px;
+}
+
+.chat-title-box {
+  display: flex;
+  justify-content: space-between;
+}
+
+.chat-title {
+  padding-top: 14px;
+}
+
+.chat-title>span {
+  font-size: 18px;
+  font-weight: bold;
+}
