@@ -5,10 +5,76 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
 .shorts-video {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.shorts-info-box {
+  position: absolute;
+  bottom: 15px;
+  width: 100%;
+}
+
+.shorts-button-box {
+  position: absolute;
+  bottom: 80px;
+  right: 5px;
+}
+
+.shorts-button-box svg {
+  color: rgb(233, 32, 72)
+}
+
+.shorts-button-box p {
+  font-weight: 300;
+  color: #fff;
+}
+
+.shorts-user-box {
+  margin: 0 5px;
+  color: #fff;
+}
+
+.shorts-user-box svg {
+  color: #fff;
+}
+
+.shorts-content-box {
+  margin: 0 15px;
+  color: #fff;
+}
+
+.shorts-video-box p {
+  font-weight: 100;
+  font-size: 14px;
+}
+
+.shorts-content {
+  text-align: left;
+}
+
+.shorts-controller {
+  position: absolute;
+  bottom: -8px;
+  width: 100%;
+  height: 10px;
+}
+
+.shorts-controller progress {
+  width: 100%;
+  appearance: none;
+  height: 5px;
+}
+
+.shorts-controller progress::-webkit-progress-bar {
+  background: #fff;
+}
+
+.shorts-controller progress::-webkit-progress-value {
+  background: rgba(235, 98, 223, 0.651);
 }

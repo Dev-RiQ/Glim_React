@@ -16,10 +16,10 @@ function Header() {
   const uri = window.location.pathname;
 
   useEffect(() => {
-    let footerIcon = [];
-    footerIcon = [...footerIcon, getButton(faBell, '/alarm')];
-    footerIcon = [...footerIcon, getButton(faPaperPlane, '/chat', uri === '/chat' ? true : '')];
-    setHeader(footerIcon);
+    let headerIcon = [];
+    headerIcon = [...headerIcon, getButton(faBell, '/alarm')];
+    headerIcon = [...headerIcon, getButton(faPaperPlane, '/chat', uri === '/chat' ? true : '')];
+    setHeader(headerIcon);
   }, [modal])
 
   function buttonEvent(link) {

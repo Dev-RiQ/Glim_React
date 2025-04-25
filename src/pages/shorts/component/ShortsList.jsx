@@ -1,11 +1,10 @@
 import React, { useEffect, useState, } from 'react';
 import '../style/shortsList.css';
 import ShortsVideo from './ShortsVideo';
-import IconButton from '../../../components/IconButton';
-import { faCircle } from '@fortawesome/free-solid-svg-icons';
 
 function ShortsList() {
   const [shorts, setShorts] = useState([]);
+
 
   useEffect(() => {
     let shortsList = ["test1", "test2", "test3", "test4", "test5"
@@ -15,10 +14,6 @@ function ShortsList() {
       shortsBoxes = [...shortsBoxes, setShortsBox(element)];
     });
     setShorts(shortsBoxes)
-    setTimeout(() => {
-      const video = document.querySelector('.shorts-list-box').firstChild.firstChild.firstChild;
-      // video.play();
-    }, 100);
   }, []);
 
   function setShortsBox(element) {
@@ -53,7 +48,7 @@ function ShortsList() {
   }
 
   const section = document.querySelector('section');
-  const height = window.innerHeight - 100;
+  const height = window.innerHeight - 50;
   function reScroll() {
     section.scrollTop = page * height;
   }
@@ -62,7 +57,9 @@ function ShortsList() {
     if (e.target.parentNode.parentNode.nextSibling) {
       section.scrollTop = (page + 1) * height
       e.target.pause();
+      e.target.parentNode.parentNode.nextSibling.firstChild.firstChild.muted = true;
       e.target.parentNode.parentNode.nextSibling.firstChild.firstChild.play();
+      e.target.parentNode.parentNode.nextSibling.firstChild.firstChild.muted = false;
       movePage(page + 1);
     }
     else {
@@ -78,7 +75,9 @@ function ShortsList() {
     if (e.target.parentNode.parentNode.previousSibling) {
       section.scrollTop = (page - 1) * height
       e.target.pause();
+      e.target.parentNode.parentNode.previousSibling.firstChild.firstChild.muted = true;
       e.target.parentNode.parentNode.previousSibling.firstChild.firstChild.play();
+      e.target.parentNode.parentNode.previousSibling.firstChild.firstChild.muted = false;
       movePage(page - 1);
     } else {
       section.scrollTop = page * height;

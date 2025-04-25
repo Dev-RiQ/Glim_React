@@ -4,7 +4,6 @@ import './assets/style/index.css';
 import Routing from './pages/Routing';
 import Header from './pages/main/component/Header';
 import Footer from './pages/main/component/Footer';
-import Toast from './components/Toast';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
