@@ -1,6 +1,8 @@
 import { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import JWT from '../utils/JWT'
+import jwtToken from '../utils/jwtToken';
+import LoginPro from './main/page/LoginPro';
+import NotFoundPage from './error/page/NotFoundPage';
 const Login = lazy(() => import('./main/page/Login'));
 const Main = lazy(() => import('./main/page/Main'));
 const Search = lazy(() => import('./search/page/Search'));
@@ -12,8 +14,8 @@ const ChatRoom = lazy(() => import('./chat/page/ChatRoom'));
 
 function Routing() {
   useEffect(() => {
-    if (window.location.pathname !== '/login' && !JWT.call()) {
-      window.location.href = '/login';
+    if ((window.location.pathname.includes('/login') && window.location.pathname !== '/join') && !jwtToken.call()) {
+      // window.location.href = '/login';
     }
   }, [])
 
@@ -24,12 +26,14 @@ function Routing() {
           <Routes>
             <Route path='/login' element={<Login />} />
             <Route path='/' element={<Main />} />
+            <Route path='/login/:accessToken' element={<LoginPro />} />
             <Route path='/search/' element={<Search />} />
             <Route path='/shorts/' element={<Shorts />} />
             <Route path='/addBoard/' element={<AddBoard />} />
             <Route path='/myPage/' element={<MyPage />} />
             <Route path='/chat/' element={<Chat />} />
             <Route path='/chatRoom/:id' element={<ChatRoom />} />
+            <Route path='*' element={<NotFoundPage />} />
           </Routes>
         </Suspense>
       </BrowserRouter>

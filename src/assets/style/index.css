@@ -207,32 +207,31 @@ section {
 svg {
   padding: 10px;
   color: black;
-}
-
-/* button:hover {
-  opacity: 0.7;
-}
-
-button:active {
-  opacity: 0.5;
-}
-
-svg {
   border-radius: 50%;
 }
 
-svg:hover {
-  background-color: skyblue;
+@media (hover: hover) and (pointer: fine) {
+  svg:hover {
+    background-color: skyblue;
+  }
+
+  button:hover {
+    opacity: 0.7;
+  }
+
+  a:hover {
+    opacity: 0.7;
+  }
 }
 
 svg:active {
   background-color: deepskyblue;
 }
 
-a:hover {
-  opacity: 0.7;
+button:active {
+  opacity: 0.5;
 }
 
 a:active {
   opacity: 0.5;
-} */
+}

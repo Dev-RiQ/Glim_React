@@ -1,0 +1,42 @@
+.button-box {
+  display: flex;
+  width: 300px;
+  height: 45px;
+  justify-content: center;
+  align-items: center;
+  margin: 5px 0;
+  border-radius: 10px;
+  background-color: lightskyblue;
+  gap: 10px;
+}
+
+.button-box.naver {
+  background-color: rgb(103, 214, 151);
+}
+
+.button-box.kakao {
+  background-color: yellow;
+}
+
+.button-box.google {
+  background-color: lightcoral;
+}
+
+.btn-text {
+  width: 100px;
+  font-weight: bold;
+  font-size: 16px;
+  margin-left: 30px;
+}
+
+.button-box .icon-btn {
+  width: 30px;
+}
+
+.button-box button {
+  width: 30px;
+}
+
+.icon-btn * {
+  width: 30px;
+}

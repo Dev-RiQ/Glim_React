@@ -1,0 +1,39 @@
+.toast-box {
+  width: 100%;
+  position: fixed;
+  bottom: 100px;
+  justify-content: center;
+  transition: 0.3s;
+  opacity: 0;
+  z-index: -100;
+}
+
+.toast-box.show {
+  opacity: 1;
+  z-index: 100;
+}
+
+.toast-box button {
+  align-items: center;
+  margin: auto;
+  display: flex;
+  background-color: #888;
+  border-radius: 30px;
+  color: #fff;
+  padding: 5px 30px;
+  max-width: 300px;
+}
+
+.toast-icon {
+  margin-right: 5px;
+}
+
+.toast-icon.success svg {
+  color: lightcyan;
+}
+
+.toast-icon.error svg {
+  color: rgb(196, 17, 53);
+}
+
+.toast-msg {}
