@@ -24,7 +24,6 @@ function Header() {
 
   function buttonEvent(link) {
     if (link === '/alarm') {
-      console.log(modal)
       setModal(!modal);
       return;
     }

@@ -1,0 +1,77 @@
+.story-view-img {
+  object-fit: contain;
+  height: calc(100% - 50px);
+}
+
+.story-header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 100%;
+  color: #fff;
+  display: flex;
+}
+
+.story-end {
+  padding: 10px 0;
+  padding-left: 5px;
+}
+
+.story-end svg {
+  color: #fff;
+  font-size: 15px;
+}
+
+.story-user-protion {
+  width: 100%;
+}
+
+.story-user-protion svg {
+  color: #fff;
+}
+
+.story-footer {
+  height: 40px;
+  position: fixed;
+  width: calc(100% - 20px);
+  bottom: 0;
+  left: 100%;
+  display: flex;
+  margin: 0 10px;
+}
+
+.story-footer svg {
+  color: #fff;
+  padding: 10px 0;
+}
+
+.story-reply-msg {
+  width: calc(100% - 100px);
+  margin-right: 10px;
+  border-radius: 30px;
+  background-color: black;
+  border: 1px solid #fff;
+  margin: 5px 0;
+  padding: 10px;
+  color: #fff;
+}
+
+.story-view-box.show .story-header,
+.story-view-box.show .story-footer {
+  left: 0;
+}
+
+
+.storyLine-box {
+  position: fixed;
+  top: -11px;
+  left: 0;
+  width: calc(100% - 6px);
+  display: flex;
+  gap: 3px;
+  margin: 0 3px;
+}
+
+.storyLine-box>div {
+  flex: 1;
+}

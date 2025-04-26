@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Toast from '../components/Toast';
 import { render } from '@testing-library/react';
-import useToast from './ShowToast';
+import useToast from '../pages/main/hook/ShowToast';
 
 let API_KEY = localStorage.getItem('accessToken');
 if (!API_KEY && (!window.location.pathname.includes('/login') && !window.location.pathname !== '/join')) {

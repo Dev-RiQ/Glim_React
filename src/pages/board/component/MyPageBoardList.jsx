@@ -3,8 +3,6 @@ import '../style/myPageBoardList.css';
 import IconButton from '../../../components/IconButton';
 import { faCirclePlay, faImage, faTag, } from '@fortawesome/free-solid-svg-icons';
 import SearchList from '../../search/component/SearchList';
-import BoardList from '../page/BoardList';
-import ShortsList from '../../shorts/component/ShortsList';
 
 function MyPageBoardList(props) {
   const [checks, setChecks] = useState([true, '', '']);
@@ -30,20 +28,9 @@ function MyPageBoardList(props) {
   }
 
   function getBoardList(num) {
-    let list = null;
-    if (num === 1) {
-      list = <div>
-        <SearchList />
-      </div>
-    } else if (num === 2) {
-      list = <div>
-        <BoardList />
-      </div>
-    } else {
-      list = <div>
-        <ShortsList />
-      </div>
-    }
+    let list = <div>
+      <SearchList />
+    </div>
     return list;
   }
 

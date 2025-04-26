@@ -4,7 +4,7 @@ import SocialLoginButton from '../component/SocialLoginButton';
 import { faGoogle, faKaggle, faNeos } from '@fortawesome/free-brands-svg-icons';
 import { faArrowRightToBracket, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import api from '../../../utils/api';
-import ShowToast from '../../../utils/ShowToast';
+import ShowToast from '../hook/ShowToast';
 
 function Login() {
   const [loginId, setLoginId] = useState('');

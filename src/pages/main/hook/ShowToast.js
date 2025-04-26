@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import Toast from "../components/Toast";
+import Toast from "../../../components/Toast";
 
 function ShowToast(type, msg) {
   setTimeout(() => {

@@ -1,19 +1,99 @@
-import { React } from 'react';
+import { React, useEffect, useState } from 'react';
 import "../style/userImage.css"
 import user1 from '../../../assets/test/user1.jpg'
 import user2 from '../../../assets/test/user2.jpg'
 import user3 from '../../../assets/test/user3.jpg'
+import showStory from '../../story/hook/ShowStory';
 
 function UserImage(props) {
+
+  const id = 1;
+  const [story, setStory] = useState(null);
+  const [storyInfo, setStoryInfo] = useState(null);
+  const [storyPage, setStoryPage] = useState(0);
+  const [storyList, setStoryList] = useState(['test1', 'test2', 'test3']);
+  const [name, setName] = useState('story-view-box');
+
+  function getStoryLine(pages) {
+    let line = []
+    for (let i = 0; i < storyList.length; i++) {
+      let value = 0;
+      if (pages >= i) value = 500;
+      line = [...line,
+      <div key={i}>
+        <progress className="story-progress" min="0" max="500" value={value} />
+      </div>
+      ]
+    }
+    return line;
+  }
+
   let rd = user1;
   if (Math.random() > 0.66) rd = user2;
   else if (Math.random() < 0.33) rd = user3;
+  let storyRd;
+  if (Math.random() > 0.5) storyRd = false;
+  else storyRd = false;
+
+  function showStoryView(e) {
+    if (e.currentTarget.className.includes('has-story') && e.target.className === "user-img") {
+      setStory(showStory(storyInfo, getStoryLine(0)))
+      setStoryPage(0)
+      setName(name + " show")
+    }
+  }
+
+  function beforeStory(e) {
+    if (storyPage === 0) {
+      setName('story-view-box')
+      setTimeout(() => {
+        setStory(null);
+      }, 300);
+      return;
+    }
+    setStoryPage(storyPage - 1)
+    setStory(showStory(storyList[storyPage - 1], getStoryLine(storyPage - 1)))
+  }
+
+  function afterStory(e) {
+    if (storyPage === storyList.length - 1) {
+      setName('story-view-box')
+      setTimeout(() => {
+        setStory(null);
+      }, 300);
+      return
+    }
+    setStoryPage(storyPage + 1)
+    setStory(showStory(storyList[storyPage + 1], getStoryLine(storyPage + 1)))
+  }
+
+  function storyClickEvents(e) {
+    if (e.target.parentNode.parentNode.parentNode.className === 'story-end' ||
+      e.target.parentNode.parentNode.parentNode.parentNode.className === 'story-end'
+    ) {
+      setName('story-view-box')
+      setTimeout(() => {
+        setStory(null);
+      }, 300);
+      return;
+    }
+    if (e.pageX > e.target.clientWidth / 2) {
+      afterStory(e)
+    } else {
+      beforeStory(e)
+    }
+  }
 
   return (
-    <div className="user-image">
+    <div className={
+      storyRd ? 'user-image' : 'user-image has-story'
+    } onClick={e => showStoryView(e, { id })}>
       <button className="user-img-btn">
-        <img className="user-img" src={rd} alt="USER_IMG" width="100%" height="100%" decoding="async" loading="lazy" />
+        <img className='user-img' src={rd} alt="USER_IMG" width="100%" height="100%" decoding="async" loading="lazy" />
       </button>
+      <div className={name} onClick={e => storyClickEvents(e)}>
+        {story}
+      </div>
     </div>
   )
 };

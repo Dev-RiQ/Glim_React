@@ -3,8 +3,9 @@ import "../style/userStory.css"
 import UserImage from '../../user/component/UserImage';
 
 function UserStory(props) {
+
   return (
-    <div className="story-box">
+    <div className="story-box" onClick={props.showStoryView}>
       <div className="story-user-img">
         <UserImage link={props.link} />
       </div>

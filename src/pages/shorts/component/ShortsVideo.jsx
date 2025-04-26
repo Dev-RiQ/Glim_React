@@ -6,6 +6,7 @@ import thumbnail from '../../../assets/test/test2.jpg'
 import IconButton from '../../../components/IconButton';
 import { faComment, faHeart, faShare } from '@fortawesome/free-solid-svg-icons';
 import UserPortion from '../../user/component/UserPortion';
+
 function ShortsVideo(props) {
   const testlist = [video1, video2];
   const [link, setLink] = useState(null);
@@ -18,17 +19,18 @@ function ShortsVideo(props) {
     setLink(testlist[parseInt(Math.random() * 1.9)]);
   }, [])
 
+
   let touchEnd = 0;
   let totalLength = 0;
 
   function onTouch(e) {
-    if (!e.currentTarget.parentNode.parentNode.firstChild.paused) {
+    if (!e.currentTarget?.parentNode?.parentNode?.firstChild?.paused) {
       e.currentTarget.parentNode.parentNode.firstChild.pause();
     }
   }
 
   function endTouch(e) {
-    if (e.currentTarget.parentNode.parentNode.firstChild.paused) {
+    if (e.currentTarget?.parentNode?.parentNode?.firstChild?.paused) {
       if (e.touches)
         touchEnd = e.changedTouches[0].clientX;
       else
@@ -44,6 +46,7 @@ function ShortsVideo(props) {
   }
 
   function control(e) {
+    if (e.target.className !== 'shorts-video') return;
     if (e.target?.paused) {
       e.target.play();
       e.target.muted = false;
@@ -66,34 +69,36 @@ function ShortsVideo(props) {
   }
 
   return (
-    <div className="shorts-video-box">
-      <video className='shorts-video' poster={thumbnail} src={link} playsInline loop width="100%" height="100%" decoding="async" loading="lazy" onClick={((e) => control(e))} onPlay={e => videoPlay(e)} onPause={e => videoPause(e)} />
-      <div className='shorts-info-box'>
-        <div className='shorts-user-box'>
-          <UserPortion />
+    <>
+      <div className="shorts-video-box">
+        <video className='shorts-video' poster={thumbnail} src={link} playsInline loop width="100%" height="100%" decoding="async" loading="lazy" onClick={((e) => control(e))} onPlay={e => videoPlay(e)} onPause={e => videoPause(e)} />
+        <div className='shorts-info-box'>
+          <div className='shorts-user-box'>
+            <UserPortion />
+          </div>
+          <div className='shorts-content-box'>
+            <p className='shorts-content'>릴스다 이말이야~</p>
+          </div>
+          <div className='shorts-controller' onMouseUp={e => endTouch(e)} onMouseDown={e => onTouch(e)} onTouchStart={e => onTouch(e)} onTouchEnd={e => endTouch(e)}>
+            <progress min="0" value={time} max="100" />
+          </div>
         </div>
-        <div className='shorts-content-box'>
-          <p className='shorts-content'>릴스다 이말이야~</p>
-        </div>
-        <div className='shorts-controller' onMouseUp={e => endTouch(e)} onMouseDown={e => onTouch(e)} onTouchStart={e => onTouch(e)} onTouchEnd={e => endTouch(e)}>
-          <progress min="0" value={time} max="100" />
+        <div className='shorts-button-box'>
+          <div>
+            <IconButton icon={faHeart} />
+            <p>9.9만</p>
+          </div>
+          <div onClick={e => props.shortsComment(e)}>
+            <IconButton icon={faComment} />
+            <p>9.9만</p>
+          </div>
+          <div>
+            <IconButton icon={faShare} />
+            <p>9.9만</p>
+          </div>
         </div>
       </div>
-      <div className='shorts-button-box'>
-        <div>
-          <IconButton icon={faHeart} />
-          <p>9.9만</p>
-        </div>
-        <div>
-          <IconButton icon={faComment} />
-          <p>9.9만</p>
-        </div>
-        <div>
-          <IconButton icon={faShare} />
-          <p>9.9만</p>
-        </div>
-      </div>
-    </div>
+    </>
   );
 }
 

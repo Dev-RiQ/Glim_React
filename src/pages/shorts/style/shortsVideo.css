@@ -78,3 +78,21 @@
 .shorts-controller progress::-webkit-progress-value {
   background: rgba(235, 98, 223, 0.651);
 }
+
+.comment-box {
+  background-color: #fff;
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-radius: 20px;
+  z-index: 100;
+  transition: 0.2s;
+  transform: translateY(100vh);
+}
+
+.comment-box.show {
+  display: block;
+  transform: translateY(0vh);
+}

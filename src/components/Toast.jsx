@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { React, useEffect, useState } from 'react';
 import "../assets/style/toast.css"
 import { faCheck, faExclamation } from '@fortawesome/free-solid-svg-icons';
-import useToast from '../utils/ShowToast';
+import useToast from '../pages/main/hook/ShowToast';
 
 function Toast(props) {
   const [msg, setMsg] = useState('');

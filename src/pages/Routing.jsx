@@ -15,7 +15,7 @@ const ChatRoom = lazy(() => import('./chat/page/ChatRoom'));
 function Routing() {
   useEffect(() => {
     if ((window.location.pathname.includes('/login') && window.location.pathname !== '/join') && !jwtToken.call()) {
-      // window.location.href = '/login';
+      window.location.href = '/login';
     }
   }, [])
 

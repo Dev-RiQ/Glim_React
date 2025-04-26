@@ -1,0 +1,62 @@
+.board-comment-box {
+  position: relative;
+}
+
+.comment-header {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  padding: 10px 0;
+  align-items: center;
+  border-bottom: 2px solid #888;
+  justify-content: center;
+  background-color: #fff;
+  z-index: 100;
+}
+
+.comment-close {
+  position: absolute;
+  top: 7px;
+  left: 10px;
+  z-index: 1000;
+}
+
+.comment-title {
+  font-size: 20px;
+  font-weight: bold;
+
+}
+
+.comment-list-box {
+  width: 100%;
+  padding-top: 50px;
+  height: calc(100vh - 100px);
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+.comment-footer {
+  width: 100%;
+  position: absolute;
+  top: calc(100vh - 50px);
+  left: 0;
+  justify-content: center;
+  align-items: center;
+}
+
+.comment-user-box {
+  margin: 0 5px;
+}
+
+.comment-input {
+  border-radius: 30px;
+  width: 80%;
+  padding: 10px;
+  padding-right: 35px;
+}
+
+.comment-enter {
+  position: absolute;
+  top: 3px;
+  right: 20px;
+}

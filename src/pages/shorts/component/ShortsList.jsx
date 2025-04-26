@@ -1,30 +1,50 @@
 import React, { useEffect, useState, } from 'react';
 import '../style/shortsList.css';
 import ShortsVideo from './ShortsVideo';
+import ShowComment from '../../board/hook/ShowComment';
 
 function ShortsList() {
   const [shorts, setShorts] = useState([]);
+  const [comments, setComments] = useState(null);
+  const [commentView, setCommentView] = useState('comment-box')
+
+  useEffect(() => {
+    if (commentView === 'comment-box') {
+      setComments(null);
+    }
+  }, [commentView])
+
+  function shortsComment(e) {
+    setComments(ShowComment(1, setCommentView))
+    setCommentView('comment-box show')
+    pauseVideo(e)
+  }
 
 
   useEffect(() => {
     let shortsList = ["test1", "test2", "test3", "test4", "test5"
     ];
     let shortsBoxes = [];
-    shortsList.forEach(element => {
-      shortsBoxes = [...shortsBoxes, setShortsBox(element)];
+    shortsList.forEach((element, idx) => {
+      shortsBoxes = [...shortsBoxes, setShortsBox(element, idx)];
     });
     setShorts(shortsBoxes)
   }, []);
 
-  function setShortsBox(element) {
+  function pauseVideo(e) {
+    if (e.currentTarget.parentNode.parentNode.firstChild.played.length === 1) {
+      e.currentTarget.parentNode.parentNode.firstChild.pause()
+    }
+  }
+
+  function setShortsBox(element, idx) {
     return (
-      <div key={element}>
-        <ShortsVideo link={element} name={element} />
+      <div className={idx} key={idx} onWheel={e => wheelScroll(e)} onMouseUp={e => endTouch(e)} onMouseDown={e => onTouch(e)} onTouchStart={e => onTouch(e)} onTouchEnd={e => endTouch(e)}>
+        <ShortsVideo link={element} name={element} shortsComment={shortsComment} />
       </div>
     )
   }
 
-  const [page, movePage] = useState(0);
   let touchStart = 0;
   let touchEnd = 0;
 
@@ -44,26 +64,22 @@ function ShortsList() {
     const diff = touchStart - touchEnd;
     if (diff > 50) scrollUp(e);
     else if (diff < -50) scrollDown(e);
-    else reScroll();
+    else if (diff !== 0) reScroll();
   }
 
   const section = document.querySelector('section');
   const height = window.innerHeight - 50;
-  function reScroll() {
-    section.scrollTop = page * height;
+  function reScroll(e) {
+    section.scrollTop = parseInt(e.currentTarget.className) * height;
   }
 
   function scrollUp(e) {
-    if (e.target.parentNode.parentNode.nextSibling) {
-      section.scrollTop = (page + 1) * height
-      e.target.pause();
-      e.target.parentNode.parentNode.nextSibling.firstChild.firstChild.muted = true;
-      e.target.parentNode.parentNode.nextSibling.firstChild.firstChild.play();
-      e.target.parentNode.parentNode.nextSibling.firstChild.firstChild.muted = false;
-      movePage(page + 1);
-    }
-    else {
-      movePage(0);
+    if (e.currentTarget.nextSibling) {
+      section.scrollTop = (parseInt(e.currentTarget.className) + 1) * height
+      e.currentTarget.firstChild.firstChild.pause();
+      e.currentTarget.nextSibling.firstChild.firstChild.muted = true;
+      e.currentTarget.nextSibling.firstChild.firstChild.play();
+      e.currentTarget.nextSibling.firstChild.firstChild.muted = false;
     }
     section.style.overflowY = 'hidden'
     setTimeout(() => {
@@ -72,15 +88,14 @@ function ShortsList() {
   }
 
   function scrollDown(e) {
-    if (e.target.parentNode.parentNode.previousSibling) {
-      section.scrollTop = (page - 1) * height
-      e.target.pause();
-      e.target.parentNode.parentNode.previousSibling.firstChild.firstChild.muted = true;
-      e.target.parentNode.parentNode.previousSibling.firstChild.firstChild.play();
-      e.target.parentNode.parentNode.previousSibling.firstChild.firstChild.muted = false;
-      movePage(page - 1);
+    if (e.currentTarget.previousSibling) {
+      section.scrollTop = (parseInt(e.currentTarget.className) - 1) * height
+      e.currentTarget.firstChild.firstChild.pause();
+      e.currentTarget.previousSibling.firstChild.firstChild.muted = true;
+      e.currentTarget.previousSibling.firstChild.firstChild.play();
+      e.currentTarget.previousSibling.firstChild.firstChild.muted = false;
     } else {
-      section.scrollTop = page * height;
+      section.scrollTop = parseInt(e.currentTarget.className) * height;
     }
     section.style.overflowY = 'hidden'
     setTimeout(() => {
@@ -104,9 +119,14 @@ function ShortsList() {
   }
 
   return (
-    <div className="shorts-list-box" onWheel={e => wheelScroll(e)} onMouseUp={e => endTouch(e)} onMouseDown={e => onTouch(e)} onTouchStart={e => onTouch(e)} onTouchEnd={e => endTouch(e)}>
-      {shorts}
-    </div>
+    <>
+      <div className="shorts-list-box">
+        {shorts}
+      </div>
+      <div className={commentView}>
+        {comments}
+      </div>
+    </>
   );
 }
 
