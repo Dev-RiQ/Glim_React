@@ -12,7 +12,7 @@ let header = {
   Accept: "application/json",
   Authorization: `Bearer ${API_KEY}`,
 }
-if (window.location.pathname !== '/login' || window.location.pathname !== '/join') {
+if (window.location.pathname === '/login' || window.location.pathname === '/join') {
   header = {
     Accept: "application/json",
   }
@@ -25,7 +25,16 @@ const api = axios.create({
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    useToast("error", error.response?.data?.errors[0]);
+    console.log(error)
+    console.log(error.code)
+    if (error.code === 'ERR_NETWORK' || error.code === 'ERR_BAD_RESPONSE') {
+      useToast("error", '로그인 정보가 정확하지 않습니다.');
+      setTimeout(() => {
+        window.location.href = "/login"
+      }, 500);
+    } else {
+      useToast("error", error.response?.data?.errors[0]);
+    }
   }
 );
 

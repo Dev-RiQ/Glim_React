@@ -4,7 +4,7 @@ import SocialLoginButton from '../component/SocialLoginButton';
 import { faGoogle, faKaggle, faNeos } from '@fortawesome/free-brands-svg-icons';
 import { faArrowRightToBracket, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import api from '../../../utils/api';
-import ShowToast from '../hook/ShowToast';
+import logo from '../../../assets/images/logo-light-mode.png'
 
 function Login() {
   const [loginId, setLoginId] = useState('');
@@ -49,6 +49,7 @@ function Login() {
 
   return (
     <div className="login-box">
+      <img className='view-logo' src={logo} alt="logo" width="200px" height="100px" decoding="async" loading="lazy" />
       <div className='input-box'>
         <input className="username" type="text" placeholder='ID' onKeyUp={e => inputId(e)} />
         <input className="password" type="password" placeholder='PW' onKeyUp={e => inputPw(e)} />

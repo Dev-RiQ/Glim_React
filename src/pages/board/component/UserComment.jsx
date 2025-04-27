@@ -6,18 +6,22 @@ import UserImage from '../../user/component/UserImage';
 
 function UserComment(props) {
 
+  function goMyPage() {
+    window.location.href = "/mypage/" + 1;
+  }
+
   return (
-    <div className="user-portion-box">
-      <div className="user-portion-left">
+    <div className="user-comment-box">
+      <div className="user-comment-left">
         <div className="user-img-box">
           <UserImage />
         </div>
-        <div className="user-portion-info">
-          <p className="user-nickname">test_nickname</p>
+        <div className="user-comment-info">
+          <p className="user-nickname" onClick={goMyPage}>test_nickname</p>
           <p className="comment-content">와 진짜 가고싶다와 진짜 가고싶다와 진짜 가고싶다와 진짜 가고싶다와 진짜 가고싶다와 진짜 가고싶다와 진짜 가고싶다와 진짜 가고싶다와 진짜 가고싶다</p>
         </div>
       </div>
-      <div className="user-portion-rigth">
+      <div className="user-comment-rigth">
         <IconButton icon={faHeart} />
         <p>1.1만</p>
       </div>

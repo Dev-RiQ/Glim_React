@@ -1,5 +1,6 @@
 .story-view-img {
   object-fit: contain;
+  width: 100vw !important;
   height: calc(100% - 50px);
 }
 

@@ -2,6 +2,7 @@ import React, { useEffect, useState, } from 'react';
 import '../style/addBoard.css';
 import IconButton from '../../../components/IconButton';
 import { faAdd } from '@fortawesome/free-solid-svg-icons';
+import api from '../../../utils/api';
 
 function AddBoard() {
   const [uploadFiles, setFiles] = useState([]);
@@ -28,6 +29,8 @@ function AddBoard() {
   function test(file) {
     return <div key={file}>{file}</div>
   }
+
+
 
   return (
     <div className="add-board-box">

@@ -22,9 +22,6 @@ function BoardMiddle(props) {
     setComments(ShowComment(1, setCommentView))
     setCommentView('comment-box show')
   }
-  function boardShare(e) {
-    console.log('share')
-  }
   function boardSave(e) {
     console.log('save')
   }
@@ -39,9 +36,6 @@ function BoardMiddle(props) {
         <div onClick={e => boardComment(e)}>
           <IconButton icon={faComment} />
           <p className="board-middle-count">123</p>
-        </div>
-        <div onClick={e => boardShare(e)}>
-          <IconButton icon={faShareNodes} />
         </div>
       </div>
       <div className="icon-right" onClick={e => boardSave(e)}>

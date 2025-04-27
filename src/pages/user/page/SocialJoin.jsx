@@ -1,0 +1,145 @@
+import React, { useState } from 'react';
+import '../style/join.css';
+import ShowToast from '../../main/hook/ShowToast';
+import IconButton from '../../../components/IconButton';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import logo from '../../../assets/images/logo-light-mode.png'
+import { useLocation, useParams } from 'react-router-dom';
+
+function SocialJoin() {
+  const [phone, setPhone] = useState(null)
+  const [code, setCode] = useState(null)
+  const [nickname, setNickname] = useState(null)
+  const [name, setName] = useState(null)
+  const [img, setImg] = useState(null)
+  const [nicknameOK, setNicknameOK] = useState(false)
+  const [codeOK, setCodeOK] = useState(false)
+  const location = useLocation()
+  const [token, setToken] = useState(location.state)
+
+  if (!(token.startsWith('eyJhbGciOiJIUzI1NiJ9.') && token.includes('wiZXhwIjoxNzQ1N'))) {
+    window.location.href = "/login";
+    return;
+  }
+
+  function inputPhone(e) {
+    if (e.target.value?.length > 20) {
+      ShowToast('error', '전화번호 형식이 잘못되었습니다.')
+      e.target.value = e.target.value.substring(0, 20);
+      return
+    }
+    setPhone(e.target.value)
+    setCodeOK(false)
+  }
+
+  function inputCode(e) {
+    if (e.target.value?.length > 6) {
+      ShowToast('error', '인증코드 6자리를 입력해주세요.')
+      e.target.value = e.target.value.substring(0, 6);
+      return
+    }
+    setCode(e.target.value)
+  }
+
+  function inputNickname(e) {
+    if (e.target.value?.length > 16) {
+      ShowToast('error', '닉네임은 최대 16자까지 입력가능합니다.')
+      e.target.value = e.target.value.substring(0, 16);
+      return
+    }
+    setNickname(e.target.value)
+    setNicknameOK(false)
+  }
+
+  function inputName(e) {
+    if (e.target.value?.length > 20) {
+      ShowToast('error', '이름은 최대 20자까지 입력가능합니다.')
+      e.target.value = e.target.value.substring(0, 20);
+      return
+    }
+    setName(e.target.value)
+  }
+
+  function inputImg(e) {
+    if (e.target.files[0].type.startsWith('image/')) {
+      setImg(e.target.files[0])
+    } else {
+      e.target.value = null;
+      ShowToast('error', '이미지 파일만 업로드 가능합니다.')
+    }
+  }
+
+  function nicknameValid(e) {
+    if (nicknameOK) return;
+    if (!nickname || nickname.length < 6 || nickname.length > 16) {
+      ShowToast('error', '닉네임은 6~16자 사이로 입력해주세요.')
+      return
+    }
+    if (nickname.length < 6 || nickname.length > 16) {
+      ShowToast('error', '이미 존재하는 닉네임입니다.')
+      return
+    }
+
+    ShowToast('success', '사용할 수 있는 닉네임입니다.')
+    setNicknameOK(true)
+  }
+
+
+  function codeValid(e) {
+    if (codeOK) return;
+    if (true) {
+      ShowToast('error', '인증번호가 일치하지 않습니다.')
+      return
+    }
+
+    ShowToast('success', '전화번호 인증에 성공하였습니다.')
+    setCodeOK(true)
+  }
+
+  function join() {
+    if (!nicknameOK) {
+      ShowToast('error', '닉네임 중복체크가 필요합니다.')
+      return
+    }
+    if (!codeOK) {
+      ShowToast('error', '전화번호 인증이 필요합니다.')
+      return
+    }
+    if (!name || name.length < 2 || name.length > 20) {
+      ShowToast('error', '이름은 2~20자 사이로 입력해주세요.')
+      return
+    }
+
+    localStorage.setItem("accessToken", token);
+    ShowToast('success', '회원가입에 성공하였습니다.')
+    window.location.href = "/"
+  }
+
+  function inputFile(e) {
+    e.currentTarget.nextSibling.click()
+  }
+
+  return (
+    <div className="join-box">
+      <img className='view-logo' src={logo} alt="logo" width="200px" height="100px" decoding="async" loading="lazy" />
+      <div className='user-img-setting' onClick={e => inputFile(e)}>
+        <IconButton icon={faPlus} />
+        <p>이미지 추가</p>
+      </div>
+      <input className="join-file-input" type="file" placeholder='img' onChange={e => inputImg(e)} accept="image/*" />
+      <input type="text" placeholder='01012341234' onChange={e => inputPhone(e)} />
+      <div className='valid-check-box'>
+        <input type="text" placeholder='인증번호 입력' onChange={e => inputCode(e)} />
+        <button onClick={e => codeValid(e)}>인증번호 확인</button>
+      </div>
+      <div className='valid-check-box'>
+        <input type="text" placeholder='nickname' onChange={e => inputNickname(e)} />
+        <button onClick={e => nicknameValid(e)}>중복체크</button>
+      </div>
+      <input type="text" placeholder='name' onChange={e => inputName(e)} />
+      <button className='join-submit-btn' onClick={join}>가입완료</button>
+    </div>
+  );
+}
+
+export default SocialJoin;

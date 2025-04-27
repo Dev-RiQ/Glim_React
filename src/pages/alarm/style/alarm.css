@@ -1,0 +1,54 @@
+.alarm-box {
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  background-color: #ddd;
+}
+
+.alarm-box * {
+  font-weight: bold;
+}
+
+.alarm-user-img-box {
+  width: 60px;
+  height: 60px;
+}
+
+.alarm-link-img-box {
+  width: 50px;
+  height: 50px;
+}
+
+.link-img {
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.alarm-content-box {
+  width: calc(100% - 70px);
+  padding: 5px 10px;
+  text-align: left;
+}
+
+.alarm-content-text {
+  text-align: left;
+
+}
+
+.alarm-content-ago {
+  font-size: 13px;
+  color: #888
+}
+
+.alarm-box.read {
+  background-color: #fff;
+}
+
+.alarm-box.read * {
+  font-weight: 500;
+}
+
+.alarm-content-link-box {
+  display: flex;
+  align-items: center;
+}

@@ -6,11 +6,18 @@
   border: 3px solid #999;
 }
 
+
 .user-img-btn {}
 
 .user-img {
   width: 100%;
   height: 100%;
+  object-fit: cover;
+}
+
+.story-user-protion .user-img {
+  width: 30px;
+  height: 35px;
   object-fit: cover;
 }
 

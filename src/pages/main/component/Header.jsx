@@ -17,16 +17,12 @@ function Header() {
 
   useEffect(() => {
     let headerIcon = [];
-    headerIcon = [...headerIcon, getButton(faBell, '/alarm')];
+    headerIcon = [...headerIcon, getButton(faBell, '/alarm', uri === '/alarm' ? true : '')];
     headerIcon = [...headerIcon, getButton(faPaperPlane, '/chat', uri === '/chat' ? true : '')];
     setHeader(headerIcon);
   }, [modal])
 
   function buttonEvent(link) {
-    if (link === '/alarm') {
-      setModal(!modal);
-      return;
-    }
     link !== uri ? window.location.href = link : scrollToTop();
   }
 

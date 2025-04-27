@@ -1,21 +1,21 @@
-.user-portion-box {
-  height: 100%;
+.user-comment-box {
   display: flex;
   justify-content: space-between;
-  padding: 10px 5px;
+  padding: 5px 5px;
 }
 
-.user-portion-left {
+.user-comment-left {
   display: flex;
   width: calc(100% - 60px);
   gap: 5px;
 }
 
-.user-portion-info {
+.user-comment-info {
   width: 100%;
+  height: 100%;
 }
 
-.user-portion-info * {
+.user-comment-info * {
   text-align: left;
 }
 
@@ -30,10 +30,8 @@
   height: 35px;
 }
 
-.user-portion-rigth svg {
+.user-comment-rigth svg {
   font-size: 20px;
 }
 
-.comment-content {
-  height: 100%;
-}
+.comment-content {}

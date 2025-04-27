@@ -20,3 +20,20 @@
 .login-box input:focus {
   outline: none;
 }
+
+header {
+  display: none;
+}
+
+footer {
+  display: none;
+}
+
+section {
+  height: 100vh;
+  margin: 0;
+}
+
+.view-logo {
+  margin-bottom: 30px;
+}
