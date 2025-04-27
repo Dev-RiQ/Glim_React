@@ -4,6 +4,7 @@ import ShowToast from '../../main/hook/ShowToast';
 import IconButton from '../../../components/IconButton';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import logo from '../../../assets/images/logo-light-mode.png'
+import apiFile from '../../../utils/apiFile';
 
 function Join() {
   const [id, setId] = useState(null)
@@ -13,6 +14,7 @@ function Join() {
   const [nickname, setNickname] = useState(null)
   const [name, setName] = useState(null)
   const [img, setImg] = useState(null)
+  const [file, setFile] = useState(null)
   const [idOK, setIdOK] = useState(false)
   const [nicknameOK, setNicknameOK] = useState(false)
   const [codeOK, setCodeOK] = useState(false)
@@ -76,7 +78,8 @@ function Join() {
 
   function inputImg(e) {
     if (e.target.files[0].type.startsWith('image/')) {
-      setImg(e.target.files[0])
+      setImg(URL.createObjectURL(e.target.files[0]))
+      setFile(e.target.files[0])
     } else {
       e.target.value = null;
       ShowToast('error', '이미지 파일만 업로드 가능합니다.')
@@ -125,7 +128,7 @@ function Join() {
     setCodeOK(true)
   }
 
-  function join() {
+  async function join() {
     if (!idOK) {
       ShowToast('error', 'ID 중복체크가 필요합니다.')
       return
@@ -147,6 +150,11 @@ function Join() {
       return
     }
 
+    const sendFiles = {
+      files: file,
+      fileType: "USER_IMAGE"
+    }
+    await apiFile.post('/file', sendFiles)
     ShowToast('success', '회원가입에 성공하였습니다.')
     window.location.href = "/login"
   }
@@ -159,8 +167,10 @@ function Join() {
     <div className="join-box">
       <img className='view-logo' src={logo} alt="logo" width="200px" height="100px" decoding="async" loading="lazy" />
       <div className='user-img-setting' onClick={e => inputFile(e)}>
-        <IconButton icon={faPlus} />
-        <p>이미지 추가</p>
+        {img ?
+          <img className='view-user-img' src={img} alt="logo" width="100px" height="100px" decoding="async" loading="lazy" />
+          : (<><IconButton icon={faPlus} /><p>이미지 추가</p></>)}
+
       </div>
       <input className="join-file-input" type="file" placeholder='img' onChange={e => inputImg(e)} accept="image/*" />
       <div className='valid-check-box'>

@@ -1,8 +1,27 @@
-import { React } from 'react';
+import { React, useEffect, useState } from 'react';
 import "../style/userStory.css"
 import UserImage from '../../user/component/UserImage';
+import IconButton from '../../../components/IconButton';
+import { faAdd } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 function UserStory(props) {
+  const navigate = useNavigate()
+  const [myStory, setMyStory] = useState([]);
+
+  useEffect(() => {
+    if (props.isMine) {
+      setMyStory(
+        <div className='add-story-btn' onClick={addStory}>
+          <IconButton icon={faAdd} />
+        </div>
+      )
+    }
+  }, [])
+
+  function addStory() {
+    navigate('/addStory')
+  }
 
   return (
     <div className="story-box" onClick={props.showStoryView}>
@@ -10,6 +29,7 @@ function UserStory(props) {
         <UserImage link={props.link} />
       </div>
       <p className="story-user-name">{props.name}</p>
+      {myStory}
     </div>
   )
 };

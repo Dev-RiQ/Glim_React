@@ -1,6 +1,4 @@
 import axios from 'axios';
-import Toast from '../components/Toast';
-import { render } from '@testing-library/react';
 import useToast from '../pages/main/hook/ShowToast';
 
 let API_KEY = localStorage.getItem('accessToken');
@@ -9,20 +7,20 @@ if (!API_KEY && (!window.location.pathname.includes('/login') && !window.locatio
   window.location.href = '/login'
 }
 let header = {
-  Accept: "application/json",
+  "Content-Type": "multipart/form-data",
   Authorization: `Bearer ${API_KEY}`,
 }
 if (window.location.pathname === '/login' || window.location.pathname === '/join') {
   header = {
-    Accept: "application/json",
+    "Content-Type": "multipart/form-data",
   }
 }
 // Axios 인스턴스 생성
-const api = axios.create({
+const apiFile = axios.create({
   baseURL: "http://localhost:8081/api/v1",
   headers: header,
 });
-api.interceptors.response.use(
+apiFile.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.code === 'ERR_NETWORK' || error.code === 'ERR_BAD_RESPONSE') {
@@ -36,4 +34,4 @@ api.interceptors.response.use(
   }
 );
 
-export default api;
+export default apiFile;

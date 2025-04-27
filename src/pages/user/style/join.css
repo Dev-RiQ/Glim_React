@@ -13,6 +13,7 @@
   border-radius: 50%;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
 .user-img-setting .icon-btn {
@@ -72,4 +73,8 @@ section {
 
 .view-logo {
   margin-bottom: 30px;
+}
+
+.view-user-img {
+  object-fit: cover;
 }

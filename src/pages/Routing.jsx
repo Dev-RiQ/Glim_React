@@ -9,6 +9,7 @@ const SocialJoin = lazy(() => import('./user/page/SocialJoin'));
 const Main = lazy(() => import('./main/page/Main'));
 const Search = lazy(() => import('./search/page/Search'));
 const Shorts = lazy(() => import('./shorts/page/Shorts'));
+const AddStory = lazy(() => import('./story/page/AddStory'));
 const AddBoard = lazy(() => import('./board/page/AddBoard'));
 const MyPage = lazy(() => import('./user/page/MyPage'));
 const Chat = lazy(() => import('./chat/page/Chat'));
@@ -39,6 +40,7 @@ function Routing() {
             <Route path='/search/' element={<Search />} />
             <Route path='/shorts/' element={<Shorts />} />
             <Route path='/shorts/:id' element={<ShortsView />} />
+            <Route path='/addStory' element={<AddStory />} />
             <Route path='/addBoard/' element={<AddBoard />} />
             <Route path='/board/:id' element={<BoardView />} />
             <Route path='/myPage/' element={<MyPage />} />

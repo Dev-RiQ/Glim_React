@@ -96,6 +96,8 @@ audio,
 video,
 section,
 aside,
+input,
+textarea,
 button {
   margin: 0;
   padding: 0;
@@ -109,6 +111,11 @@ button {
   -moz-osx-font-smoothing: grayscale;
   background: none;
   text-align: center;
+}
+
+input,
+textarea {
+  text-align: left;
 }
 
 /* Scroll */

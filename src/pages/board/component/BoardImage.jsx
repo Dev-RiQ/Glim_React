@@ -15,7 +15,13 @@ import test9 from '../../../assets/test/test9.jpg';
 function BoardImage(props) {
   const [page, movePage] = useState(0);
   const [count, setCount] = useState([]);
-  const totalPage = 9;
+  const [totalPage, setTotalPage] = useState(props.imgs ? props.imgs.length : 9);
+
+  useEffect(() => {
+    if (props.imgs) {
+      setTotalPage(props.imgs.length)
+    }
+  }, [])
 
   useEffect(() => {
     function countPage() {
@@ -37,7 +43,10 @@ function BoardImage(props) {
       const testlist = [test1, test2, test3, test4, test5, test6, test7, test8, test9];
       let list = []
       for (let i = 0; i < totalPage; i++) {
-        const link = testlist[i];
+        let link = testlist[i];
+        if (props.imgs) {
+          link = props.imgs[i];
+        }
         list = [...list,
         <div key={i}>
           <img className="board-img" src={link} width="100%" height="100%" alt="BOARD_IMG" decoding="async" loading="lazy" />

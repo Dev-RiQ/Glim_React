@@ -1,0 +1,61 @@
+.add-board-box {
+  margin: auto;
+}
+
+.add-board-box svg {
+  font-size: 50px;
+  border: 5px dotted black;
+  border-radius: 20%;
+  padding: 20px;
+  margin-bottom: 15px;
+}
+
+.add-file-input {
+  display: none;
+}
+
+.view-story-img {
+  width: 100vw;
+  height: 100%;
+  object-fit: contain;
+}
+
+.preview-story {
+  position: fixed;
+  height: calc(100vh - 100px);
+  background-color: black;
+  top: 50px;
+  left: 0;
+}
+
+.redo-img {
+  position: fixed;
+  z-index: 100;
+  top: 60px;
+  left: 10px;
+}
+
+.redo-img svg {
+  border: none;
+  font-size: 18px;
+  color: #fff;
+  background-color: #888;
+  border-radius: 50%;
+  padding: 5px;
+}
+
+.submit-story-add {
+  position: fixed;
+  right: 10px;
+  top: 60px;
+  font-size: 20px;
+  z-index: 100;
+  padding: 2px 15px;
+  background-color: #888;
+  color: #fff;
+  border-radius: 30px;
+}
+
+.submit-story-add button {
+  color: #fff;
+}

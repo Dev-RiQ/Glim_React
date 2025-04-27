@@ -13,8 +13,32 @@
   -moz-user-drag: none;
   -o-user-drag: none;
   user-drag: none;
+  position: relative;
 }
 
 .story-user-img {
   height: 80px;
+}
+
+.add-story-btn {
+  position: absolute;
+  top: 57px;
+  left: 57px;
+  background-color: royalblue;
+  border-radius: 50%;
+}
+
+.add-story-btn .icon.btn {
+  height: 24px;
+}
+
+.add-story-btn button {
+  height: 24px;
+}
+
+.add-story-btn svg {
+  aspect-ratio: 1/1;
+  font-size: 20px;
+  padding: 0px 2px;
+  color: #fff;
 }
