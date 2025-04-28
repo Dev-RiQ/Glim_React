@@ -4,6 +4,8 @@ import jwtToken from '../utils/jwtToken';
 import LoginPro from './user/page/LoginPro';
 import NotFoundPage from './error/page/NotFoundPage';
 const Login = lazy(() => import('./user/page/Login'));
+const FindId = lazy(() => import('./user/page/FindId'));
+const FindPw = lazy(() => import('./user/page/FindPw'));
 const Join = lazy(() => import('./user/page/Join'));
 const SocialJoin = lazy(() => import('./user/page/SocialJoin'));
 const Main = lazy(() => import('./main/page/Main'));
@@ -33,6 +35,8 @@ function Routing() {
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
             <Route path='/login' element={<Login />} />
+            <Route path='/findId' element={<FindId />} />
+            <Route path='/findPw' element={<FindPw />} />
             <Route path='/join' element={<Join />} />
             <Route path='/socialJoin' element={<SocialJoin />} />
             <Route path='/' element={<Main />} />

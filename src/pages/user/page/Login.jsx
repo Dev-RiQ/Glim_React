@@ -47,6 +47,13 @@ function Login() {
     window.location.href = 'http://localhost:8081/api/v1/oauth2/authorization/google';
   }
 
+  function findId() {
+    window.location.href = '/findId'
+  }
+  function findPw() {
+    window.location.href = '/findPw'
+  }
+
   return (
     <div className="login-box">
       <img className='view-logo' src={logo} alt="logo" width="200px" height="100px" decoding="async" loading="lazy" />
@@ -69,6 +76,14 @@ function Login() {
         </div>
         <div onClick={googleLogin}>
           <SocialLoginButton icon={faGoogle} name={"구글 로그인"} />
+        </div>
+        <div className='find-id-pw'>
+          <div onClick={findId}>
+            <button>아이디 찾기</button>
+          </div>
+          <div onClick={findPw}>
+            <button>비밀번호 찾기</button>
+          </div>
         </div>
       </div>
     </div>
