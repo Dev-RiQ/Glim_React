@@ -17,6 +17,8 @@ const ChatRoom = lazy(() => import('./chat/page/ChatRoom'));
 const BoardView = lazy(() => import('./board/page/BoardView'));
 const ShortsView = lazy(() => import('./shorts/page/ShortsView'));
 const Alarm = lazy(() => import('./alarm/page/AlarmList'));
+const UserInfo = lazy(() => import('./user/page/UserInfo'));
+const UserList = lazy(() => import('./user/page/UserList'));
 
 function Routing() {
   useEffect(() => {
@@ -45,6 +47,8 @@ function Routing() {
             <Route path='/board/:id' element={<BoardView />} />
             <Route path='/myPage/' element={<MyPage />} />
             <Route path='/myPage/:id' element={<MyPage />} />
+            <Route path='/userInfo' element={<UserInfo />} />
+            <Route path='/userList' element={<UserList />} />
             <Route path='/chat/' element={<Chat />} />
             <Route path='/chatRoom/:id' element={<ChatRoom />} />
             <Route path='*' element={<NotFoundPage />} />

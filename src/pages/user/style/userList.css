@@ -1,0 +1,26 @@
+.user-list-box {
+  margin: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+}
+
+.show-user-img {
+  width: 50px;
+  height: 50px;
+  margin-right: 15px;
+}
+
+.show-user-box {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  width: 50%;
+}
+
+.show-user-nickname {
+  font-weight: bold;
+  font-size: 14px;
+  float: left;
+}

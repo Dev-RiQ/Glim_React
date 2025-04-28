@@ -34,6 +34,11 @@
 
 .my-id {
   color: royalblue;
+  float: left;
+}
+
+.my-name {
+  float: left;
 }
 
 .my-info {

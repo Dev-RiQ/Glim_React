@@ -9,17 +9,43 @@ function UserMenu(props) {
   useEffect(() => {
     let menuList = null
     if (props.isMine) {
-      menuList = (
-        <>
-          <button className='menu' onClick={deleteAction}>
-            삭제하기
-          </button>
-          <hr className='menu-hr' />
-          <button className='menu' onClick={() => props.setMenuModal(false)}>
-            돌아가기
-          </button>
-        </>
-      )
+      if (props.isMyPage) {
+        menuList = (
+          <>
+            <button className='menu' onClick={logout}>
+              로그아웃
+            </button>
+            <hr className='menu-hr' />
+            <button className='menu' onClick={changePw}>
+              비밀번호 변경
+            </button>
+            <hr className='menu-hr' />
+            <button className='menu' onClick={changePhone}>
+              전화번호 변경
+            </button>
+            <hr className='menu-hr' />
+            <button className='menu' onClick={userExit}>
+              회원탈퇴
+            </button>
+            <hr className='menu-hr' />
+            <button className='menu' onClick={() => props.setMenuModal(false)}>
+              돌아가기
+            </button>
+          </>
+        )
+      } else {
+        menuList = (
+          <>
+            <button className='menu' onClick={deleteAction}>
+              삭제하기
+            </button>
+            <hr className='menu-hr' />
+            <button className='menu' onClick={() => props.setMenuModal(false)}>
+              돌아가기
+            </button>
+          </>
+        )
+      }
     } else {
       menuList = (
         <>
@@ -37,6 +63,25 @@ function UserMenu(props) {
     }
     setMenu(menuList)
   }, [])
+
+  function logout() {
+    console.log('로그아웃')
+
+  }
+
+  function userExit() {
+    console.log('회원탈퇴')
+
+  }
+
+  function changePw() {
+    console.log('비번변경')
+  }
+
+  function changePhone() {
+    console.log('폰번변경')
+
+  }
 
   function deleteAction() {
     //타입별 삭제 로직

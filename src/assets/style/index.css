@@ -118,6 +118,10 @@ textarea {
   text-align: left;
 }
 
+textarea {
+  resize: none;
+}
+
 /* Scroll */
 html {
   scroll-behavior: smooth;
@@ -171,14 +175,6 @@ a {
 button {
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-}
-
-button:hover {
-  background: none;
-}
-
-button:active {
-  background: none;
 }
 
 section {
