@@ -26,7 +26,7 @@
 ## 🔧 Use API / Library
 - Fortawesome : 아이콘 가져오기
 
-## Connect REST API
+## 🔗 Connect REST API
 [Glim API](https://github.com/Dev-RiQ/Glim)
 
 
