@@ -1,0 +1,15 @@
+.menu-list-box {
+  border-radius: 15px;
+  background-color: #fff;
+  width: 200px;
+}
+
+.menu {
+  padding: 10px;
+  width: 100%;
+}
+
+.menu-hr {
+  margin: 0;
+  padding: 0;
+}

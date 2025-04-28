@@ -1,0 +1,11 @@
+.search-list-box {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 0.3% 0.5%;
+}
+
+.search-list-box>div {
+  width: 33%;
+  aspect-ratio: 1/1;
+}

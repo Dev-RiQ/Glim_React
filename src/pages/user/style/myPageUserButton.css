@@ -8,7 +8,7 @@
 .user-btn {
   border: 1px solid black;
   border-radius: 10px;
-  padding: 0px 55px;
+  width: 100%;
 }
 
 .user-add-btn {

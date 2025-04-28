@@ -17,7 +17,7 @@ function MyPageUserInfo(props) {
           <div className='my-names'>
             <div>
               <span className='my-id'>@my_id_1234</span>
-              <span className='my-names-devider'>|</span>
+              <br />
               <span className='my-name'>myNickname</span>
             </div>
             <div className='my-menu'>

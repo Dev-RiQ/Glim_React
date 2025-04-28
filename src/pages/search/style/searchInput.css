@@ -1,0 +1,68 @@
+.search-input-box {
+  position: relative;
+}
+
+.search-input {
+  width: calc(100% - 20px);
+  padding: 10px;
+  padding-left: 40px;
+}
+
+.search-input-icon {
+  position: absolute;
+}
+
+.search-input-icon svg {
+  font-size: 20px;
+}
+
+.show-search-user-box {
+  position: absolute;
+  max-height: 190px;
+  z-index: 1000;
+  width: 100%;
+  background-color: #555;
+  opacity: 0.95;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+}
+
+.show-search-user {
+  margin-top: 7px;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  gap: 10px;
+}
+
+.search-user-img-box {
+  width: 40px;
+  height: 40px;
+}
+
+.ranking-info {
+  position: fixed;
+  z-index: 1000;
+  right: 7px;
+  bottom: 55px;
+  color: #fff;
+  background-color: royalblue;
+  padding: 2px 5px;
+  font-size: 12px;
+  border-radius: 15px;
+}
+
+.ranking-btn {
+  position: fixed;
+  z-index: 1000;
+  right: 10px;
+  bottom: 80px;
+  border-radius: 50%;
+  background-color: royalblue;
+}
+
+.ranking-btn svg {
+  color: gold
+}

@@ -12,6 +12,9 @@
   user-drag: none;
   padding-top: 10px;
   justify-self: center;
+  width: calc(100% - 20px);
+  padding: 0 10px;
+  padding-top: 10px;
 }
 
 .mypage-user-portion {
@@ -29,9 +32,14 @@
   height: 100px;
 }
 
+.my-id {
+  color: royalblue;
+}
+
 .my-info {
   padding-top: 5px;
   padding-left: 20px;
+  width: calc(100% - 110px);
 }
 
 .my-names {
@@ -70,14 +78,14 @@
 
 .count {
   font-size: 16px;
-  width: 100px;
+  width: 90px;
   text-align: left;
   font-weight: bold;
   margin-bottom: -3px;
 }
 
 .count-title {
-  width: 100px;
+  width: 90px;
   text-align: left;
 }
 

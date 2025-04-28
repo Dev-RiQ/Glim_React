@@ -17,6 +17,9 @@ function ShortsVideo(props) {
 
   useEffect(() => {
     setLink(testlist[parseInt(Math.random() * 1.9)]);
+    if (props.video) {
+      setLink(props.video)
+    }
   }, [])
 
 
@@ -72,31 +75,35 @@ function ShortsVideo(props) {
     <>
       <div className="shorts-video-box">
         <video className='shorts-video' poster={thumbnail} src={link} playsInline loop width="100%" height="100%" decoding="async" loading="lazy" onClick={((e) => control(e))} onPlay={e => videoPlay(e)} onPause={e => videoPause(e)} />
-        <div className='shorts-info-box'>
-          <div className='shorts-user-box'>
-            <UserPortion />
-          </div>
-          <div className='shorts-content-box'>
-            <p className='shorts-content'>릴스다 이말이야~</p>
-          </div>
-          <div className='shorts-controller' onMouseUp={e => endTouch(e)} onMouseDown={e => onTouch(e)} onTouchStart={e => onTouch(e)} onTouchEnd={e => endTouch(e)}>
-            <progress min="0" value={time} max="100" />
-          </div>
-        </div>
-        <div className='shorts-button-box'>
-          <div>
-            <IconButton icon={faHeart} />
-            <p>9.9만</p>
-          </div>
-          <div onClick={e => props.shortsComment(e)}>
-            <IconButton icon={faComment} />
-            <p>9.9만</p>
-          </div>
-          <div>
-            <IconButton icon={faShare} />
-            <p>9.9만</p>
-          </div>
-        </div>
+        {!props.pre ?
+          <>
+            <div className='shorts-info-box'>
+              <div className='shorts-user-box'>
+                <UserPortion />
+              </div>
+              <div className='shorts-content-box'>
+                <p className='shorts-content'>릴스다 이말이야~</p>
+              </div>
+              <div className='shorts-controller' onMouseUp={e => endTouch(e)} onMouseDown={e => onTouch(e)} onTouchStart={e => onTouch(e)} onTouchEnd={e => endTouch(e)}>
+                <progress min="0" value={time} max="100" />
+              </div>
+            </div>
+            <div className='shorts-button-box'>
+              <div>
+                <IconButton icon={faHeart} />
+                <p>9.9만</p>
+              </div>
+              <div onClick={e => props.shortsComment(e)}>
+                <IconButton icon={faComment} />
+                <p>9.9만</p>
+              </div>
+              <div>
+                <IconButton icon={faShare} />
+                <p>9.9만</p>
+              </div>
+            </div>
+          </>
+          : <></>}
       </div>
     </>
   );

@@ -44,6 +44,7 @@ function UserImage(props) {
   }
 
   function beforeStory(e) {
+    if (e.clientY < 60 || e.clientY > e.currentTarget.clientHeight - 60 || e.target.className === 'menu') return
     if (storyPage === 0) {
       setName('story-view-box')
       setTimeout(() => {
@@ -56,6 +57,7 @@ function UserImage(props) {
   }
 
   function afterStory(e) {
+    if (e.clientY < 60 || e.clientY > e.currentTarget.clientHeight - 60 || e.target.className === 'menu') return
     if (storyPage === storyList.length - 1) {
       setName('story-view-box')
       setTimeout(() => {

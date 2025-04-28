@@ -34,7 +34,7 @@ function BoardComment(props) {
         {commentList}
       </div>
       <div className='comment-footer'>
-        <input className='comment-input' type="text" placeholder='댓글을 입력하세요.' />
+        <input className='comment-input' type="text" spellcheck="false" placeholder='댓글을 입력하세요.' />
         <div className='comment-enter'>
           <IconButton icon={faComment} />
         </div>

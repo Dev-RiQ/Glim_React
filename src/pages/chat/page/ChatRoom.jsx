@@ -20,11 +20,12 @@ function ChatRoom() {
     { "msgId": 3, "id": 1, "content": "야" }, { "msgId": 4, "id": 2, "content": "왜" },
     { "msgId": 5, "id": 2, "content": "왜" }, { "msgId": 6, "id": 2, "content": "왜" },
     { "msgId": 7, "id": 1, "content": "그냥 ㅎ" }, { "msgId": 8, "id": 2, "content": "ㅡㅡ" },
-    { "msgId": 9, "id": 2, "content": "ㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗ" }, { "msgId": 10, "id": 1, "content": "ㅗㅗ" },
-    { "msgId": 11, "id": 2, "content": "ㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗ" }, { "msgId": 12, "id": 1, "content": "ㅗㅗ" },
-    { "msgId": 13, "id": 2, "content": "ㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗ" }, { "msgId": 14, "id": 1, "content": "ㅗㅗ" },
-    { "msgId": 15, "id": 2, "content": "ㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗ" }, { "msgId": 16, "id": 1, "content": "ㅗㅗ" },
-    { "msgId": 17, "id": 2, "content": "ㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗ" }, { "msgId": 18, "id": 1, "content": "ㅗㅗ" },
+    { "msgId": 9, "id": 2, "content": "안녕하세요" }, { "msgId": 10, "id": 1, "content": "네, 반갑습니다" },
+    { "msgId": 11, "id": 2, "content": "오늘 날씨가 참 좋죠?" }, { "msgId": 12, "id": 1, "content": "네, 해가 쨍쨍한게 기분도 좋네요." },
+    { "msgId": 13, "id": 1, "content": "식사는 하셨나요?" }, { "msgId": 14, "id": 1, "content": "저는 갈비탕 먹었는데데" },
+    { "msgId": 15, "id": 2, "content": "저는 아직이요 ㅠ" }, { "msgId": 16, "id": 2, "content": "뭐먹을지 고민중인데 추천좀 해주세요." },
+    { "msgId": 17, "id": 1, "content": "점심이니까 가볍게 마라탕 어떠신가요?" }, { "msgId": 18, "id": 2, "content": "예..? 가볍게요?" },
+    { "msgId": 19, "id": 1, "content": "마라탕 가볍지 않나요 ㅎ" }, { "msgId": 20, "id": 2, "content": "그건 좀..." },
     ]
     let list = [];
     test.forEach(msg => {
@@ -91,7 +92,7 @@ function ChatRoom() {
         <div className='empty-space'></div>
       </div>
       <div className='msg-input-box'>
-        <input className='msg-input' type="text" onKeyUp={e => sendMsgKeyUp(e)} />
+        <input className='msg-input' type="text" spellCheck="false" onKeyUp={e => sendMsgKeyUp(e)} />
         <div className='msg-send' onClick={e => sendMsgClick(e)}>
           <IconButton icon={faLocationArrow} />
         </div>

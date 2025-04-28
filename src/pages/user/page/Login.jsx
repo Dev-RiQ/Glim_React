@@ -51,8 +51,8 @@ function Login() {
     <div className="login-box">
       <img className='view-logo' src={logo} alt="logo" width="200px" height="100px" decoding="async" loading="lazy" />
       <div className='input-box'>
-        <input className="username" type="text" placeholder='ID' onKeyUp={e => inputId(e)} />
-        <input className="password" type="password" placeholder='PW' onKeyUp={e => inputPw(e)} />
+        <input className="username" type="text" spellCheck="false" placeholder='ID' onKeyUp={e => inputId(e)} />
+        <input className="password" type="password" spellCheck="false" placeholder='PW' onKeyUp={e => inputPw(e)} />
       </div>
       <div className='login-btns-box'>
         <div onClick={login}>

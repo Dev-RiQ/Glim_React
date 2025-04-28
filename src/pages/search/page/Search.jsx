@@ -1,11 +1,15 @@
 import React from 'react';
-import '../style/searchList.css';
+import '../style/search.css';
 import SearchList from '../component/SearchList';
+import SearchInput from '../component/SearchInput';
 
 function Search() {
 
   return (
-    <SearchList />
+    <div>
+      <SearchInput />
+      <SearchList />
+    </div>
   );
 }
 

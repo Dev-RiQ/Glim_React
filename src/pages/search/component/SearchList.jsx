@@ -1,9 +1,11 @@
 import React, { useEffect, useState, } from 'react';
 import '../style/searchList.css';
 import SearchImg from './SearchImg';
+import { useNavigate } from 'react-router-dom';
 
 function SearchList() {
   const [search, setSearchs] = useState([]);
+  const navigate = useNavigate()
 
   useEffect(() => {
     let searchList = ["test1", "test2", "test3", "test4", "test5", "test6", "test7", "test8"
@@ -20,7 +22,7 @@ function SearchList() {
 
   function setSearchBox(element) {
     return (
-      <div key={element}>
+      <div key={element} onClick={() => navigate('/board/' + 1)}>
         <SearchImg link={element} name={element} />
       </div>
     )

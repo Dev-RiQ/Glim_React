@@ -10,15 +10,15 @@ function Footer(props) {
   useEffect(() => {
     let footerIcon = [];
     footerIcon = [...footerIcon, getButton(faHouse, '/', uri === '/' ? true : '')];
-    footerIcon = [...footerIcon, getButton(faSearch, '/search', uri === '/search' ? true : '')];
-    footerIcon = [...footerIcon, getButton(faAdd, '/addBoard', uri === '/addBoard' ? true : '')];
-    footerIcon = [...footerIcon, getButton(faFilm, '/shorts', uri === '/shorts' ? true : '')];
-    footerIcon = [...footerIcon, getButton(faUser, '/myPage', uri === '/myPage' ? true : '')];
+    footerIcon = [...footerIcon, getButton(faSearch, '/search', uri.includes('/search') ? true : '')];
+    footerIcon = [...footerIcon, getButton(faAdd, '/addBoard', uri.includes('/addBoard') ? true : '')];
+    footerIcon = [...footerIcon, getButton(faFilm, '/shorts', uri.includes('/shorts') ? true : '')];
+    footerIcon = [...footerIcon, getButton(faUser, '/myPage', uri.includes('/myPage') ? true : '')];
     setFooter(footerIcon);
   }, [uri])
 
   function buttonEvent(link) {
-    if ((uri === '/add' || uri === '/shorts' || uri === '/mypage') && uri === link) return;
+    if ((uri.includes('/add') || uri.includes('/shorts') || uri.includes('/mypage')) && uri === link) return;
     link !== uri ? window.location.href = link : document.querySelector('section').scrollTo({
       top: 0,
       behavior: "smooth"

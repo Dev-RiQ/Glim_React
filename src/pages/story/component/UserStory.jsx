@@ -6,7 +6,6 @@ import { faAdd } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 
 function UserStory(props) {
-  const navigate = useNavigate()
   const [myStory, setMyStory] = useState([]);
 
   useEffect(() => {
@@ -20,7 +19,7 @@ function UserStory(props) {
   }, [])
 
   function addStory() {
-    navigate('/addStory')
+    window.location.href = '/addStory'
   }
 
   return (

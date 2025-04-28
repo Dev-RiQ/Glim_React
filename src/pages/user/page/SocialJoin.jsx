@@ -127,16 +127,16 @@ function SocialJoin() {
         <p>이미지 추가</p>
       </div>
       <input className="join-file-input" type="file" placeholder='img' onChange={e => inputImg(e)} accept="image/*" />
-      <input type="text" placeholder='01012341234' onChange={e => inputPhone(e)} />
+      <input type="text" placeholder='01012341234' spellCheck="false" onChange={e => inputPhone(e)} />
       <div className='valid-check-box'>
-        <input type="text" placeholder='인증번호 입력' onChange={e => inputCode(e)} />
+        <input type="text" placeholder='인증번호 입력' spellCheck="false" onChange={e => inputCode(e)} />
         <button onClick={e => codeValid(e)}>인증번호 확인</button>
       </div>
       <div className='valid-check-box'>
-        <input type="text" placeholder='nickname' onChange={e => inputNickname(e)} />
+        <input type="text" placeholder='nickname' spellCheck="false" onChange={e => inputNickname(e)} />
         <button onClick={e => nicknameValid(e)}>중복체크</button>
       </div>
-      <input type="text" placeholder='name' onChange={e => inputName(e)} />
+      <input type="text" placeholder='name' spellCheck="false" onChange={e => inputName(e)} />
       <button className='join-submit-btn' onClick={join}>가입완료</button>
     </div>
   );

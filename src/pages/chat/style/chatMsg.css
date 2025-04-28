@@ -18,15 +18,21 @@
   margin-right: 10px;
 }
 
+
 .msg-info {
   display: flex;
   align-items: flex-end;
+  justify-content: left;
   gap: 8px;
+}
+
+.msg-box.my .msg-info {
+  justify-content: right;
 }
 
 .msg-text {
   max-width: 60%;
-  border-radius: 30px;
+  border-radius: 15px;
   background-color: #888;
   color: #fff;
   padding: 10px 20px;
