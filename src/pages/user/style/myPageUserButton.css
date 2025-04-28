@@ -19,3 +19,9 @@
 .user-add-btn svg {
   font-size: 14px;
 }
+
+.recommend-list-box {
+  display: flex;
+  overflow-x: scroll;
+  gap: 10px;
+}

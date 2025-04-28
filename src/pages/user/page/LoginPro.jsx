@@ -6,7 +6,7 @@ const LoginPro = () => {
   const noPhone = useParams().noPhone;
   const navigate = useNavigate();
   useEffect(() => {
-    if (token.startsWith('eyJhbGciOiJIUzI1NiJ9.')) {
+    if (token.length > 100) {
       localStorage.setItem("accessToken", token);
       if (noPhone) {
         navigate('/socialJoin', { state: { accessToken: token } })
