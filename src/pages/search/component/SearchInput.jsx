@@ -38,6 +38,10 @@ function SearchInput() {
     setShowSearchUsers(testShow)
   }
 
+  function goRanking() {
+    window.location.href = '/ranking'
+  }
+
   return (
     <div className="search-input-box">
       <div className='search-input-icon'>
@@ -47,7 +51,7 @@ function SearchInput() {
       <div className='show-search-user-box'>
         {showSearchUsers}
       </div>
-      <div>
+      <div onClick={goRanking}>
         <div className='ranking-btn'>
           <IconButton icon={faCrown} />
         </div>

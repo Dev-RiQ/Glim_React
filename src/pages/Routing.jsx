@@ -21,6 +21,7 @@ const ShortsView = lazy(() => import('./shorts/page/ShortsView'));
 const Alarm = lazy(() => import('./alarm/page/AlarmList'));
 const UserInfo = lazy(() => import('./user/page/UserInfo'));
 const UserList = lazy(() => import('./user/page/UserList'));
+const Ranking = lazy(() => import('./ranking/page/Ranking'));
 
 function Routing() {
   useEffect(() => {
@@ -55,6 +56,7 @@ function Routing() {
             <Route path='/userList' element={<UserList />} />
             <Route path='/chat/' element={<Chat />} />
             <Route path='/chatRoom/:id' element={<ChatRoom />} />
+            <Route path='/ranking' element={<Ranking />} />
             <Route path='*' element={<NotFoundPage />} />
           </Routes>
         </Suspense>

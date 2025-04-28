@@ -1,0 +1,87 @@
+.rank {
+  background-color: #aaa;
+  padding: 0 10px;
+  padding-top: 7px;
+}
+
+.rank-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+.rank-no {
+  padding: 10px;
+  font-size: 30px;
+  font-weight: 700;
+  position: relative;
+  width: 30px;
+}
+
+.rank-board-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.rank-board-img img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+}
+
+.rank-user-nickname {
+  text-align: left;
+  float: left;
+}
+
+.rank-board-content {
+  text-align: left;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-break: keep-all;
+  white-space: nowrap;
+  font-size: 14px;
+  margin-bottom: 5px;
+  padding: 0 10px;
+}
+
+.rank-info {
+  width: calc(100% - 120px);
+}
+
+.rank-count-box {
+  display: flex;
+}
+
+.rank-count-box svg {
+  color: #888;
+  font-size: 16px;
+  padding: 0;
+  margin-right: 3px;
+}
+
+.count-box {
+  color: #888;
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  justify-content: center;
+}
+
+.rank-medal {
+  position: absolute;
+  top: 8px;
+  left: 6px;
+  object-fit: contain;
+}
+
+.rank-box.first {}
+
+.rank-box.second {}
+
+.rank-box.third {}

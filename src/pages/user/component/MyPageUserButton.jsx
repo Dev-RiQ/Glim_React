@@ -3,7 +3,6 @@ import '../style/myPageUserButton.css';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import IconButton from '../../../components/IconButton';
 import test from '../../../assets/test/user3.jpg'
-import UserImage from './UserImage';
 import Recommend from './Recommend';
 
 function MyPageUserButton(props) {
