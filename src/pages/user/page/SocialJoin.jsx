@@ -16,6 +16,7 @@ function SocialJoin() {
   const [codeOK, setCodeOK] = useState(false)
   const location = useLocation()
   const [token, setToken] = useState(location.state)
+  const [responseCode, setResponseCode] = useState('47189789273981')
 
   if (!(token.startsWith('eyJhbGciOiJIUzI1NiJ9.') && token.includes('wiZXhwIjoxNzQ1N'))) {
     window.location.href = "/login";
@@ -84,10 +85,14 @@ function SocialJoin() {
     setNicknameOK(true)
   }
 
+  function getCode(e) {
+    setResponseCode('받아온 코드 저장')
+    ShowToast('success', '인증코드가 전송되었습니다.')
+  }
 
   function codeValid(e) {
     if (codeOK) return;
-    if (true) {
+    if (code !== responseCode) {
       ShowToast('error', '인증번호가 일치하지 않습니다.')
       return
     }
@@ -127,7 +132,10 @@ function SocialJoin() {
         <p>이미지 추가</p>
       </div>
       <input className="join-file-input" type="file" placeholder='img' onChange={e => inputImg(e)} accept="image/*" />
-      <input type="text" placeholder='01012341234' spellCheck="false" onChange={e => inputPhone(e)} />
+      <div className='valid-check-box'>
+        <input type="text" placeholder='01012341234' spellCheck="false" onChange={e => inputPhone(e)} />
+        <button onClick={e => getCode(e)}>인증번호 받기</button>
+      </div>
       <div className='valid-check-box'>
         <input type="text" placeholder='인증번호 입력' spellCheck="false" onChange={e => inputCode(e)} />
         <button onClick={e => codeValid(e)}>인증번호 확인</button>

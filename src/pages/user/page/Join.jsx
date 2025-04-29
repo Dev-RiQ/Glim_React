@@ -18,6 +18,7 @@ function Join() {
   const [idOK, setIdOK] = useState(false)
   const [nicknameOK, setNicknameOK] = useState(false)
   const [codeOK, setCodeOK] = useState(false)
+  const [responseCode, setResponseCode] = useState('47189789273981')
 
   function inputId(e) {
     if (e.target.value?.length > 16) {
@@ -116,6 +117,10 @@ function Join() {
     setNicknameOK(true)
   }
 
+  function getCode(e) {
+    setResponseCode('받아온 코드 저장')
+    ShowToast('success', '인증코드가 전송되었습니다.')
+  }
 
   function codeValid(e) {
     if (codeOK) return;
@@ -178,7 +183,10 @@ function Join() {
         <button onClick={e => idValid(e)}>중복체크</button>
       </div>
       <input type="password" placeholder='PW' spellCheck="false" onChange={e => inputPw(e)} />
-      <input type="text" placeholder='01012341234' spellCheck="false" onChange={e => inputPhone(e)} />
+      <div className='valid-check-box'>
+        <input type="text" placeholder='01012341234' spellCheck="false" onChange={e => inputPhone(e)} />
+        <button onClick={e => getCode(e)}>인증번호 받기</button>
+      </div>
       <div className='valid-check-box'>
         <input type="text" placeholder='인증번호 입력' spellCheck="false" onChange={e => inputCode(e)} />
         <button onClick={e => codeValid(e)}>인증번호 확인</button>

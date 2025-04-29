@@ -97,10 +97,6 @@ function ShortsVideo(props) {
                 <IconButton icon={faComment} />
                 <p>9.9만</p>
               </div>
-              <div>
-                <IconButton icon={faShare} />
-                <p>9.9만</p>
-              </div>
             </div>
           </>
           : <></>}

@@ -6,7 +6,7 @@ function FindId() {
   const [phone, setPhone] = useState(null)
   const [code, setCode] = useState(null)
   const [showId, setShowId] = useState(null)
-
+  const [responseCode, setResponseCode] = useState('47189789273981')
 
   function inputPhone(e) {
     if (e.target.value?.length > 20) {
@@ -26,8 +26,13 @@ function FindId() {
     setCode(e.target.value)
   }
 
+  function getCode(e) {
+    setResponseCode('받아온 코드 저장')
+    ShowToast('success', '인증코드가 전송되었습니다.')
+  }
+
   function codeValid(e) {
-    if (!e) {
+    if (code !== responseCode) {
       ShowToast('error', '인증번호가 일치하지 않습니다.')
       setShowId(null)
       return
@@ -50,7 +55,10 @@ function FindId() {
       <div className='find-title-box'>
         아이디 찾기
       </div>
-      <input type="text" placeholder='01012341234' spellCheck="false" onChange={e => inputPhone(e)} />
+      <div className='valid-check-box'>
+        <input type="text" placeholder='01012341234' spellCheck="false" onChange={e => inputPhone(e)} />
+        <button onClick={e => getCode(e)}>인증번호 받기</button>
+      </div>
       <div className='valid-check-box'>
         <input type="text" placeholder='인증번호 입력' spellCheck="false" onChange={e => inputCode(e)} />
         <button onClick={e => codeValid(e)}>인증번호 확인</button>

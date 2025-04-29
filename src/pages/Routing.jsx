@@ -6,6 +6,7 @@ import NotFoundPage from './error/page/NotFoundPage';
 const Login = lazy(() => import('./user/page/Login'));
 const FindId = lazy(() => import('./user/page/FindId'));
 const FindPw = lazy(() => import('./user/page/FindPw'));
+const ChangePhone = lazy(() => import('./user/page/ChangePhone'));
 const Join = lazy(() => import('./user/page/Join'));
 const SocialJoin = lazy(() => import('./user/page/SocialJoin'));
 const Main = lazy(() => import('./main/page/Main'));
@@ -38,6 +39,7 @@ function Routing() {
             <Route path='/login' element={<Login />} />
             <Route path='/findId' element={<FindId />} />
             <Route path='/findPw' element={<FindPw />} />
+            <Route path='/changePhone' element={<ChangePhone />} />
             <Route path='/join' element={<Join />} />
             <Route path='/socialJoin' element={<SocialJoin />} />
             <Route path='/' element={<Main />} />

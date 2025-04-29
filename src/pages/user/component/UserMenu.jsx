@@ -75,12 +75,11 @@ function UserMenu(props) {
   }
 
   function changePw() {
-    console.log('비번변경')
+    window.location.href = '/findPw'
   }
 
   function changePhone() {
-    console.log('폰번변경')
-
+    window.location.href = '/changePhone'
   }
 
   function deleteAction() {
