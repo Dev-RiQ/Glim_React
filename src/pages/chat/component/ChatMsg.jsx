@@ -6,7 +6,7 @@ function ChatMsg(props) {
   const [msg, setMsg] = useState(null);
 
   useEffect(() => {
-    if (props.id === 1) {
+    if (props.id === props.loginId) {
       setMsg(setMyMsg());
     } else {
       setMsg(setOtherMsg());

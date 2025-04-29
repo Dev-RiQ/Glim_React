@@ -23,7 +23,7 @@ const api = axios.create({
   headers: header,
 });
 api.interceptors.response.use(
-  (response) => response,
+  (response) => response?.data?.data,
   (error) => {
     if (error.code === 'ERR_NETWORK' || error.code === 'ERR_BAD_RESPONSE') {
       useToast("error", '로그인 정보가 정확하지 않습니다.');

@@ -4,7 +4,7 @@ import RankingList from '../component/RankingList';
 import RankingFilter from '../component/RankingFilter';
 
 function Ranking() {
-  const [period, setPeriod] = useState('day')
+  const [period, setPeriod] = useState('realtime')
   const [type, setType] = useState('BASIC')
   const [criteria, setCriteria] = useState('view')
   const [ranking, setRanking] = useState([])

@@ -1,36 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import '../style/chatRoom.css';
 import IconButton from '../../../components/IconButton';
-import { faChevronLeft, faLocationArrow } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faEllipsis, faLocationArrow } from '@fortawesome/free-solid-svg-icons';
 import { useParams } from 'react-router-dom';
 import ChatMsg from '../component/ChatMsg';
 import UserImage from '../../user/component/UserImage';
+import api from '../../../utils/api';
+import SockJsClient from "react-stomp";
+import UserMenu from '../../user/component/UserMenu';
 
 function ChatRoom() {
-  const roomId = useParams();
+  const roomId = useParams().id;
   const [msgList, setMsgList] = useState([]);
   const [socketMsgList, setSocketMsgList] = useState([]);
+  const [loginId, setLoginId] = useState(0);
+  const [menu, setMenu] = useState([])
+  const [menuModal, setMenuModal] = useState(false)
 
   useEffect(() => {
+    setMenu(<UserMenu isMine={true} isChat={true} setMenuModal={setMenuModal} />)
     getMsgList()
   }, [])
 
-  function getMsgList() {
-    let test = [{ "msgId": 1, "id": 1, "content": "야" }, { "msgId": 2, "id": 1, "content": "야" },
-    { "msgId": 3, "id": 1, "content": "야" }, { "msgId": 4, "id": 2, "content": "왜" },
-    { "msgId": 5, "id": 2, "content": "왜" }, { "msgId": 6, "id": 2, "content": "왜" },
-    { "msgId": 7, "id": 1, "content": "그냥 ㅎ" }, { "msgId": 8, "id": 2, "content": "ㅡㅡ" },
-    { "msgId": 9, "id": 2, "content": "안녕하세요" }, { "msgId": 10, "id": 1, "content": "네, 반갑습니다" },
-    { "msgId": 11, "id": 2, "content": "오늘 날씨가 참 좋죠?" }, { "msgId": 12, "id": 1, "content": "네, 해가 쨍쨍한게 기분도 좋네요." },
-    { "msgId": 13, "id": 1, "content": "식사는 하셨나요?" }, { "msgId": 14, "id": 1, "content": "저는 갈비탕 먹었는데데" },
-    { "msgId": 15, "id": 2, "content": "저는 아직이요 ㅠ" }, { "msgId": 16, "id": 2, "content": "뭐먹을지 고민중인데 추천좀 해주세요." },
-    { "msgId": 17, "id": 1, "content": "점심이니까 가볍게 마라탕 어떠신가요?" }, { "msgId": 18, "id": 2, "content": "예..? 가볍게요?" },
-    { "msgId": 19, "id": 1, "content": "마라탕 가볍지 않나요 ㅎ" }, { "msgId": 20, "id": 2, "content": "그건 좀..." },
-    ]
+  async function getMsgList() {
+    let test2 = await api.get('/chat/' + roomId)
     let list = [];
-    test.forEach(msg => {
+    setLoginId(test2?.loginId)
+    test2?.msgList?.forEach(msg => {
       list = [...list, <div key={msg.msgId}>
-        <ChatMsg msgId={msg.msgId} id={msg.id} content={msg.content} />
+        <ChatMsg msgId={msg.msgId} loginId={test2.loginId} id={msg.userId} content={msg.content} />
       </div>]
     })
     setMsgList(list);
@@ -38,8 +36,9 @@ function ChatRoom() {
   }
 
   function sendMsgKeyUp(e) {
-    if (e.code === 'Enter')
+    if (!e.nativeEvent.isComposing && e.code === 'Enter') {
       sendMsg(e.target);
+    }
   }
   function sendMsgClick(e) {
     sendMsg(e.currentTarget.parentNode.firstChild);
@@ -48,13 +47,21 @@ function ChatRoom() {
   function sendMsg(target) {
     if (!target || !target.value) return;
     //메시지 전송
-    console.log(target.value);
-    setSocketMsgList([...socketMsgList, <div key={socketMsgList.length + 30}>
-      <ChatMsg msgId={socketMsgList.length + 30} id={1} content={target.value} />
-    </div>])
-    scrollBottom()
+    const body = {
+      "roomId": roomId,
+      "content": target.value,
+      "replyMsgId": 0
+    }
+    const send = api.post('/chat/sendMsg', body)
     target.value = '';
     target.focus();
+  }
+
+  function appendMsg(msg) {
+    setSocketMsgList([...socketMsgList, <div key={msg.msgId}>
+      <ChatMsg msgId={msg.msgId} loginId={loginId} id={msg.userId} content={msg.content} />
+    </div>])
+    scrollBottom()
   }
 
   function scrollBottom() {
@@ -71,6 +78,14 @@ function ChatRoom() {
 
   return (
     <div className="chat-room-box">
+      <SockJsClient
+        url={"http://localhost:8081/api/v1/chat-socket"}
+        topics={["/sub/" + roomId]}
+        onConnect={console.log("connected!")}
+        onDisconnect={console.log("disconnected!")}
+        onMessage={(msg) => appendMsg(msg)}
+        debug={false}
+      />
       <div className='chat-title-box'>
         <div className='chat-title'>
           <div className='move-back' onClick={e => moveBack(e)}>
@@ -85,6 +100,9 @@ function ChatRoom() {
             </div>
           </div>
         </div>
+        <div className='other-user-menu' onClick={() => setMenuModal(!menuModal)}>
+          <IconButton icon={faEllipsis} />
+        </div>
       </div>
       <div className='chat-list-box'>
         {msgList}
@@ -92,11 +110,21 @@ function ChatRoom() {
         <div className='empty-space'></div>
       </div>
       <div className='msg-input-box'>
-        <input className='msg-input' type="text" spellCheck="false" onKeyUp={e => sendMsgKeyUp(e)} />
+        <input className='msg-input' type="text" spellCheck="false" onKeyUp={sendMsgKeyUp} />
         <div className='msg-send' onClick={e => sendMsgClick(e)}>
           <IconButton icon={faLocationArrow} />
         </div>
       </div>
+      {menuModal ?
+        <>
+          <div className='menu-modal'>
+          </div>
+          <div className='menu-info'>
+            {menu}
+          </div>
+        </>
+        : <></>
+      }
     </div>
   );
 }

@@ -14,6 +14,7 @@ function FilterBox(props) {
       case 'SHORTS': return '숏츠'
       case 'view': return '조회수'
       case 'like': return '좋아요'
+      case 'realtime': return '실시간'
       case 'day': return '일간'
       case 'week': return '주간'
       case 'month': return '월간'

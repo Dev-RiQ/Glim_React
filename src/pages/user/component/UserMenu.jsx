@@ -33,6 +33,18 @@ function UserMenu(props) {
             </button>
           </>
         )
+      } else if (props.isChat) {
+        menuList = (
+          <>
+            <button className='menu' onClick={chatOutAction}>
+              채팅방 나가기
+            </button>
+            <hr className='menu-hr' />
+            <button className='menu' onClick={() => props.setMenuModal(false)}>
+              돌아가기
+            </button>
+          </>
+        )
       } else {
         menuList = (
           <>
@@ -71,7 +83,10 @@ function UserMenu(props) {
 
   function userExit() {
     console.log('회원탈퇴')
+  }
 
+  function chatOutAction() {
+    console.log('채팅 나가기')
   }
 
   function changePw() {

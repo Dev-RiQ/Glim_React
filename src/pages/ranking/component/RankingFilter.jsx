@@ -7,7 +7,7 @@ import second from '../../../assets/images/2nd.png'
 import third from '../../../assets/images/3rd.png'
 import FilterBox from './FilterBox';
 
-const periodes = ['day', 'week', 'month', 'year']
+const periodes = ['realtime', 'day', 'week', 'month', 'year']
 const types = ['BASIC', 'SHORTS']
 const criterias = ['view', 'like']
 const filters = ['type', 'criteria', 'period']

@@ -17,11 +17,11 @@ function ChatList(props) {
   }
 
   return (
-    <div className="single-chat-box" onClick={e => openChat(e)}>
+    <div className="single-chat-box">
       <div className='chat-user-img'>
         <UserImage />
       </div>
-      <div className='chat-info'>
+      <div className='chat-info' onClick={e => openChat(e)}>
         <div className='chat-user-name'>
           <span className='chat-user-text'>test_1234</span>
         </div>
