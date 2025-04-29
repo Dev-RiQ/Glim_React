@@ -1,0 +1,15 @@
+.rank-filter-box {
+  display: flex;
+}
+
+.filter-btn {
+  width: 100%;
+  padding: 5px;
+  border-top: 1px solid #888;
+  background-color: #fff;
+}
+
+.filter-btn.active {
+  background-color: royalblue;
+  color: #fff;
+}

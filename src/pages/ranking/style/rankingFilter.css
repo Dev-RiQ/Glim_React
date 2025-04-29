@@ -1,0 +1,37 @@
+.rank-filter {
+  position: relative;
+}
+
+.toggle-btn.active svg {
+  transform: rotate(180deg);
+}
+
+.toggle-btn.active {
+  border-radius: 0;
+}
+
+.toggle-btn {
+  position: absolute;
+  right: 0px;
+  border: 1px solid #888;
+  z-index: 100;
+  background-color: #888;
+  transition: 0.2s;
+  border-radius: 50%;
+}
+
+.toggle-btn svg {
+  transition: 0.2s;
+  padding: 1px;
+  padding-bottom: 2px;
+  color: #fff;
+}
+
+.filter-view {
+  transition: 0.2s;
+  margin-top: -100px;
+}
+
+.filter-view.active {
+  margin-top: 0;
+}

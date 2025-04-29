@@ -4,8 +4,8 @@ import testU from '../../../assets/test/user1.jpg'
 import testB from '../../../assets/test/test2.jpg'
 import RankingView from './RankingView';
 
-function RankingList() {
-  const [ranking, setRanking] = useState([])
+function RankingList(props) {
+  const [ranking, setRanking] = useState(props.list)
 
   useEffect(() => {
     getRanking()
