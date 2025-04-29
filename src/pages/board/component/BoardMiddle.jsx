@@ -6,22 +6,6 @@ import ShowComment from '../hook/ShowComment';
 
 function BoardMiddle(props) {
 
-  const [comments, setComments] = useState(null);
-  const [commentView, setCommentView] = useState('comment-box')
-
-  useEffect(() => {
-    if (commentView === 'comment-box') {
-      setComments(null);
-    }
-  }, [commentView])
-
-  function boardLike(e) {
-    console.log('like')
-  }
-  function boardComment(e) {
-    setComments(ShowComment(1, setCommentView))
-    setCommentView('comment-box show')
-  }
   function boardSave(e) {
     console.log('save')
   }
@@ -29,11 +13,11 @@ function BoardMiddle(props) {
   return (
     <div className="board-icon-box">
       <div className="icon-left" >
-        <div onClick={e => boardLike(e)}>
+        <div onClick={props.boardLike}>
           <IconButton icon={faHeart} />
           <p className="board-middle-count">123</p>
         </div>
-        <div onClick={e => boardComment(e)}>
+        <div onClick={e => props.boardComment(e)}>
           <IconButton icon={faComment} />
           <p className="board-middle-count">123</p>
         </div>
@@ -41,8 +25,8 @@ function BoardMiddle(props) {
       <div className="icon-right" onClick={e => boardSave(e)}>
         <IconButton icon={faBookmark} />
       </div>
-      <div className={commentView}>
-        {comments}
+      <div className={props.commentView}>
+        {props.comments}
       </div>
     </div >
   );

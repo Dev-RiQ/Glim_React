@@ -16,6 +16,10 @@ function BoardImage(props) {
   const [page, movePage] = useState(0);
   const [count, setCount] = useState([]);
   const [totalPage, setTotalPage] = useState(props.imgs ? props.imgs.length : 9);
+  const [touched, setTouched] = useState(false)
+  const [touchLocX, setTouchLocX] = useState(0)
+  const [touchLocY, setTouchLocY] = useState(0)
+  const [touchStart, setTouchStart] = useState(0)
 
   useEffect(() => {
     if (props.imgs) {
@@ -57,17 +61,35 @@ function BoardImage(props) {
     setImage(imageList());
   }, [])
 
-  let touchStart = 0;
-  let touchEnd = 0;
+  function setTouch(e) {
+    if (touched &&
+      ((e.touches[0].clientX - touchLocX < 20 && e.touches[0].clientX - touchLocX > -20)
+        && ((e.touches[0].clientY - touchLocY < 20 && e.touches[0].clientY - touchLocY > -20)))
+    ) {
+      props.boardLike()
+    }
+    setTouchLocX(e.touches[0].clientX)
+    setTouchLocY(e.touches[0].clientY)
+    setTouched(true)
+    setTimeout(() => {
+      setTouchLocX(0)
+      setTouchLocY(0)
+      setTouched(false)
+    }, 250);
+  }
+
   function onTouch(e) {
-    if (e.touches)
-      touchStart = e.touches[0].clientX;
+    if (e.touches) {
+      setTouchStart(e.touches[0].clientX);
+      setTouch(e)
+    }
     else
-      touchStart = e.clientX;
+      setTouchStart(e.clientX);
 
   }
 
   function endTouch(e) {
+    let touchEnd;
     if (e.touches)
       touchEnd = e.changedTouches[0].clientX;
     else
@@ -96,7 +118,7 @@ function BoardImage(props) {
 
   return (
     <div className='board-info-images'>
-      <div className="file-box" onMouseUp={e => endTouch(e)} onMouseDown={e => onTouch(e)} onTouchStart={e => onTouch(e)} onTouchEnd={e => endTouch(e)}>
+      <div className="file-box" onMouseUp={e => endTouch(e)} onMouseDown={e => onTouch(e)} onTouchStart={e => onTouch(e)} onTouchEnd={e => endTouch(e)} onDoubleClick={props.boardLike}>
         {image}
       </div>
       <div className="file-count-list">

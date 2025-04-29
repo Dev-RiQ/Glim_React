@@ -4,7 +4,7 @@ import '../style/boardContent.css';
 function BoardContent(props) {
 
   return (
-    <div className="board-content">
+    <div className="board-content" onClick={props.boardComment}>
       <div className="board-content-data">
         <div className='board-content-box'>
           <span className="board-user-name">이름_123456789</span>

@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import jwtToken from '../utils/jwtToken';
 import LoginPro from './user/page/LoginPro';
 import NotFoundPage from './error/page/NotFoundPage';
+import Loading from './loading/page/Loading';
 const Login = lazy(() => import('./user/page/Login'));
 const FindId = lazy(() => import('./user/page/FindId'));
 const FindPw = lazy(() => import('./user/page/FindPw'));
@@ -34,7 +35,7 @@ function Routing() {
   return (
     <section>
       <BrowserRouter>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<Loading />}>
           <Routes>
             <Route path='/login' element={<Login />} />
             <Route path='/findId' element={<FindId />} />
