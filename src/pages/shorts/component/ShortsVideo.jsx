@@ -64,7 +64,7 @@ function ShortsVideo(props) {
   async function likeShorts() {
     const res = isLike ? await api.delete(`/boardLike/${data.id}`)
       : await api.post(`/boardLike/${data.id}`)
-    if (isLike) {
+    if (res && isLike) {
       api.post('/tags/view', data.tags)
       api.post(`/boardView/${data.id}`)
     }
@@ -74,7 +74,7 @@ function ShortsVideo(props) {
   return (
     <>
       <div className="shorts-video-box">
-        <video className='shorts-video' poster={data.img} src={data.video} playsInline loop width="100%" height="100%" decoding="async" loading="lazy" onClick={((e) => control(e))} onPlay={e => videoPlay(e)} onPause={e => videoPause(e)} />
+        <video className='shorts-video' poster={data.img[1]} src={data.img[0]} playsInline loop width="100%" height="100%" decoding="async" loading="lazy" onClick={((e) => control(e))} onPlay={e => videoPlay(e)} onPause={e => videoPause(e)} />
         <div className='shorts-info-box'>
           <div className='shorts-user-box'>
             <UserPortion user={data.user} id={data.id} subTitle={data.createdAt} />

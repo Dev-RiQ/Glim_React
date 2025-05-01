@@ -18,9 +18,9 @@ function UserList() {
   async function moreUserList() {
     let list = []
     if (type === 'follower') {
-      list = await api.get(`/follow/followers/${userId}` + offset !== 0 ? `/${offset}` : '')
+      list = await api.get(`/follow/followers/${userId}` + (offset !== 0 ? `/${offset}` : ''))
     } else {
-      list = await api.get(`/follow/followings/${userId}` + offset !== 0 ? `/${offset}` : '')
+      list = await api.get(`/follow/followings/${userId}` + (offset !== 0 ? `/${offset}` : ''))
     }
     let showUserList = []
     list.forEach(element => {

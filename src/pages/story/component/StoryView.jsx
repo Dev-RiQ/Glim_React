@@ -12,7 +12,7 @@ function StoryView(props) {
   const [content, setContent] = useState('')
 
   useEffect(() => {
-    api.post(`/storyView/${data.id}`)
+    api.get(`/story/${data.id}`)
   }, [])
 
   async function storyLike() {

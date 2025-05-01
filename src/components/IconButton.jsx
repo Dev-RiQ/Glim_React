@@ -5,9 +5,9 @@ import "../assets/style/iconButton.css"
 function IconButton(props) {
   let name = "icon-btn";
   if (props.check && props.check === 'like') {
-    name += " " + props.like;
+    name += ' like';
   } else if (props.check) {
-    name += " " + props.check;
+    name += ` ${props.check}`;
   }
   return (
     <div className={name}>

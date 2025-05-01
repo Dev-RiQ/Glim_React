@@ -11,7 +11,7 @@ function StoryList(props) {
   }, []);
 
   async function getStoryList() {
-    let storyList = await api.get(`/story`)
+    let storyList = await api.get(`/follow/story`)
     let storyBoxes = [await setMyStory()];
     storyList?.forEach(element => {
       storyBoxes = [...storyBoxes, setStoryBox(element)];
@@ -23,7 +23,7 @@ function StoryList(props) {
     const myInfo = await api.get('/auth/me')
     return (
       <div key={myInfo.nickname}>
-        <UserStory link={myInfo.img} name={myInfo.nickname} isMine={true} />
+        <UserStory id={myInfo.id} link={myInfo.img} name={myInfo.nickname} isMine={true} hasStory={myInfo.isStory} />
       </div>
     )
   }
@@ -31,7 +31,7 @@ function StoryList(props) {
   function setStoryBox(element) {
     return (
       <div key={element.id}>
-        <UserStory link={element.img} name={element.nickname} />
+        <UserStory link={element.img} name={element.nickname} hasStory={true} />
       </div>
     )
   }

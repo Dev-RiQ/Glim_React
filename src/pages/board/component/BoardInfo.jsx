@@ -12,14 +12,14 @@ function BoardInfo(props) {
   const [comments, setComments] = useState(null);
   const [commentView, setCommentView] = useState('comment-box')
   const [subTitle, setSubTitle] = useState('')
-  const [isLike, setIsLike] = useState(data.isLike)
+  const [isLike, setIsLike] = useState(data?.isLike)
 
   useEffect(() => {
-    if (data.isAd) {
+    if (data?.isAd) {
       setSubTitle(`광고`)
-    } else if (data.bgm?.title) {
+    } else if (data?.bgm?.title) {
       setSubTitle(`♬ ${data.bgm.title}-${data.bgm.artist}`)
-    } else if (data.location) {
+    } else if (data?.location) {
       setSubTitle(`${data.location}`)
     }
   }, [])
@@ -51,8 +51,8 @@ function BoardInfo(props) {
 
   return (
     <div className="board-box">
-      <UserPortion user={data.user} subTitle={subTitle} />
-      <BoardImage imgs={data.img} boardLike={boardLike} />
+      <UserPortion user={data?.user} subTitle={subTitle} />
+      <BoardImage imgs={data?.img} boardLike={boardLike} />
       <BoardMiddle data={data} isLike={isLike} boardLike={boardLike} boardComment={boardComment} comments={comments} commentView={commentView} />
       <BoardContent data={data} boardComment={boardComment} />
     </div>

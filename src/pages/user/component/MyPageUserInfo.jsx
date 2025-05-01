@@ -32,7 +32,6 @@ function MyPageUserInfo(props) {
 
 
   async function changeLogin() {
-    console.log('계정전환 목록 보여주기')
     const res = await api.get('/auth/accounts')
     let list = []
     res?.forEach(element => {
@@ -69,7 +68,7 @@ function MyPageUserInfo(props) {
     <div className="mypage-user-box">
       <div className='mypage-user-portion'>
         <div className="mypage-user-img">
-          <UserImage link={user.img} hasStory={user.isStory} />
+          <UserImage id={user.id} link={user.img} hasStory={user.isStory} />
         </div>
         <div className='my-info'>
           <div className='my-names'>

@@ -1,6 +1,4 @@
 import axios from 'axios';
-import Toast from '../components/Toast';
-import { render } from '@testing-library/react';
 import useToast from '../pages/main/hook/ShowToast';
 
 let API_KEY = localStorage.getItem('accessToken');
@@ -24,22 +22,33 @@ const api = axios.create({
 });
 api.interceptors.response.use(
   (response) => {
-    console.log(response)
-    // 토큰 재요청 있는지 없는지 확인해서 있으면 로컬스토리지 다시저장 추가
-    return response?.data?.data ? response?.data?.data : response?.data
-  },
-  (error) => {
-    console.log(error)
-    if (error.code === 'ERR_NETWORK' || error.code === 'ERR_BAD_RESPONSE') {
-      useToast("error", '로그인 정보가 정확하지 않습니다.');
-      setTimeout(() => {
-        // window.location.href = "/login"
-      }, 500);
-      return null;
-    } else {
-      useToast("error", error.response?.data?.errors[0]);
+    const data = response?.data?.data ? response?.data?.data : response?.data
+    console.log(data)
+    if (data.accessToken) {
+      localStorage.setItem('accessToken', data.accessToken)
+      const originalRequest = response.config;
+      originalRequest.headers.Authorization = `Bearer ${data.accessToken}`
+      return api(originalRequest);
+    }
+    if (data.length === 0) {
       return null;
     }
+    return data
+  },
+  (error) => {
+    console.log(error.status)
+    if (error.status === 500) {
+      useToast("error", '서버와의 통신에 실패했습니다.');
+    } else if (error.status === 404) {
+      useToast("error", "해당하는 정보를 찾을 수 없습니다.")
+    } else if (error.status === 401) {
+      useToast("error", "로그인 정보가 확인되지 않습니다.")
+    } else if (error.status === 400 || 405) {
+      useToast("error", "잘못된 요청입니다.")
+    } else {
+      useToast("error", error.response?.data?.errors?.length > 0 ? error.response?.data?.errors[0] : error.code);
+    }
+    return null;
   }
 );
 

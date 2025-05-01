@@ -4,30 +4,15 @@ import showStory from '../../story/hook/ShowStory';
 import api from '../../../utils/api';
 
 function UserImage(props) {
-
   const id = props.id;
   const [story, setStory] = useState(null);
-  const [storyInfo, setStoryInfo] = useState(null);
   const [storyPage, setStoryPage] = useState(0);
   const [storyList, setStoryList] = useState([]);
   const [name, setName] = useState('story-view-box');
 
-  useEffect(() => {
-    getStory();
-  }, [])
-
-  useEffect(() => {
-    setStoryInfo(storyList[storyPage])
-  }, [storyPage])
-
-  async function getStory() {
-    const res = await api.get(`/story/${id}`)
-    res && setStoryList(res)
-  }
-
-  function getStoryLine(pages) {
+  function getStoryLine(list, pages) {
     let line = []
-    for (let i = 0; i < storyList.length; i++) {
+    for (let i = 0; i < list.length; i++) {
       let value = 0;
       if (pages >= i) value = 500;
       line = [...line,
@@ -39,9 +24,18 @@ function UserImage(props) {
     return line;
   }
 
-  function showStoryView(e) {
-    if (e.currentTarget.className.includes('has-story') && e.target.className === "user-img") {
-      setStory(showStory(storyInfo, getStoryLine(0)))
+  function endStoryView() {
+    setStory(null)
+    setStoryList([])
+    setName('story-view-box')
+    setStoryPage(0)
+  }
+
+  async function showStoryView(e) {
+    if (e.currentTarget.className.includes('has-story')) {
+      const res = await api.get(`/story/${id}`)
+      res && setStoryList(res)
+      setStory(showStory(res[0], getStoryLine(res, 0), endStoryView))
       setStoryPage(0)
       setName(name + " show")
     }
@@ -57,7 +51,7 @@ function UserImage(props) {
       return;
     }
     setStoryPage(storyPage - 1)
-    setStory(showStory(storyList[storyPage - 1], getStoryLine(storyPage - 1)))
+    setStory(showStory(storyList[storyPage - 1], getStoryLine(storyPage - 1), endStoryView))
   }
 
   function afterStory(e) {
@@ -70,10 +64,11 @@ function UserImage(props) {
       return
     }
     setStoryPage(storyPage + 1)
-    setStory(showStory(storyList[storyPage + 1], getStoryLine(storyPage + 1)))
+    setStory(showStory(storyList[storyPage + 1], getStoryLine(storyPage + 1), endStoryView))
   }
 
   function storyClickEvents(e) {
+    console.log(e.target)
     if (e.target.parentNode.parentNode.parentNode.className === 'story-end' ||
       e.target.parentNode.parentNode.parentNode.parentNode.className === 'story-end'
     ) {
@@ -91,16 +86,18 @@ function UserImage(props) {
   }
 
   return (
-    <div className={
-      props.hasStory ? 'user-image has-story' : 'user-image'
-    } onClick={e => showStoryView(e, { id })}>
-      <button className="user-img-btn">
-        <img className='user-img' src={props.link} alt="USER_IMG" width="100%" height="100%" decoding="async" loading="lazy" />
-      </button>
+    <>
+      <div className={
+        props.hasStory ? 'user-image has-story' : 'user-image'
+      } onClick={e => showStoryView(e, { id })}>
+        <button className="user-img-btn">
+          <img className='user-img' src={props.link} alt="USER_IMG" width="100%" height="100%" decoding="async" loading="lazy" />
+        </button>
+      </div>
       <div className={name} onClick={e => storyClickEvents(e)}>
         {story}
       </div>
-    </div>
+    </>
   )
 };
 

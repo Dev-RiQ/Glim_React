@@ -17,19 +17,19 @@ function SearchList(props) {
   async function getSearchList() {
     let res;
     if (!num) {
-      res = await api.get('/board/search' + offset !== 0 ? +`/${offset}` : '')
+      res = await api.get('/board/search' + (offset !== 0 ? +`/${offset}` : ''))
     } else if (num === 1) {
-      res = await api.get(`/board/my/${props.id}` + offset !== 0 ? +`/${offset}` : '')
+      res = await api.get(`/board/my/${props.id}` + (offset !== 0 ? +`/${offset}` : ''))
     } else if (num === 2) {
-      res = await api.get(`/board/myShorts/${props.id}` + offset !== 0 ? +`/${offset}` : '')
+      res = await api.get(`/board/myShorts/${props.id}` + (offset !== 0 ? +`/${offset}` : ''))
     } else if (num === 3) {
-      res = await api.get(`/board/tag/${props.id}` + offset !== 0 ? +`/${offset}` : '')
+      res = await api.get(`/board/tag/${props.id}` + (offset !== 0 ? +`/${offset}` : ''))
     }
     let searchBoxes = [];
     res?.forEach(element => {
       searchBoxes = [...searchBoxes, setSearchBox(element)];
     });
-    setOffset(res[res.length - 1].id)
+    res && setOffset(res[res.length - 1].id)
     return searchBoxes
   }
 
@@ -43,7 +43,7 @@ function SearchList(props) {
 
   function setSearchBox(element) {
     return (
-      <div key={element.id} onClick={movePage(element.id, element.type ? element.type : props?.type)}>
+      <div key={element.id} onClick={() => movePage(element.id, element.type ? element.type : props?.type)}>
         <SearchImg link={element.img} type={element.type} />
       </div>
     )

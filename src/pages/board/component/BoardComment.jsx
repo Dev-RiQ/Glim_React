@@ -20,7 +20,7 @@ function BoardComment(props) {
   }, []);
 
   async function getBoardList() {
-    const res = await api.get(`/comment/${data.id}` + offset !== 0 ? `/${offset}` : '')
+    const res = await api.get(`/comment/${data.id}` + (offset !== 0 ? `/${offset}` : ''))
     let commentBoxes = [];
     if (commentList.length === 0) {
       commentBoxes = [...commentBoxes, setComment(data, false)]
@@ -102,7 +102,7 @@ function BoardComment(props) {
         {commentList}
       </div>
       <div className='comment-footer'>
-        <input className='comment-input' type="text" spellcheck="false" placeholder='댓글을 입력하세요.' onChange={getCommentInupt} />
+        <input className='comment-input' type="text" spellCheck="false" placeholder='댓글을 입력하세요.' onChange={getCommentInupt} />
         <div className='comment-enter' onClick={e => addComment(e)}>
           <IconButton icon={faComment} />
         </div>

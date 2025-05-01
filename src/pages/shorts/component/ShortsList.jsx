@@ -33,14 +33,13 @@ function ShortsList() {
   }, []);
 
   async function getShortsList() {
-    const res = await api.get('/board/shorts' + offset !== 0 ? `/${offset}` : '')
+    const res = await api.get('/board/shorts' + (offset !== 0 ? `/${offset}` : ''))
     let shortsBoxes = [];
     res?.forEach((element, idx) => {
       shortsBoxes = [...shortsBoxes, setShortsBox(element, shorts.length + idx)];
     });
     res && setOffset(res[res.length - 1].id)
-    res && setShorts(getShortsList())
-    return shortsBoxes;
+    res && setShorts(shortsBoxes)
   }
 
   function pauseVideo(e) {
