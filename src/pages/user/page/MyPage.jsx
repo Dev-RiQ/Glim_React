@@ -1,19 +1,36 @@
-import { React } from 'react';
+import { React, useEffect, useState } from 'react';
 import "../style/myPage.css"
 import MyPageUserInfo from '../component/MyPageUserInfo';
 import MyPageBoardList from '../../board/component/MyPageBoardList';
-import user1 from '../../../assets/test/user1.jpg'
+import { useParams } from 'react-router-dom';
+import api from '../../../utils/api';
 
-function MyPage(props) {
+function MyPage() {
+  const userId = useParams().id;
+  const [myPage, setMyPage] = useState([]);
 
-  let isMine = true;
+  useEffect(() => {
+    if (userId) {
+      getUserInfo(userId)
+    } else {
+      getUserInfo()
+    }
+  }, [])
 
+  async function getUserInfo(id) {
+    console.log('id', id)
+    const user = (id ? await api.get(`/auth/${id}`) : await api.get('/auth/me'))
+    setMyPage(
+      <div className="mypage-box">
+        <MyPageUserInfo user={user} isMine={user.mine ? user.ming : true} />
+      </div>
+    )
+  }
 
   return (
-    <div className="mypage-box">
-      <MyPageUserInfo link={user1} isMine={isMine} />
-      <MyPageBoardList />
-    </div>
+    <>
+      {myPage}
+    </>
   )
 };
 

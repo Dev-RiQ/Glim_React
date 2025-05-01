@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../style/boardImage.css';
 import IconButton from '../../../components/IconButton';
-import { faCircle, faPause, faPlay } from '@fortawesome/free-solid-svg-icons';
+import { faPause, faPlay } from '@fortawesome/free-solid-svg-icons';
 
 function MusicPlay(props) {
   const [musicStatus, setMusicStatus] = useState(<IconButton icon={faPlay} />)

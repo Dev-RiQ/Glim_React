@@ -2,28 +2,49 @@ import React, { useEffect, useState, } from 'react';
 import '../style/searchList.css';
 import SearchImg from './SearchImg';
 import { useNavigate } from 'react-router-dom';
+import api from '../../../utils/api';
 
-function SearchList() {
+function SearchList(props) {
+  const num = props?.num
   const [search, setSearchs] = useState([]);
+  const [offset, setOffset] = useState(0);
   const navigate = useNavigate()
 
   useEffect(() => {
-    let searchList = ["test1", "test2", "test3", "test4", "test5", "test6", "test7", "test8"
-      , "test11", "test12", "test13", "test14", "test15", "test16", "test17", "test18"
-      , "test21", "test22", "test23", "test24", "test25", "test26", "test27", "test28"
-      , "test31", "test32", "test33", "test34", "test35", "test36", "test37", "test38"
-    ];
+    setSearchs(getSearchList())
+  }, []);
+
+  async function getSearchList() {
+    let res;
+    if (!num) {
+      res = await api.get('/board/search' + offset !== 0 ? +`/${offset}` : '')
+    } else if (num === 1) {
+      res = await api.get(`/board/my/${props.id}` + offset !== 0 ? +`/${offset}` : '')
+    } else if (num === 2) {
+      res = await api.get(`/board/myShorts/${props.id}` + offset !== 0 ? +`/${offset}` : '')
+    } else if (num === 3) {
+      res = await api.get(`/board/tag/${props.id}` + offset !== 0 ? +`/${offset}` : '')
+    }
     let searchBoxes = [];
-    searchList.forEach(element => {
+    res?.forEach(element => {
       searchBoxes = [...searchBoxes, setSearchBox(element)];
     });
-    setSearchs(searchBoxes)
-  }, []);
+    setOffset(res[res.length - 1].id)
+    return searchBoxes
+  }
+
+  function movePage(id, type) {
+    let uri = '/board/'
+    if (type && type === 'SHORTS') {
+      uri += 'shorts/'
+    }
+    navigate(uri + id)
+  }
 
   function setSearchBox(element) {
     return (
-      <div key={element} onClick={() => navigate('/board/' + 1)}>
-        <SearchImg link={element} name={element} />
+      <div key={element.id} onClick={movePage(element.id, element.type ? element.type : props?.type)}>
+        <SearchImg link={element.img} type={element.type} />
       </div>
     )
   }

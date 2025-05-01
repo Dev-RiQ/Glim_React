@@ -2,30 +2,15 @@ import React, { useEffect, useState } from 'react';
 import '../style/boardImage.css';
 import IconButton from '../../../components/IconButton';
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
-import test1 from '../../../assets/test/test1.jpg';
-import test2 from '../../../assets/test/test2.jpg';
-import test3 from '../../../assets/test/test3.jpg';
-import test4 from '../../../assets/test/test4.jpg';
-import test5 from '../../../assets/test/test5.jpg';
-import test6 from '../../../assets/test/test6.jpg';
-import test7 from '../../../assets/test/test7.jpg';
-import test8 from '../../../assets/test/test8.jpg';
-import test9 from '../../../assets/test/test9.jpg';
 
 function BoardImage(props) {
   const [page, movePage] = useState(0);
   const [count, setCount] = useState([]);
-  const [totalPage, setTotalPage] = useState(props.imgs ? props.imgs.length : 9);
+  const [totalPage, setTotalPage] = useState(props.imgs.length);
   const [touched, setTouched] = useState(false)
   const [touchLocX, setTouchLocX] = useState(0)
   const [touchLocY, setTouchLocY] = useState(0)
   const [touchStart, setTouchStart] = useState(0)
-
-  useEffect(() => {
-    if (props.imgs) {
-      setTotalPage(props.imgs.length)
-    }
-  }, [])
 
   useEffect(() => {
     function countPage() {
@@ -42,24 +27,22 @@ function BoardImage(props) {
   }, [page]);
 
   const [image, setImage] = useState([]);
+
   useEffect(() => {
-    function imageList() {
-      const testlist = [test1, test2, test3, test4, test5, test6, test7, test8, test9];
-      let list = []
-      for (let i = 0; i < totalPage; i++) {
-        let link = testlist[i];
-        if (props.imgs) {
-          link = props.imgs[i];
-        }
-        list = [...list,
-        <div key={i}>
-          <img className="board-img" src={link} width="100%" height="100%" alt="BOARD_IMG" decoding="async" loading="lazy" />
-        </div>]
-      }
-      return list;
-    }
-    setImage(imageList());
+    imageList()
   }, [])
+
+  function imageList() {
+    let list = []
+    for (let i = 0; i < totalPage; i++) {
+      let link = props.imgs[i];
+      list = [...list,
+      <div key={i}>
+        <img className="board-img" src={link} width="100%" height="100%" alt="BOARD_IMG" decoding="async" loading="lazy" />
+      </div>]
+    }
+    setImage(list);
+  }
 
   function setTouch(e) {
     if (touched &&

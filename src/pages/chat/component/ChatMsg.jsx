@@ -18,7 +18,7 @@ function ChatMsg(props) {
       <div className='msg-box my' key={props.msgId}>
         <div className='msg-info'>
           <div className='date-text'>
-            <span className='msg-date'>3일 전</span>
+            <span className='msg-date'>{props.createAt}</span>
           </div>
           <div className='msg-text my'>
             <span className='msg-content'>{props.content}</span>
@@ -32,14 +32,14 @@ function ChatMsg(props) {
     return (
       <div className='msg-box' key={props.msgId}>
         <div className='msg-user-img'>
-          <UserImage />
+          <UserImage link={props.userImg} />
         </div>
         <div className='msg-info'>
           <div className='msg-text'>
             <span className='msg-content'>{props.content}</span>
           </div>
           <div className='date-text'>
-            <span className='msg-date'>3일 전</span>
+            <span className='msg-date'>{props.createAt}</span>
           </div>
         </div>
       </div>

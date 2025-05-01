@@ -3,7 +3,6 @@ import "../style/userStory.css"
 import UserImage from '../../user/component/UserImage';
 import IconButton from '../../../components/IconButton';
 import { faAdd } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from 'react-router-dom';
 
 function UserStory(props) {
   const [myStory, setMyStory] = useState([]);
@@ -25,7 +24,7 @@ function UserStory(props) {
   return (
     <div className="story-box" onClick={props.showStoryView}>
       <div className="story-user-img">
-        <UserImage link={props.link} />
+        <UserImage link={props.link} hasStory={true} />
       </div>
       <p className="story-user-name">{props.name}</p>
       {myStory}

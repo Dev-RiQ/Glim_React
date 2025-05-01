@@ -2,46 +2,44 @@ import React, { useState } from 'react';
 import '../style/myPageUserButton.css';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import IconButton from '../../../components/IconButton';
-import test from '../../../assets/test/user3.jpg'
 import Recommend from './Recommend';
+import api from '../../../utils/api';
+import ShowToast from '../../main/hook/ShowToast';
 
 function MyPageUserButton(props) {
   const isMine = props.isMine;
-  const [isFollow, setIsFollow] = useState(props.isFollow);
+  const [isFollow, setIsFollow] = useState(props.isFollowing);
   const [recommend, setRecommend] = useState([]);
 
-  function followCancel() {
-    setIsFollow(!isFollow)
+
+
+  async function followCancel(userId) {
+    const res = await api.delete(`/follow`, { "followingId": userId })
+    res && ShowToast('success', res.message)
+    res && setIsFollow(!isFollow)
   }
 
-  function followAdd() {
-    setIsFollow(!isFollow)
+  async function followAdd(userId) {
+    const res = await api.post(`/follow`, { "followingId": userId })
+    res && ShowToast('success', res.message)
+    res && setIsFollow(!isFollow)
   }
 
-  function changeLogin() {
-
+  async function sendChat() {
+    const res = await api.post(`/chat/room/${props.id}`)
+    window.location.href = `/chatRoom/${res}`
   }
 
-  function sendChat() {
-
-  }
-
-  function recommendShow() {
+  async function recommendShow() {
     if (recommend.length > 0) {
       setRecommend([])
       return
     }
-    let recList = [
-      { "userId": 1, "nickname": "junhee", "img": test },
-      { "userId": 2, "nickname": "junhee", "img": test },
-      { "userId": 3, "nickname": "junhee", "img": test },
-      { "userId": 4, "nickname": "junhee", "img": test },
-      { "userId": 5, "nickname": "junhee", "img": test },
-    ];
+    let recList = await api.get('/follow/recommend')
     let list = [];
-    recList.forEach(element => {
+    recList?.forEach(element => {
       list = [...list, (
-        <Recommend nickname={element.nickname} />
+        <Recommend user={element} followAdd={followAdd} followCancel={followCancel} />
       )]
     })
     setRecommend(list)
@@ -60,7 +58,7 @@ function MyPageUserButton(props) {
         }
         {
           isMine ?
-            <button className='user-btn' onClick={changeLogin}>계정 전환</button>
+            <button className='user-btn' onClick={props.changeLogin}>계정 전환</button>
             : <button className='user-btn' onClick={sendChat}>채팅 보내기</button>
         }
         <div className='user-add-btn' onClick={recommendShow}>
@@ -70,6 +68,7 @@ function MyPageUserButton(props) {
       <div className='recommend-list-box'>
         {recommend}
       </div>
+
     </>
   );
 }

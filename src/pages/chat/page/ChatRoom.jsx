@@ -8,6 +8,7 @@ import UserImage from '../../user/component/UserImage';
 import api from '../../../utils/api';
 import SockJsClient from "react-stomp";
 import UserMenu from '../../user/component/UserMenu';
+import ShowToast from '../../main/hook/ShowToast';
 
 function ChatRoom() {
   const roomId = useParams().id;
@@ -16,23 +17,40 @@ function ChatRoom() {
   const [loginId, setLoginId] = useState(0);
   const [menu, setMenu] = useState([])
   const [menuModal, setMenuModal] = useState(false)
+  const [user, setUser] = useState(null)
 
   useEffect(() => {
-    setMenu(<UserMenu isMine={true} isChat={true} setMenuModal={setMenuModal} />)
+    getUserInfo()
+  }, [])
+
+  useEffect(() => {
+    setMenu(<UserMenu isMine={true} isChat={true} setMenuModal={setMenuModal} roomId={roomId} />)
     getMsgList()
   }, [])
 
+  async function getUserInfo() {
+    const res = await api.get(`/chat/users/${roomId}`)
+    res && setUser(res)
+  }
+
   async function getMsgList() {
-    let test2 = await api.get('/chat/' + roomId)
+    let res = await api.get('/chat/' + roomId)
     let list = [];
-    setLoginId(test2?.loginId)
-    test2?.msgList?.forEach(msg => {
+    setLoginId(res?.loginId)
+    res?.msgList?.forEach(msg => {
       list = [...list, <div key={msg.msgId}>
-        <ChatMsg msgId={msg.msgId} loginId={test2.loginId} id={msg.userId} content={msg.content} />
+        <ChatMsg msgId={msg.msgId} loginId={res.loginId} id={msg.userId} content={msg.content} userImg={user?.img} />
       </div>]
     })
     setMsgList(list);
     scrollBottom()
+  }
+
+  function checkMsg(e) {
+    if (e.target.value.length > 255) {
+      ShowToast('error', '메시지는 최대 255자까지 입력가능합니다.')
+      e.target.value = e.target.value.substring(0, 255)
+    }
   }
 
   function sendMsgKeyUp(e) {
@@ -46,20 +64,19 @@ function ChatRoom() {
 
   function sendMsg(target) {
     if (!target || !target.value) return;
-    //메시지 전송
     const body = {
       "roomId": roomId,
       "content": target.value,
       "replyMsgId": 0
     }
-    const send = api.post('/chat/sendMsg', body)
-    target.value = '';
-    target.focus();
+    const res = api.post('/chat/sendMsg', body)
+    res && (target.value = '')
+    res && target.focus();
   }
 
   function appendMsg(msg) {
     setSocketMsgList([...socketMsgList, <div key={msg.msgId}>
-      <ChatMsg msgId={msg.msgId} loginId={loginId} id={msg.userId} content={msg.content} />
+      <ChatMsg msgId={msg.msgId} loginId={loginId} id={msg.userId} content={msg.content} userImg={user.img} />
     </div>])
     scrollBottom()
   }
@@ -93,10 +110,10 @@ function ChatRoom() {
           </div>
           <div className='other-user-info'>
             <div className='other-user-img'>
-              <UserImage />
+              <UserImage link={user.img} />
             </div>
             <div className='other-user-name'>
-              <span>test_0123</span>
+              <span>{user.nickname}</span>
             </div>
           </div>
         </div>
@@ -110,7 +127,7 @@ function ChatRoom() {
         <div className='empty-space'></div>
       </div>
       <div className='msg-input-box'>
-        <input className='msg-input' type="text" spellCheck="false" onKeyUp={sendMsgKeyUp} />
+        <input className='msg-input' type="text" spellCheck="false" onKeyUp={sendMsgKeyUp} onChange={checkMsg} />
         <div className='msg-send' onClick={e => sendMsgClick(e)}>
           <IconButton icon={faLocationArrow} />
         </div>

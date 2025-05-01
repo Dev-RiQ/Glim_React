@@ -5,10 +5,13 @@ import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import UserImage from '../../user/component/UserImage';
 
 function ChatList(props) {
+  const data = props.data
   const [isRead, setRead] = useState('chat-unread');
 
   useEffect(() => {
-    // setRead(isRead + ' check');
+    if (data.isRead) {
+      setRead(isRead + ' check');
+    }
   }, [])
 
   function openChat(e) {
@@ -19,16 +22,16 @@ function ChatList(props) {
   return (
     <div className="single-chat-box">
       <div className='chat-user-img'>
-        <UserImage />
+        <UserImage link={data.img} />
       </div>
       <div className='chat-info' onClick={e => openChat(e)}>
         <div className='chat-user-name'>
-          <span className='chat-user-text'>test_1234</span>
+          <span className='chat-user-text'>{data.nickname}</span>
         </div>
         <div className='chat-user-msg'>
-          <span className='chat-msg-content'>mosiggangE님의 릴스를 보냈습니다.</span>
+          <span className='chat-msg-content'>{data.msg}</span>
           <span className='chat-msg-devider'>·</span>
-          <span>3일 전</span>
+          <span>{data.updatedAt}</span>
         </div>
       </div>
       <div className={isRead}>

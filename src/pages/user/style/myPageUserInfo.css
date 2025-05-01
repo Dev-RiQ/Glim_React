@@ -79,23 +79,27 @@
 
 .my-counts {
   display: flex;
+  justify-content: flex-start;
+  padding-right: 50px;
+}
+
+.my-follower-count {
+  flex: 1;
 }
 
 .count {
   font-size: 16px;
-  width: 90px;
   text-align: left;
   font-weight: bold;
   margin-bottom: -3px;
 }
 
 .count-title {
-  width: 90px;
   text-align: left;
 }
 
 .my-content {
-  width: 100%;
+  width: calc(100% - 20px);
   padding: 0 10px;
   padding-top: 10px;
 }

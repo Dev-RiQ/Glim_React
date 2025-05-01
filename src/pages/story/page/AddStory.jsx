@@ -4,6 +4,7 @@ import IconButton from '../../../components/IconButton';
 import { faAdd, faX } from '@fortawesome/free-solid-svg-icons';
 import api from '../../../utils/api';
 import ShowToast from '../../main/hook/ShowToast';
+import apiFile from '../../../utils/apiFile';
 
 function AddStory() {
   const [img, setImg] = useState(null)
@@ -29,8 +30,23 @@ function AddStory() {
     setImg(null);
   }
 
-  function addStory() {
-    console.log('등록')
+  async function addStory() {
+    let filename;
+    if (file) {
+      const sendFiles = {
+        "files": file,
+        "fileType": "IMAGE"
+      }
+      filename = await apiFile.post('/file', sendFiles)
+    }
+
+    if (!filename) {
+      ShowToast('error', '사진 업로드에 실패했습니다.')
+      return
+    }
+
+    const res = await api.post('/story', { "filename": filename })
+    res && ShowToast('success', '스토리 등록이 완료되었습니다.')
   }
 
   return (

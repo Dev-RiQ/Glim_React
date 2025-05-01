@@ -5,6 +5,7 @@ import { faCirclePlay, faImage, faTag, } from '@fortawesome/free-solid-svg-icons
 import SearchList from '../../search/component/SearchList';
 
 function MyPageBoardList(props) {
+  const id = props.userId;
   const [checks, setChecks] = useState([true, '', '']);
   const [select, setSelect] = useState('selected-line check1');
   const [boardList, setBoardList] = useState(null);
@@ -28,8 +29,12 @@ function MyPageBoardList(props) {
   }
 
   function getBoardList(num) {
+    let type = "BASIC";
+    if (num === 2) {
+      type = "SHORTS"
+    }
     let list = <div>
-      <SearchList />
+      <SearchList id={id} type={type} num={num} />
     </div>
     return list;
   }

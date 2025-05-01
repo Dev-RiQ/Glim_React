@@ -5,6 +5,7 @@ import IconButton from '../../../components/IconButton';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import logo from '../../../assets/images/logo-light-mode.png'
 import apiFile from '../../../utils/apiFile';
+import api from '../../../utils/api';
 
 function Join() {
   const [id, setId] = useState(null)
@@ -18,7 +19,6 @@ function Join() {
   const [idOK, setIdOK] = useState(false)
   const [nicknameOK, setNicknameOK] = useState(false)
   const [codeOK, setCodeOK] = useState(false)
-  const [responseCode, setResponseCode] = useState('47189789273981')
 
   function inputId(e) {
     if (e.target.value?.length > 16) {
@@ -78,6 +78,11 @@ function Join() {
   }
 
   function inputImg(e) {
+    if (e.target.files.length === 0) {
+      setImg(null)
+      setFile(null)
+      return
+    }
     if (e.target.files[0].type.startsWith('image/')) {
       setImg(URL.createObjectURL(e.target.files[0]))
       setFile(e.target.files[0])
@@ -87,13 +92,14 @@ function Join() {
     }
   }
 
-  function idValid(e) {
+  async function idValid(e) {
     if (idOK) return;
     if (!id || id.length < 6 || id.length > 16) {
       ShowToast('error', 'ID는 6~16자 사이로 입력해주세요.')
       return
     }
-    if (id.length < 6 || id.length > 16) {
+    const isValidId = await api.post('/auth/check-username', { "username": id })
+    if (!isValidId) {
       ShowToast('error', '이미 존재하는 ID입니다.')
       return
     }
@@ -102,13 +108,14 @@ function Join() {
     setIdOK(true)
   }
 
-  function nicknameValid(e) {
+  async function nicknameValid(e) {
     if (nicknameOK) return;
     if (!nickname || nickname.length < 6 || nickname.length > 16) {
       ShowToast('error', '닉네임은 6~16자 사이로 입력해주세요.')
       return
     }
-    if (nickname.length < 6 || nickname.length > 16) {
+    const isValidNickname = await api.post('/auth/check-nickname', { "nickname": nickname })
+    if (!isValidNickname) {
       ShowToast('error', '이미 존재하는 닉네임입니다.')
       return
     }
@@ -117,14 +124,17 @@ function Join() {
     setNicknameOK(true)
   }
 
-  function getCode(e) {
-    setResponseCode('받아온 코드 저장')
-    ShowToast('success', '인증코드가 전송되었습니다.')
+  async function getCode(e) {
+    const responseCode = await api.post('/verify/request', { "phone": phone })
+    if (responseCode) {
+      ShowToast('success', '인증코드가 전송되었습니다.')
+    }
   }
 
-  function codeValid(e) {
+  async function codeValid(e) {
     if (codeOK) return;
-    if (id.length < 6 || id.length > 16) {
+    const isValidCode = await api.post('/verify/verifyCode', { "phone": phone, "code": code })
+    if (!isValidCode) {
       ShowToast('error', '인증번호가 일치하지 않습니다.')
       return
     }
@@ -154,14 +164,27 @@ function Join() {
       ShowToast('error', '이름은 2~20자 사이로 입력해주세요.')
       return
     }
-
-    const sendFiles = {
-      files: file,
-      fileType: "USER_IMAGE"
+    let filename = "userimages/user-default-image"
+    if (file) {
+      const sendFiles = {
+        "files": file,
+        "fileType": "USER_IMAGE"
+      }
+      filename = await apiFile.post('/file', sendFiles)
     }
-    await apiFile.post('/file', sendFiles)
-    ShowToast('success', '회원가입에 성공하였습니다.')
-    window.location.href = "/login"
+
+    const body = {
+      "username": id,
+      "password": pw,
+      "nickname": nickname,
+      "img": filename,
+      "phone": phone
+    }
+    const isJoin = await api.post('/auth/sign-up', body)
+    if (isJoin) {
+      ShowToast('success', '회원가입에 성공하였습니다.')
+      window.location.href = "/login"
+    }
   }
 
   function inputFile(e) {

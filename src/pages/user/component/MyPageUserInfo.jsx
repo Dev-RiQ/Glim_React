@@ -6,37 +6,77 @@ import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import MyPageUserButton from './MyPageUserButton';
 import { useNavigate } from 'react-router-dom';
 import UserMenu from './UserMenu';
+import MyPageBoardList from '../../board/component/MyPageBoardList';
+import api from '../../../utils/api';
 
 function MyPageUserInfo(props) {
   const isMine = props.isMine;
+  const user = props.user;
   const navigate = useNavigate()
   const [menu, setMenu] = useState([])
   const [menuModal, setMenuModal] = useState(false)
+  const [loginList, setLoginList] = useState([]);
+  const [loginChangeBox, setLoginChangeBox] = useState('login-change-box');
 
   useEffect(() => {
-    setMenu(<UserMenu isMine={true} isMyPage={true} setMenuModal={setMenuModal} />)
+    setMenu(<UserMenu isMine={isMine} isMyPage={true} userId={user.id} setMenuModal={setMenuModal} />)
   }, [])
 
   function showUserList(type) {
-    navigate('/userList', { state: { "type": type } })
+    navigate('/userList', { state: { "type": type, "userId": user.id } })
   }
 
   function showMenu() {
     setMenuModal(!menuModal)
   }
 
+
+  async function changeLogin() {
+    console.log('계정전환 목록 보여주기')
+    const res = await api.get('/auth/accounts')
+    let list = []
+    res?.forEach(element => {
+      list = [...list, (
+        <>
+          <div className='change-user-box' onClick={() => loginChange(element.id)}>
+            <div className='change-user-img'>
+              <UserImage link={element.img} />
+            </div>
+            <div className='change-user-info'>
+              <div className='change-user-username'>
+                {element.username}
+              </div>
+              <div className='change-user-nickname'>
+                @{element.nickname}
+              </div>
+            </div>
+          </div>
+          <hr className='devide-hr' />
+        </>
+      )]
+    })
+    setLoginList(list)
+    setLoginChangeBox('login-change-box show')
+  }
+
+  async function loginChange(id) {
+    const res = await api.post('/auth/accounts/switch', { "switchToUserId": id })
+    res && localStorage.setItem('accessToken', res.accessToken)
+    res && window.location.reload()
+  }
+
   return (
     <div className="mypage-user-box">
       <div className='mypage-user-portion'>
         <div className="mypage-user-img">
-          <UserImage link={props.link} />
+          <UserImage link={user.img} hasStory={user.isStory} />
         </div>
         <div className='my-info'>
           <div className='my-names'>
             <div>
-              <span className='my-id'>@my_nickname_1234</span>
+              <span className='my-id'>@{user.nickname}</span>
               <br />
-              <span className='my-name'>myName</span>
+              <span className='my-name'>{user.name}</span>
             </div>
             {isMine ?
               <div className='my-menu' onClick={showMenu}>
@@ -46,26 +86,26 @@ function MyPageUserInfo(props) {
             }
           </div>
           <div className='my-counts'>
-            <div className='my-board-count'>
-              <p className='count'>13</p>
+            <div className='my-follower-count'>
+              <p className='count'>{user.boardCount}</p>
               <p className='count-title'>게시물</p>
             </div>
-            <div className='my-follower-count' onClick={() => showUserList('follower')}>
-              <p className='count'>9999</p>
+            <div className='my-follower-count' onClick={() => { if (user.followers !== 0) showUserList('follower') }}>
+              <p className='count'>{user.followers}</p>
               <p className='count-title'>팔로워</p>
             </div>
-            <div className='my-following-count' onClick={() => showUserList('following')}>
-              <p className='count'>1</p>
+            <div className='my-following-count' onClick={() => { if (user.followings !== 0) showUserList('following') }}>
+              <p className='count'>{user.followings}</p>
               <p className='count-title'>팔로잉</p>
             </div>
           </div>
         </div>
       </div>
       <div className='my-content'>
-        <p className='content-line'>아무나 팔로우 해줘~</p>
-        <p className='content-line'>1명만 더하면 1만!!</p>
+        <p className='content-line'>{user.content}</p>
       </div>
-      <MyPageUserButton isMine={isMine} />
+      <MyPageUserButton id={user.id} isMine={isMine} isFollowing={user.isFollowing} changeLogin={changeLogin} />
+      <MyPageBoardList userId={user.id} />
       {menuModal ?
         <>
           <div className='menu-modal'>
@@ -76,6 +116,13 @@ function MyPageUserInfo(props) {
         </>
         : <></>
       }
+      <div className={loginChangeBox}>
+        <div className='login-change-box-back'></div>
+        <div className='login-change'>
+          {loginList}
+          <div className='exit-btn' onClick={() => setLoginChangeBox('login-change-box')}>돌아가기</div>
+        </div>
+      </div>
     </div>
   );
 }

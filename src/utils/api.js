@@ -23,15 +23,22 @@ const api = axios.create({
   headers: header,
 });
 api.interceptors.response.use(
-  (response) => response?.data?.data,
+  (response) => {
+    console.log(response)
+    // 토큰 재요청 있는지 없는지 확인해서 있으면 로컬스토리지 다시저장 추가
+    return response?.data?.data ? response?.data?.data : response?.data
+  },
   (error) => {
+    console.log(error)
     if (error.code === 'ERR_NETWORK' || error.code === 'ERR_BAD_RESPONSE') {
       useToast("error", '로그인 정보가 정확하지 않습니다.');
       setTimeout(() => {
-        window.location.href = "/login"
+        // window.location.href = "/login"
       }, 500);
+      return null;
     } else {
       useToast("error", error.response?.data?.errors[0]);
+      return null;
     }
   }
 );

@@ -5,20 +5,19 @@ import IconButton from '../../../components/IconButton';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import logo from '../../../assets/images/logo-light-mode.png'
 import { useLocation, useParams } from 'react-router-dom';
+import api from '../../../utils/api';
+import apiFile from '../../../utils/apiFile';
 
 function SocialJoin() {
   const [phone, setPhone] = useState(null)
   const [code, setCode] = useState(null)
   const [nickname, setNickname] = useState(null)
-  const [name, setName] = useState(null)
-  const [img, setImg] = useState(null)
   const [nicknameOK, setNicknameOK] = useState(false)
   const [codeOK, setCodeOK] = useState(false)
   const location = useLocation()
-  const [token, setToken] = useState(location.state)
-  const [responseCode, setResponseCode] = useState('47189789273981')
+  const [token, setToken] = useState(location.state.accessToken)
 
-  if (!(token.startsWith('eyJhbGciOiJIUzI1NiJ9.') && token.includes('wiZXhwIjoxNzQ1N'))) {
+  if (!(token.length > 100)) {
     window.location.href = "/login";
     return;
   }
@@ -52,31 +51,14 @@ function SocialJoin() {
     setNicknameOK(false)
   }
 
-  function inputName(e) {
-    if (e.target.value?.length > 20) {
-      ShowToast('error', '이름은 최대 20자까지 입력가능합니다.')
-      e.target.value = e.target.value.substring(0, 20);
-      return
-    }
-    setName(e.target.value)
-  }
-
-  function inputImg(e) {
-    if (e.target.files[0].type.startsWith('image/')) {
-      setImg(e.target.files[0])
-    } else {
-      e.target.value = null;
-      ShowToast('error', '이미지 파일만 업로드 가능합니다.')
-    }
-  }
-
-  function nicknameValid(e) {
+  async function nicknameValid(e) {
     if (nicknameOK) return;
     if (!nickname || nickname.length < 6 || nickname.length > 16) {
       ShowToast('error', '닉네임은 6~16자 사이로 입력해주세요.')
       return
     }
-    if (nickname.length < 6 || nickname.length > 16) {
+    const isValidNickname = await api.post('/auth/check-nickname', { "nickname": nickname })
+    if (!isValidNickname) {
       ShowToast('error', '이미 존재하는 닉네임입니다.')
       return
     }
@@ -85,14 +67,17 @@ function SocialJoin() {
     setNicknameOK(true)
   }
 
-  function getCode(e) {
-    setResponseCode('받아온 코드 저장')
-    ShowToast('success', '인증코드가 전송되었습니다.')
+  async function getCode(e) {
+    const responseCode = await api.post('/verify/request', { "phone": phone })
+    if (responseCode) {
+      ShowToast('success', '인증코드가 전송되었습니다.')
+    }
   }
 
-  function codeValid(e) {
+  async function codeValid(e) {
     if (codeOK) return;
-    if (code !== responseCode) {
+    const isValidCode = await api.post('/verify/verifyCode', { "phone": phone, "code": code })
+    if (!isValidCode) {
       ShowToast('error', '인증번호가 일치하지 않습니다.')
       return
     }
@@ -101,7 +86,7 @@ function SocialJoin() {
     setCodeOK(true)
   }
 
-  function join() {
+  async function join() {
     if (!nicknameOK) {
       ShowToast('error', '닉네임 중복체크가 필요합니다.')
       return
@@ -110,28 +95,23 @@ function SocialJoin() {
       ShowToast('error', '전화번호 인증이 필요합니다.')
       return
     }
-    if (!name || name.length < 2 || name.length > 20) {
-      ShowToast('error', '이름은 2~20자 사이로 입력해주세요.')
-      return
+
+    const body = {
+      "nickname": nickname,
+      "phone": phone
     }
+    const isJoin = await api.post('/auth/social-info', body)
 
-    localStorage.setItem("accessToken", token);
-    ShowToast('success', '회원가입에 성공하였습니다.')
-    window.location.href = "/"
-  }
-
-  function inputFile(e) {
-    e.currentTarget.nextSibling.click()
+    if (isJoin) {
+      localStorage.setItem("accessToken", token);
+      ShowToast('success', '회원가입에 성공하였습니다.')
+      window.location.href = "/"
+    }
   }
 
   return (
     <div className="join-box">
       <img className='view-logo' src={logo} alt="logo" width="200px" height="100px" decoding="async" loading="lazy" />
-      <div className='user-img-setting' onClick={e => inputFile(e)}>
-        <IconButton icon={faPlus} />
-        <p>이미지 추가</p>
-      </div>
-      <input className="join-file-input" type="file" placeholder='img' onChange={e => inputImg(e)} accept="image/*" />
       <div className='valid-check-box'>
         <input type="text" placeholder='01012341234' spellCheck="false" onChange={e => inputPhone(e)} />
         <button onClick={e => getCode(e)}>인증번호 받기</button>
@@ -144,7 +124,6 @@ function SocialJoin() {
         <input type="text" placeholder='nickname' spellCheck="false" onChange={e => inputNickname(e)} />
         <button onClick={e => nicknameValid(e)}>중복체크</button>
       </div>
-      <input type="text" placeholder='name' spellCheck="false" onChange={e => inputName(e)} />
       <button className='join-submit-btn' onClick={join}>가입완료</button>
     </div>
   );

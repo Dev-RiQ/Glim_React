@@ -13,6 +13,9 @@
 
 .user-portion-info {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .user-portion-info * {

@@ -1,20 +1,18 @@
 import React from 'react';
 import '../style/searchImg.css';
-import test1 from '../../../assets/test/test1.jpg';
-import test2 from '../../../assets/test/test2.jpg';
-import test3 from '../../../assets/test/test3.jpg';
-import test4 from '../../../assets/test/test4.jpg';
-import test5 from '../../../assets/test/test5.jpg';
-import test6 from '../../../assets/test/test6.jpg';
-import test7 from '../../../assets/test/test7.jpg';
-import test8 from '../../../assets/test/test8.jpg';
-import test9 from '../../../assets/test/test9.jpg';
+import IconButton from '../../../components/IconButton';
+import { faImage, faVideo } from '@fortawesome/free-solid-svg-icons';
+
 function SearchImg(props) {
-  const testlist = [test1, test2, test3, test4, test5, test6, test7, test8, test9];
-  let link = testlist[parseInt(Math.random() * 8.9)];
   return (
     <div className="search-img-box">
-      <img className='search-img' src={link} alt="SEARCH-IMG" width="100%" height="100%" decoding="async" loading="lazy" />
+      <div className='search-type-icon-box'>
+        {props.type === "BASIC" ?
+          <IconButton icon={faImage} />
+          : <IconButton icon={faVideo} />
+        }
+      </div>
+      <img className='search-img' src={props.link} alt="SEARCH-IMG" width="100%" height="100%" decoding="async" loading="lazy" />
     </div>
   );
 }

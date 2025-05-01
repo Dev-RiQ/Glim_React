@@ -7,7 +7,7 @@ function ShowStory(storyInfo, storyLine) {
       <div className="storyLine-box">
         {storyLine}
       </div>
-      <StoryView info={storyInfo} />
+      <StoryView data={storyInfo} />
     </>
   );
 }

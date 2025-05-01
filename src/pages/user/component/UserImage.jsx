@@ -1,18 +1,29 @@
 import { React, useEffect, useState } from 'react';
 import "../style/userImage.css"
-import user1 from '../../../assets/test/user1.jpg'
-import user2 from '../../../assets/test/user2.jpg'
-import user3 from '../../../assets/test/user3.jpg'
 import showStory from '../../story/hook/ShowStory';
+import api from '../../../utils/api';
 
 function UserImage(props) {
 
-  const id = 1;
+  const id = props.id;
   const [story, setStory] = useState(null);
   const [storyInfo, setStoryInfo] = useState(null);
   const [storyPage, setStoryPage] = useState(0);
-  const [storyList, setStoryList] = useState(['test1', 'test2', 'test3']);
+  const [storyList, setStoryList] = useState([]);
   const [name, setName] = useState('story-view-box');
+
+  useEffect(() => {
+    getStory();
+  }, [])
+
+  useEffect(() => {
+    setStoryInfo(storyList[storyPage])
+  }, [storyPage])
+
+  async function getStory() {
+    const res = await api.get(`/story/${id}`)
+    res && setStoryList(res)
+  }
 
   function getStoryLine(pages) {
     let line = []
@@ -27,13 +38,6 @@ function UserImage(props) {
     }
     return line;
   }
-
-  let rd = user1;
-  if (Math.random() > 0.66) rd = user2;
-  else if (Math.random() < 0.33) rd = user3;
-  let storyRd;
-  if (Math.random() > 0.5) storyRd = false;
-  else storyRd = false;
 
   function showStoryView(e) {
     if (e.currentTarget.className.includes('has-story') && e.target.className === "user-img") {
@@ -88,10 +92,10 @@ function UserImage(props) {
 
   return (
     <div className={
-      storyRd ? 'user-image' : 'user-image has-story'
+      props.hasStory ? 'user-image has-story' : 'user-image'
     } onClick={e => showStoryView(e, { id })}>
       <button className="user-img-btn">
-        <img className='user-img' src={rd} alt="USER_IMG" width="100%" height="100%" decoding="async" loading="lazy" />
+        <img className='user-img' src={props.link} alt="USER_IMG" width="100%" height="100%" decoding="async" loading="lazy" />
       </button>
       <div className={name} onClick={e => storyClickEvents(e)}>
         {story}

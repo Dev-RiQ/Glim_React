@@ -1,10 +1,10 @@
 import BoardComment from "../component/BoardComment";
 
-function ShowComment(boardInfo, setCommentView) {
+function ShowComment(data, setCommentView) {
 
   return (
     <>
-      <BoardComment info={boardInfo} setCommentView={setCommentView} />
+      <BoardComment data={data} setCommentView={setCommentView} />
     </>
   );
 }

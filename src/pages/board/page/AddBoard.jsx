@@ -6,16 +6,14 @@ import api from '../../../utils/api';
 import ShowToast from '../../main/hook/ShowToast';
 import BoardImage from '../component/BoardImage';
 import ShortsVideo from '../../shorts/component/ShortsVideo';
-import testimg from '../../../assets/test/user1.jpg'
 import UserImage from '../../user/component/UserImage';
-import testMusic from '../../../assets/test/music (1).mp3'
 import MusicPlay from '../component/MusicPlay';
+import apiFile from '../../../utils/apiFile';
 
 function AddBoard() {
   const [files, setFiles] = useState(null)
   const [images, setImages] = useState(null)
   const [video, setVideo] = useState(null)
-  const [imageNames, setImageNames] = useState([])
   const [boardType, setBoardType] = useState('basic')
   const [content, setContent] = useState('')
   const [location, setLocation] = useState('')
@@ -34,28 +32,28 @@ function AddBoard() {
   const [musicModal, setMusicModal] = useState(false)
   const [like, setLike] = useState(true)
   const [comment, setComment] = useState(true)
-  const [share, setShare] = useState(true)
+  const [isAd, setIsAd] = useState(false)
 
   useEffect(() => {
-    let musicList = [{ "id": 1, "title": "제목1", "artist": "가수1", "link": "음악파일" },
-    { "id": 2, "title": "제목2", "artist": "가수2", "link": "음악파일" },
-    { "id": 3, "title": "제목3", "artist": "가수3", "link": "음악파일" },
-    { "id": 4, "title": "제목4", "artist": "가수4", "link": "음악파일" },
-    { "id": 5, "title": "제목5", "artist": "가수5", "link": "음악파일" },
-    { "id": 6, "title": "제목6", "artist": "가수6", "link": "음악파일" },
-    { "id": 7, "title": "제목7", "artist": "가수7", "link": "음악파일" },
-    { "id": 8, "title": "제목8", "artist": "가수8", "link": "음악파일" },
-    { "id": 9, "title": "제목9", "artist": "가수9", "link": "음악파일" },
-    { "id": 10, "title": "제목10", "artist": "가수10", "link": "음악파일" },
-    ]
+    setMusicList()
+  }, [])
+
+  useEffect(() => {
+    if (isAd) {
+      setBoardType("advertisement")
+    }
+  }, [isAd])
+
+  async function setMusicList() {
+    const musicList = await api.get('/bgm')
     let showMusicList = []
-    musicList.forEach(element => {
+    musicList?.forEach(element => {
       showMusicList = [...showMusicList, (
         <div className='show-music-list-box'>
-          <div className='music-icon-box' onClick={e => plusMusic(element.id)}>
+          <div className='music-icon-box' onClick={() => plusMusic(element.id)}>
             <IconButton icon={faMusic} />
           </div>
-          <div className='music-info-box' onClick={e => plusMusic(element.id)}>
+          <div className='music-info-box' onClick={() => plusMusic(element.id)}>
             <div className='music-info-title'>
               {element.title}
             </div>
@@ -63,12 +61,12 @@ function AddBoard() {
               {element.artist}
             </div>
           </div>
-          <MusicPlay music={testMusic} />
+          <MusicPlay music={element.link} />
         </div>
       )]
     })
     setShowMusic(showMusicList)
-  }, [])
+  }
 
   function uploadFile(e) {
     const target = e.currentTarget.lastChild;
@@ -76,7 +74,10 @@ function AddBoard() {
   }
 
   function inputImg(e) {
-    if (e.target.files.length === 0) return;
+    if (e.target.files.length === 0) {
+      setFiles(null)
+      return;
+    }
     if (e.target.files[0].type.startsWith('video/') && e.target.files.length !== 1) {
       e.target.value = null;
       ShowToast('error', '숏츠는 1개의 영상만 업로드 가능합니다.')
@@ -124,38 +125,62 @@ function AddBoard() {
     setVideo(null);
   }
 
-  function addBoard() {
+  async function addBoard() {
     if (!content) {
       ShowToast('error', '내용을 입력해주세요.')
       return
     }
-    if (content.length > 255) {
-      ShowToast('error', '내용은 255자 이하로 입력해주세요.')
+
+    let filenames = []
+    if (boardType === "shorts") {
+      if (files) {
+        const sendFiles = {
+          "files": files,
+          "fileType": "VIDEO"
+        }
+        filenames = await apiFile.post('/file', sendFiles)
+      }
+    } else {
+      if (files) {
+        const sendFiles = {
+          "files": files,
+          "fileType": "IMAGE"
+        }
+        filenames = await apiFile.post('/file', sendFiles)
+      }
+    }
+
+    if (filenames.length === 0) {
+      ShowToast('error', '파일 업로드 중 에러가 발생했습니다.')
       return
     }
 
-    // 이미지 업로드하고 파일명 받아와서
-    // 게시글 등록으로 넘겨주기
-    console.log('등록')
-    console.log(files)
-    console.log(imageNames)
-    console.log(boardType)
-    console.log(content)
-    console.log(location)
-    console.log(user)
-    console.log(hash)
-    console.log(music)
-    console.log(like)
-    console.log(comment)
-    console.log(share)
+    const body = {
+      "location": location,
+      "img": filenames,
+      "content": content,
+      "tagUserIds": user,
+      "tags": hash,
+      "bgmId": music,
+      "boardType": boardType,
+      "viewLikes": like,
+      "commentable": comment
+    }
+
+    const res = await api.post('/board', body)
+    !res && ShowToast('error', '게시글 등록에 실패했습니다.')
+    res && ShowToast('success', '게시글 등록에 성공했습니다.')
   }
 
   function inputContent(e) {
+    if (e.target.value.length > 255) {
+      ShowToast('error', '내용은 255자 이하로 입력해주세요.')
+      return
+    }
     setContent(e.target.value)
   }
 
   function addLocation() {
-    console.log('위치추가')
     setLocationModal(true)
   }
   function submitLocation(e) {
@@ -167,38 +192,34 @@ function AddBoard() {
   function submitUser(e) {
     setUserModal(false)
   }
-  function insertUser(e) {
+  async function insertUser(e) {
     if (!e.target.value) {
       setShowSearchUsers([])
       return
     }
-    const testList = [{ "id": 1, "name": "test1", "img": testimg },
-    { "id": 2, "name": "test2", "img": testimg },
-    { "id": 3, "name": "test3", "img": testimg },
-    { "id": 4, "name": "test4", "img": testimg },
-    { "id": 4, "name": e.target.value, "img": testimg },
-    ] //=>검색결과
-    //search 유저 리스트 담아주기
-    // 유저 클릭하면 id 저장하기(plusUser)
-    let testShow = []
-    testList.forEach(element => {
-      console.log("name", element.name)
-      testShow = [...testShow, (
-        <div className='show-search-user' onClick={e => plusUser(e, element.id, element.name)} >
+    const searchList = await api.post('/auth/search', { "nickname": e.target.value })
+    let tagsShow = []
+    searchList.forEach(element => {
+      tagsShow = [...tagsShow, (
+        <div className='show-search-user' onClick={e => plusUser(e, element.id, element.nickname)} >
           <div className='search-user-img-box'>
-            <UserImage />
+            <UserImage hasStory={element.isStory} />
           </div>
-          <div>
-            @{element.name}
+          <div className='search-user-info-box'>
+            <div>
+              @{element.nickname}
+            </div>
+            <div>
+              {element.name}
+            </div>
           </div>
         </div>
       )]
     })
-    setShowSearchUsers(testShow)
+    setShowSearchUsers(tagsShow)
     setTempUser(e.target.value)
   }
   function plusUser(e, id, name) {
-    // 인풋 초기화하고 포커싱해주기
     e.currentTarget.parentNode.nextSibling.value = ''
     e.currentTarget.parentNode.nextSibling.focus()
     setShowSearchUsers([])
@@ -220,7 +241,6 @@ function AddBoard() {
     setUser([])
     setShowUsers([])
   }
-
 
   function addHash() {
     setHashModal(true)
@@ -266,7 +286,6 @@ function AddBoard() {
   }
 
   function addMusic() {
-    console.log('음악추가')
     setMusicModal(true)
   }
   function plusMusic(id) {
@@ -282,9 +301,9 @@ function AddBoard() {
     e.currentTarget.classList.toggle('none')
     setComment(!comment)
   }
-  function optionShare(e) {
+  function optionAd(e) {
     e.currentTarget.classList.toggle('none')
-    setShare(!share)
+    setIsAd(!isAd)
   }
 
 
@@ -307,9 +326,9 @@ function AddBoard() {
               <textarea className='add-board-content' placeholder='내용 입력' spellCheck="false" onChange={e => inputContent(e)} />
               <div className='sub-info-box'>
                 <div>
-                  <div className='add-board-sub-info' onClick={addLocation}>
-                    <IconButton icon={faLocationPin} />
-                    <span>위치 추가</span>
+                  <div className='add-board-sub-info' onClick={addUser}>
+                    <IconButton icon={faUserTag} />
+                    <span>사람 태그</span>
                     <IconButton icon={faChevronRight} />
                   </div>
                   <div className='add-board-sub-info' onClick={addHash}>
@@ -318,18 +337,21 @@ function AddBoard() {
                     <IconButton icon={faChevronRight} />
                   </div>
                 </div>
-                <div>
-                  <div className='add-board-sub-info' onClick={addUser}>
-                    <IconButton icon={faUserTag} />
-                    <span>사람 태그</span>
-                    <IconButton icon={faChevronRight} />
+                {boardType !== 'shorts' ?
+                  <div>
+                    <div className='add-board-sub-info' onClick={addLocation}>
+                      <IconButton icon={faLocationPin} />
+                      <span>위치 추가</span>
+                      <IconButton icon={faChevronRight} />
+                    </div>
+                    <div className='add-board-sub-info' onClick={addMusic}>
+                      <IconButton icon={faMusic} />
+                      <span>음악 추가</span>
+                      <IconButton icon={faChevronRight} />
+                    </div>
                   </div>
-                  <div className='add-board-sub-info' onClick={addMusic}>
-                    <IconButton icon={faMusic} />
-                    <span>음악 추가</span>
-                    <IconButton icon={faChevronRight} />
-                  </div>
-                </div>
+                  : <></>
+                }
               </div>
               <div className='add-board-option' >
                 <div className='option-box' onClick={e => optionLike(e)}>
@@ -342,11 +364,14 @@ function AddBoard() {
                   <IconButton icon={faCheckCircle} />
                   <input type="checkbox" />
                 </div>
-                <div className='option-box' onClick={e => optionShare(e)}>
-                  <span>공유된 수 보기</span>
-                  <IconButton icon={faCheckCircle} />
-                  <input type="checkbox" />
-                </div>
+                {boardType !== 'shorts' ?
+                  <div className='option-box none' onClick={e => optionAd(e)}>
+                    <span>광고로 등록하기기</span>
+                    <IconButton icon={faCheckCircle} />
+                    <input type="checkbox" />
+                  </div>
+                  : <></>
+                }
               </div>
             </div>
             {locationModal ?

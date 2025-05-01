@@ -1,7 +1,6 @@
 import React, { useEffect, useState, } from 'react';
 import '../style/alarm.css';
 import UserImage from '../../user/component/UserImage';
-import test1 from '../../../assets/test/test7.jpg'
 import IconButton from '../../../components/IconButton';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 
@@ -33,7 +32,7 @@ function Alarm(props) {
           <span className='alarm-content-ago'>1일 전</span>
         </div>
         <div className='alarm-link-img-box'>
-          <img className='link-img' src={test1} alt='test' width="100%" height="100%" decoding="async" loading="lazy" />
+          <img className='link-img' src={null} alt='test' width="100%" height="100%" decoding="async" loading="lazy" />
         </div>
       </div>
       <div className='delete-alarm' onClick={deleteAlarm}>

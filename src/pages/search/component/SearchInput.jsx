@@ -1,36 +1,34 @@
 import React, { useEffect, useState, } from 'react';
 import '../style/searchInput.css';
 import UserImage from '../../user/component/UserImage';
-import testimg from '../../../assets/test/user3.jpg'
 import IconButton from '../../../components/IconButton';
-import { faCommentAlt, faCrown, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faCrown, faSearch } from '@fortawesome/free-solid-svg-icons';
+import api from '../../../utils/api';
 
 function SearchInput() {
   const [showSearchUsers, setShowSearchUsers] = useState([])
 
-  function insertUser(e) {
+  async function insertUser(e) {
     if (!e.target.value) {
       setShowSearchUsers([])
       return
     }
-    const testList = [{ "id": 1, "name": "test1", "img": testimg },
-    { "id": 2, "name": "test2", "img": testimg },
-    { "id": 3, "name": "test3", "img": testimg },
-    { "id": 4, "name": "test4", "img": testimg },
-    { "id": 4, "name": e.target.value, "img": testimg },
-    ] //=>검색결과
-    //search 유저 리스트 담아주기
-    // 유저 클릭하면 id 저장하기(plusUser)
+    const searchList = await api.post('/auth/search', { "nickname": e.target.value })
     let testShow = []
-    testList.forEach(element => {
+    searchList?.forEach(element => {
       console.log("name", element.name)
       testShow = [...testShow, (
-        <div className='show-search-user' onClick={e => window.location.href = '/myPage/' + element.id} >
+        <div className='show-search-user' onClick={() => window.location.href = '/myPage/' + element.id} >
           <div className='search-user-img-box'>
-            <UserImage />
+            <UserImage link={element.img} hasStory={element.isStory} />
           </div>
           <div>
-            @{element.name}
+            <div>
+              @{element.nickname}
+            </div>
+            <div>
+              {element.name}
+            </div>
           </div>
         </div>
       )]

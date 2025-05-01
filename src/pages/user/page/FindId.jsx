@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import '../style/findId.css';
 import ShowToast from '../../main/hook/ShowToast';
+import api from '../../../utils/api';
 
 function FindId() {
   const [phone, setPhone] = useState(null)
   const [code, setCode] = useState(null)
+  const [codeOK, setCodeOK] = useState(false)
   const [showId, setShowId] = useState(null)
-  const [responseCode, setResponseCode] = useState('47189789273981')
 
   function inputPhone(e) {
     if (e.target.value?.length > 20) {
@@ -26,23 +27,27 @@ function FindId() {
     setCode(e.target.value)
   }
 
-  function getCode(e) {
-    setResponseCode('받아온 코드 저장')
-    ShowToast('success', '인증코드가 전송되었습니다.')
+
+  async function getCode(e) {
+    const responseCode = await api.post('/verify/request', { "phone": phone })
+    if (responseCode) {
+      ShowToast('success', '인증코드가 전송되었습니다.')
+    }
   }
 
-  function codeValid(e) {
-    if (code !== responseCode) {
+  async function codeValid(e) {
+    if (codeOK) return;
+    const res = await api.post('/auth/find-username', { "phone": phone, "code": code })
+    if (!res) {
       ShowToast('error', '인증번호가 일치하지 않습니다.')
-      setShowId(null)
       return
     }
     ShowToast('success', '전화번호 인증에 성공하였습니다.')
-    let hideId = 'dhuo*wqj*'
+    setCodeOK(true)
     setShowId(
       <>
         <div className='show-id'>
-          회원님의 아이디 : {hideId}
+          회원님의 아이디 : {res}
         </div>
         <button className='join-submit-btn' onClick={() => window.location.href = '/login'}>로그인 하기</button>
         <button className='join-submit-btn' onClick={() => window.location.href = '/findPw'}>비밀번호 찾기</button>

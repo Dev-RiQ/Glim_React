@@ -1,27 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import '../style/shortsVideo.css';
-import video1 from '../../../assets/test/video1.mp4';
-import video2 from '../../../assets/test/video2.mp4';
-import thumbnail from '../../../assets/test/test2.jpg'
 import IconButton from '../../../components/IconButton';
-import { faComment, faHeart, faShare } from '@fortawesome/free-solid-svg-icons';
+import { faComment, faHeart } from '@fortawesome/free-solid-svg-icons';
 import UserPortion from '../../user/component/UserPortion';
+import api from '../../../utils/api';
 
 function ShortsVideo(props) {
-  const testlist = [video1, video2];
-  const [link, setLink] = useState(null);
+  const data = props.data;
   const [time, setTime] = useState(0);
   const [video, setVideo] = useState(null);
   const [videoDuration, setVideoDuration] = useState(0);
   const [interval, setTimeInterval] = useState(null);
-
-  useEffect(() => {
-    setLink(testlist[parseInt(Math.random() * 1.9)]);
-    if (props.video) {
-      setLink(props.video)
-    }
-  }, [])
-
+  const [isLike, setIsLike] = useState(data.isLike)
 
   let touchEnd = 0;
   let totalLength = 0;
@@ -71,35 +61,50 @@ function ShortsVideo(props) {
     setTimeInterval(null);
   }
 
+  async function likeShorts() {
+    const res = isLike ? await api.delete(`/boardLike/${data.id}`)
+      : await api.post(`/boardLike/${data.id}`)
+    if (isLike) {
+      api.post('/tags/view', data.tags)
+      api.post(`/boardView/${data.id}`)
+    }
+    res && setIsLike(!isLike)
+  }
+
   return (
     <>
       <div className="shorts-video-box">
-        <video className='shorts-video' poster={thumbnail} src={link} playsInline loop width="100%" height="100%" decoding="async" loading="lazy" onClick={((e) => control(e))} onPlay={e => videoPlay(e)} onPause={e => videoPause(e)} />
-        {!props.pre ?
-          <>
-            <div className='shorts-info-box'>
-              <div className='shorts-user-box'>
-                <UserPortion />
-              </div>
-              <div className='shorts-content-box'>
-                <p className='shorts-content'>릴스다 이말이야~</p>
-              </div>
-              <div className='shorts-controller' onMouseUp={e => endTouch(e)} onMouseDown={e => onTouch(e)} onTouchStart={e => onTouch(e)} onTouchEnd={e => endTouch(e)}>
-                <progress min="0" value={time} max="100" />
-              </div>
-            </div>
-            <div className='shorts-button-box'>
-              <div>
-                <IconButton icon={faHeart} />
-                <p>9.9만</p>
-              </div>
-              <div onClick={e => props.shortsComment(e)}>
-                <IconButton icon={faComment} />
-                <p>9.9만</p>
-              </div>
-            </div>
-          </>
-          : <></>}
+        <video className='shorts-video' poster={data.img} src={data.video} playsInline loop width="100%" height="100%" decoding="async" loading="lazy" onClick={((e) => control(e))} onPlay={e => videoPlay(e)} onPause={e => videoPause(e)} />
+        <div className='shorts-info-box'>
+          <div className='shorts-user-box'>
+            <UserPortion user={data.user} id={data.id} subTitle={data.createdAt} />
+          </div>
+          <div className='shorts-content-box'>
+            <p className='shorts-content'>{data.content}</p>
+          </div>
+          <div className='shorts-controller' onMouseUp={e => endTouch(e)} onMouseDown={e => onTouch(e)} onTouchStart={e => onTouch(e)} onTouchEnd={e => endTouch(e)}>
+            <progress min="0" value={time} max="100" />
+          </div>
+        </div>
+        <div className='shorts-button-box'>
+          <div onClick={likeShorts}>
+            {isLike ?
+              <IconButton icon={faHeart} check="like" />
+              : <IconButton icon={faHeart} />
+            }
+            <p>{data.viewLikes ?
+              data.likeCount
+              : '좋아요'
+            }</p>
+          </div>
+          <div onClick={e => props.shortsComment(e, data)}>
+            <IconButton icon={faComment} />
+            <p>{data.commentable ?
+              data.commentCount
+              : '댓글 중지'
+            }</p>
+          </div>
+        </div>
       </div>
     </>
   );

@@ -2,11 +2,14 @@ import React, { useEffect, useState, } from 'react';
 import '../style/shortsList.css';
 import ShortsVideo from './ShortsVideo';
 import ShowComment from '../../board/hook/ShowComment';
+import api from '../../../utils/api';
+import ShowToast from '../../main/hook/ShowToast';
 
 function ShortsList() {
   const [shorts, setShorts] = useState([]);
   const [comments, setComments] = useState(null);
   const [commentView, setCommentView] = useState('comment-box')
+  const [offset, setOffset] = useState(0)
 
   useEffect(() => {
     if (commentView === 'comment-box') {
@@ -14,22 +17,31 @@ function ShortsList() {
     }
   }, [commentView])
 
-  function shortsComment(e) {
-    setComments(ShowComment(1, setCommentView))
+  function shortsComment(e, data) {
+    if (!data.commentable) {
+      ShowToast('error', '댓글 사용이 중지된 게시글입니다.')
+      return;
+    }
+    setComments(ShowComment(data, setCommentView))
     setCommentView('comment-box show')
     pauseVideo(e)
   }
 
 
   useEffect(() => {
-    let shortsList = ["test1", "test2", "test3", "test4", "test5"
-    ];
-    let shortsBoxes = [];
-    shortsList.forEach((element, idx) => {
-      shortsBoxes = [...shortsBoxes, setShortsBox(element, idx)];
-    });
-    setShorts(shortsBoxes)
+    getShortsList()
   }, []);
+
+  async function getShortsList() {
+    const res = await api.get('/board/shorts' + offset !== 0 ? `/${offset}` : '')
+    let shortsBoxes = [];
+    res?.forEach((element, idx) => {
+      shortsBoxes = [...shortsBoxes, setShortsBox(element, shorts.length + idx)];
+    });
+    res && setOffset(res[res.length - 1].id)
+    res && setShorts(getShortsList())
+    return shortsBoxes;
+  }
 
   function pauseVideo(e) {
     if (e.currentTarget.parentNode.parentNode.firstChild.played.length === 1) {
@@ -40,7 +52,7 @@ function ShortsList() {
   function setShortsBox(element, idx) {
     return (
       <div className={idx} key={idx} onWheel={e => wheelScroll(e)} onMouseUp={e => endTouch(e)} onMouseDown={e => onTouch(e)} onTouchStart={e => onTouch(e)} onTouchEnd={e => endTouch(e)}>
-        <ShortsVideo link={element} name={element} shortsComment={shortsComment} />
+        <ShortsVideo data={element} shortsComment={shortsComment} />
       </div>
     )
   }

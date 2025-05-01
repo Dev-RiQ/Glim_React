@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import '../style/changePhone.css';
 import ShowToast from '../../main/hook/ShowToast';
+import api from '../../../utils/api';
 
 function ChangePhone() {
   const [phone, setPhone] = useState(null)
   const [code, setCode] = useState(null)
   const [codeOK, setCodeOK] = useState(false)
-  const [responseCode, setResponseCode] = useState('47189789273981')
 
   function inputPhone(e) {
     if (e.target.value?.length > 20) {
@@ -18,9 +18,24 @@ function ChangePhone() {
     codeOK(false)
   }
 
-  function getCode(e) {
-    setResponseCode('받아온 코드 저장')
-    ShowToast('success', '인증코드가 전송되었습니다.')
+
+  async function getCode(e) {
+    const responseCode = await api.post('/verify/request', { "phone": phone })
+    if (responseCode) {
+      ShowToast('success', '인증코드가 전송되었습니다.')
+    }
+  }
+
+  async function codeValid(e) {
+    if (codeOK) return;
+    const isValidCode = await api.post('/verify/verifyCode', { "phone": phone, "code": code })
+    if (!isValidCode) {
+      ShowToast('error', '인증번호가 일치하지 않습니다.')
+      return
+    }
+
+    ShowToast('success', '전화번호 인증에 성공하였습니다.')
+    setCodeOK(true)
   }
 
   function inputCode(e) {
@@ -32,22 +47,14 @@ function ChangePhone() {
     setCode(e.target.value)
   }
 
-  function codeValid(e) {
-    if (code !== responseCode) {
-      ShowToast('error', '인증되지 않은 전화번호입니다.')
-      return
-    }
-    ShowToast('success', '전화번호 인증에 성공하였습니다.')
-    setCodeOK(true)
-  }
-
-  function changePhone() {
+  async function changePhone() {
     if (!codeOK) {
       ShowToast('error', '전화번호 인증을 먼저 진행해주세요.')
       return
     }
-    ShowToast('success', '전화번호 변경에 성공하였습니다.')
-    setTimeout(() => {
+    const res = await api.put('/auth/update-phone')
+    res && ShowToast('success', '전화번호 변경에 성공하였습니다.')
+    res && setTimeout(() => {
       window.location.href = '/myPage'
     }, 500);
   }

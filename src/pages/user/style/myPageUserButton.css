@@ -25,3 +25,73 @@
   overflow-x: scroll;
   gap: 10px;
 }
+
+.login-change-box.show {
+  display: block;
+  z-index: 10000;
+}
+
+.login-change-box {
+  display: none;
+  z-index: -100;
+}
+
+.login-change-box-back {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #888;
+  opacity: 0.5;
+}
+
+.login-change {
+  position: fixed;
+  top: calc(50% - 75px);
+  left: calc(50% - 150px);
+  width: 300px;
+  z-index: 11000;
+  background-color: #fff;
+  opacity: 1;
+  margin: auto;
+  border-radius: 10px;
+}
+
+.change-user-img {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+.change-user-img * {
+  width: 50px;
+  height: 50px;
+}
+
+.change-user-box {
+  display: flex;
+  margin: 5px;
+  align-items: center;
+}
+
+.change-user-username {
+  font-weight: bold;
+}
+
+.change-user-info {
+  width: 100%;
+}
+
+.change-user-info>div {
+  text-align: left;
+}
+
+.devide-hr {
+  margin: 0;
+}
+
+.exit-btn {
+  width: 100%;
+  padding: 15px 0;
+}

@@ -1,7 +1,5 @@
 import React, { useEffect, useState, } from 'react';
 import '../style/rankingView.css';
-import UserImage from '../../user/component/UserImage';
-import BoardImage from '../../board/component/BoardImage';
 import IconButton from '../../../components/IconButton';
 import { faClock, faEye, faHeart } from '@fortawesome/free-solid-svg-icons';
 import first from '../../../assets/images/1st.png'
@@ -11,6 +9,7 @@ import third from '../../../assets/images/3rd.png'
 function RankingView(props) {
   const data = props.data;
   const [rankBox, setRankBox] = useState('rank-box')
+
   useEffect(() => {
     if (props.rank === 1) {
       setRankBox(rankBox + ' first')
