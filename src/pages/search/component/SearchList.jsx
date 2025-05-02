@@ -9,21 +9,22 @@ function SearchList(props) {
   const [search, setSearchs] = useState([]);
   const [offset, setOffset] = useState(0);
   const navigate = useNavigate()
-
   useEffect(() => {
-    setSearchs(getSearchList())
-  }, []);
+    setOffset(0)
+    setSearchs(getSearchList(true))
+  }, [num]);
 
-  async function getSearchList() {
+  async function getSearchList(enter) {
     let res;
+    const next = enter ? 0 : offset;
     if (!num) {
-      res = await api.get('/board/search' + (offset !== 0 ? +`/${offset}` : ''))
+      res = await api.get('/board/search' + (next !== 0 ? `/${next}` : ''))
     } else if (num === 1) {
-      res = await api.get(`/board/my/${props.id}` + (offset !== 0 ? +`/${offset}` : ''))
+      res = await api.get(`/board/my/${props.id}` + (next !== 0 ? `/${next}` : ''))
     } else if (num === 2) {
-      res = await api.get(`/board/myShorts/${props.id}` + (offset !== 0 ? +`/${offset}` : ''))
+      res = await api.get(`/board/myShorts/${props.id}` + (next !== 0 ? `/${next}` : ''))
     } else if (num === 3) {
-      res = await api.get(`/board/tag/${props.id}` + (offset !== 0 ? +`/${offset}` : ''))
+      res = await api.get(`/board/tag/${props.id}` + (next !== 0 ? `/${next}` : ''))
     }
     let searchBoxes = [];
     res?.forEach(element => {
@@ -36,9 +37,9 @@ function SearchList(props) {
   function movePage(id, type) {
     let uri = '/board/'
     if (type && type === 'SHORTS') {
-      uri += 'shorts/'
+      uri = '/shorts/'
     }
-    navigate(uri + id)
+    navigate(`${uri}${id}`)
   }
 
   function setSearchBox(element) {

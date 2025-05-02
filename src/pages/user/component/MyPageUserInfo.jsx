@@ -37,16 +37,16 @@ function MyPageUserInfo(props) {
     res?.forEach(element => {
       list = [...list, (
         <>
-          <div className='change-user-box' onClick={() => loginChange(element.id)}>
+          <div className='change-user-box' onClick={() => loginChange(element.userId)}>
             <div className='change-user-img'>
               <UserImage link={element.img} />
             </div>
             <div className='change-user-info'>
               <div className='change-user-username'>
-                {element.username}
+                @{element.nickname}
               </div>
               <div className='change-user-nickname'>
-                @{element.nickname}
+                {element.name}
               </div>
             </div>
           </div>

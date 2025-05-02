@@ -51,7 +51,7 @@ function UserImage(props) {
       return;
     }
     setStoryPage(storyPage - 1)
-    setStory(showStory(storyList[storyPage - 1], getStoryLine(storyPage - 1), endStoryView))
+    setStory(showStory(storyList[storyPage - 1], getStoryLine(storyList, storyPage - 1), endStoryView))
   }
 
   function afterStory(e) {
@@ -64,11 +64,10 @@ function UserImage(props) {
       return
     }
     setStoryPage(storyPage + 1)
-    setStory(showStory(storyList[storyPage + 1], getStoryLine(storyPage + 1), endStoryView))
+    setStory(showStory(storyList[storyPage + 1], getStoryLine(storyList, storyPage + 1), endStoryView))
   }
 
   function storyClickEvents(e) {
-    console.log(e.target)
     if (e.target.parentNode.parentNode.parentNode.className === 'story-end' ||
       e.target.parentNode.parentNode.parentNode.parentNode.className === 'story-end'
     ) {

@@ -13,14 +13,14 @@ function MyPageUserButton(props) {
 
 
 
-  async function followCancel(userId) {
-    const res = await api.delete(`/follow`, { "followingId": userId })
+  async function followCancel() {
+    const res = await api.delete(`/follow`, { "followingId": props.id })
     res && ShowToast('success', res.message)
     res && setIsFollow(!isFollow)
   }
 
-  async function followAdd(userId) {
-    const res = await api.post(`/follow`, { "followingId": userId })
+  async function followAdd() {
+    const res = await api.post(`/follow`, { "followingId": props.id })
     res && ShowToast('success', res.message)
     res && setIsFollow(!isFollow)
   }

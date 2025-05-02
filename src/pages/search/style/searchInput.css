@@ -17,6 +17,7 @@
 }
 
 .show-search-user-box {
+  padding-top: 7px;
   position: absolute;
   max-height: 190px;
   z-index: 1000;
@@ -30,7 +31,7 @@
 }
 
 .show-search-user {
-  margin-top: 7px;
+  margin-bottom: 7px;
   display: flex;
   align-items: center;
   padding: 0 10px;

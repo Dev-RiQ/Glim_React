@@ -77,7 +77,7 @@ function ShortsVideo(props) {
         <video className='shorts-video' poster={data.img[1]} src={data.img[0]} playsInline loop width="100%" height="100%" decoding="async" loading="lazy" onClick={((e) => control(e))} onPlay={e => videoPlay(e)} onPause={e => videoPause(e)} />
         <div className='shorts-info-box'>
           <div className='shorts-user-box'>
-            <UserPortion user={data.user} id={data.id} subTitle={data.createdAt} />
+            <UserPortion user={data.user} id={data.id} subTitle={data.createdAt} type={'shorts'} />
           </div>
           <div className='shorts-content-box'>
             <p className='shorts-content'>{data.content}</p>

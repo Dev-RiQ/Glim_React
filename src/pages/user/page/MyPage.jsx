@@ -1,7 +1,6 @@
 import { React, useEffect, useState } from 'react';
 import "../style/myPage.css"
 import MyPageUserInfo from '../component/MyPageUserInfo';
-import MyPageBoardList from '../../board/component/MyPageBoardList';
 import { useParams } from 'react-router-dom';
 import api from '../../../utils/api';
 
@@ -18,11 +17,11 @@ function MyPage() {
   }, [])
 
   async function getUserInfo(id) {
-    console.log('id', id)
     const user = (id ? await api.get(`/auth/${id}`) : await api.get('/auth/me'))
+
     setMyPage(
       <div className="mypage-box">
-        <MyPageUserInfo user={user} isMine={user.mine ? user.ming : true} />
+        <MyPageUserInfo user={user} isMine={user.isMine !== undefined ? user.isMine : true} />
       </div>
     )
   }

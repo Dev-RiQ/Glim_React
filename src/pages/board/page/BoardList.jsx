@@ -13,7 +13,6 @@ function BoardList() {
 
   async function getBoardList() {
     const res = await api.get('/board' + (offset !== 0 ? `/${offset}` : ''))
-    console.log(res)
     let boardBoxes = [];
     res?.forEach(element => {
       boardBoxes = [...boardBoxes, setBoardBox(element)];

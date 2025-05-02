@@ -42,7 +42,7 @@ function BoardInfo(props) {
   async function boardLike() {
     const res = isLike ? await api.delete(`/boardLike/${data.id}`)
       : await api.post(`/boardLike/${data.id}`)
-    if (isLike) {
+    if (!isLike) {
       api.post('/tags/view', data.tags)
       api.post(`/boardView/${data.id}`)
     }
@@ -51,7 +51,7 @@ function BoardInfo(props) {
 
   return (
     <div className="board-box">
-      <UserPortion user={data?.user} subTitle={subTitle} />
+      <UserPortion user={data?.user} subTitle={subTitle} type={'board'} />
       <BoardImage imgs={data?.img} boardLike={boardLike} />
       <BoardMiddle data={data} isLike={isLike} boardLike={boardLike} boardComment={boardComment} comments={comments} commentView={commentView} />
       <BoardContent data={data} boardComment={boardComment} />

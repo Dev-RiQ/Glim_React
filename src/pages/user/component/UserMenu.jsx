@@ -127,13 +127,7 @@ function UserMenu(props) {
   }
 
   function deleteAction() {
-    const path = window.location.pathname;
-    let res;
-    if (path.includes('story')) {
-      res = api.delete(`/story/${props.id}`)
-    } else {
-      res = api.delete(`/board/${props.id}`)
-    }
+    let res = api.delete(`/${props.type}/${props.id}`)
     res && (window.location.href = '/')
   }
 

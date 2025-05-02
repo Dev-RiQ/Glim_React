@@ -22,7 +22,7 @@ function Chat() {
   async function addChatList() {
     const res = await api.get('/chat')
     let list = []
-    res.forEach(room => {
+    res?.forEach(room => {
       list = [...list, <><ChatList data={room} /></>];
     })
     setChatList([...chatList, list]);
@@ -36,7 +36,7 @@ function Chat() {
     }
     const searchList = await api.post('/auth/search', { "nickname": e.target.value })
     let list = []
-    searchList.forEach(element => {
+    searchList?.forEach(element => {
       list = [...list, (
         <div className='show-search-user'>
           <div className='search-user-img-box'>

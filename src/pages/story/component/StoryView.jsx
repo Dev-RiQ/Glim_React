@@ -51,7 +51,7 @@ function StoryView(props) {
           <IconButton icon={faX} />
         </div>
         <div className="story-user-protion">
-          <UserPortion user={data.user} storyDate={data.createdAt} id={data.id} />
+          <UserPortion user={data.user} storyDate={data.createdAt} id={data.id} type={'story'} />
         </div>
       </div>
       <div className="story-footer">

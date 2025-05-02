@@ -24,6 +24,8 @@ const Alarm = lazy(() => import('./alarm/page/AlarmList'));
 const UserInfo = lazy(() => import('./user/page/UserInfo'));
 const UserList = lazy(() => import('./user/page/UserList'));
 const Ranking = lazy(() => import('./ranking/page/Ranking'));
+const MySave = lazy(() => import('./board/page/MySave'));
+const MyStory = lazy(() => import('./story/page/MyStory'));
 
 function Routing() {
   useEffect(() => {
@@ -55,6 +57,8 @@ function Routing() {
             <Route path='/board/:id' element={<BoardView />} />
             <Route path='/myPage/' element={<MyPage />} />
             <Route path='/myPage/:id' element={<MyPage />} />
+            <Route path='/myStory' element={<MyStory />} />
+            <Route path='/mySave' element={<MySave />} />
             <Route path='/userInfo' element={<UserInfo />} />
             <Route path='/userList' element={<UserList />} />
             <Route path='/chat/' element={<Chat />} />

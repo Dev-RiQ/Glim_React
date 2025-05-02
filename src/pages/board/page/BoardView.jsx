@@ -2,23 +2,24 @@ import React, { useEffect, useState, } from 'react';
 import '../style/boardList.css';
 import BoardInfo from '../component/BoardInfo';
 import api from '../../../utils/api';
+import { useParams } from 'react-router-dom';
 
-function BoardView(props) {
-  const id = props.id;
-  const [data, setData] = useState(null)
+function BoardView() {
+  const id = useParams().id;
+  const [view, setView] = useState(null)
 
   useEffect(() => {
     getData();
-  })
+  }, [])
 
   async function getData() {
-    const res = await api.get(`/board/${id}`)
-    res && setData(res)
+    const res = await api.get(`/board/show/${id}`)
+    res && setView(<BoardInfo data={res} />)
   }
 
   return (
     <>
-      <BoardInfo data={data} />
+      {view}
     </>
   );
 }

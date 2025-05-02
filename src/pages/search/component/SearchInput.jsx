@@ -18,7 +18,7 @@ function SearchInput() {
     searchList?.forEach(element => {
       console.log("name", element.name)
       testShow = [...testShow, (
-        <div className='show-search-user' onClick={() => window.location.href = '/myPage/' + element.id} >
+        <div className='show-search-user' onClick={() => window.location.href = '/myPage/' + element.userId} >
           <div className='search-user-img-box'>
             <UserImage link={element.img} hasStory={element.isStory} />
           </div>

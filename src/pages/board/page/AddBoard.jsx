@@ -61,7 +61,7 @@ function AddBoard() {
               {element.artist}
             </div>
           </div>
-          <MusicPlay music={element.link} />
+          <MusicPlay music={element.fileName} />
         </div>
       )]
     })
@@ -199,7 +199,7 @@ function AddBoard() {
     }
     const searchList = await api.post('/auth/search', { "nickname": e.target.value })
     let tagsShow = []
-    searchList.forEach(element => {
+    searchList?.forEach(element => {
       tagsShow = [...tagsShow, (
         <div className='show-search-user' onClick={e => plusUser(e, element.id, element.nickname)} >
           <div className='search-user-img-box'>

@@ -8,10 +8,10 @@ function MyPageBoardList(props) {
   const id = props.userId;
   const [checks, setChecks] = useState([true, '', '']);
   const [select, setSelect] = useState('selected-line check1');
-  const [boardList, setBoardList] = useState(null);
+  const [boardList, setBoardList] = useState([]);
 
   useEffect(() => {
-    setBoardList(getBoardList(1));
+    getBoardList(1);
   }, [])
 
   function changeView(num) {
@@ -25,7 +25,7 @@ function MyPageBoardList(props) {
     }
     setSelect('selected-line check' + num);
     setChecks(checkList);
-    setBoardList(getBoardList(num));
+    getBoardList(num);
   }
 
   function getBoardList(num) {
@@ -33,10 +33,10 @@ function MyPageBoardList(props) {
     if (num === 2) {
       type = "SHORTS"
     }
-    let list = <div>
+    let list = (<>
       <SearchList id={id} type={type} num={num} />
-    </div>
-    return list;
+    </>)
+    setBoardList(list);
   }
 
   return (

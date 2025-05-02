@@ -24,10 +24,10 @@ api.interceptors.response.use(
   (response) => {
     const data = response?.data?.data ? response?.data?.data : response?.data
     console.log(data)
-    if (data.accessToken) {
-      localStorage.setItem('accessToken', data.accessToken)
+    if (data.token) {
+      localStorage.setItem('accessToken', data.token)
       const originalRequest = response.config;
-      originalRequest.headers.Authorization = `Bearer ${data.accessToken}`
+      originalRequest.headers.Authorization = `Bearer ${data.token}`
       return api(originalRequest);
     }
     if (data.length === 0) {

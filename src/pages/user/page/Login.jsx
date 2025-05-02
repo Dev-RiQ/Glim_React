@@ -32,7 +32,7 @@ function Login() {
       password: loginPw
     };
     const res = await api.post('/auth/login', loginData)
-    res && (window.location.href = '/login/' + res.data.accessToken);
+    res && (window.location.href = '/login/' + res.accessToken);
   }
   function join() {
     window.location.href = '/join';

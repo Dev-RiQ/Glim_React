@@ -11,7 +11,7 @@ function BoardMiddle(props) {
   async function boardSave(e) {
     const res = isSave ? await api.delete(`/boardSave/${data.id}`)
       : await api.post(`/boardSave/${data.id}`)
-    if (isSave) {
+    if (!isSave) {
       api.post('/tags/view', data.tags)
       api.post(`/boardView/${data.id}`)
     }

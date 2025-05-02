@@ -4,8 +4,10 @@ import ShowComment from '../../board/hook/ShowComment';
 import ShortsVideo from '../component/ShortsVideo';
 import api from '../../../utils/api';
 import ShowToast from '../../main/hook/ShowToast';
+import { useParams } from 'react-router-dom';
 
 function ShortsView(props) {
+  const id = useParams().id
   const [shorts, setShorts] = useState([]);
   const [comments, setComments] = useState(null);
   const [commentView, setCommentView] = useState('comment-box')
@@ -32,9 +34,8 @@ function ShortsView(props) {
   }, []);
 
   async function getShorts() {
-    const res = await api.get(`/board/shorts/${props.id}`)
-    res && setShortsBox(res)
-    res && setShorts(res)
+    const res = await api.get(`/board/shorts/show/${id}`)
+    res && setShorts(setShortsBox(res))
   }
 
   function pauseVideo(e) {

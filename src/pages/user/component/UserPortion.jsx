@@ -11,7 +11,7 @@ function UserPortion(props) {
   const [menuModal, setMenuModal] = useState(false)
 
   useEffect(() => {
-    setMenu(<UserMenu isMine={user.isMine} setMenuModal={setMenuModal} id={props.id} userId={user.id} />)
+    setMenu(<UserMenu isMine={user.isMine} setMenuModal={setMenuModal} id={props.id} userId={user.id} type={props.type} />)
   }, [])
 
   function goMyPage() {
