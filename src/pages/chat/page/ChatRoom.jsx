@@ -51,7 +51,7 @@ function ChatRoom() {
     setLoginId(res?.loginId)
     res?.msgList?.forEach(msg => {
       list = [...list, <div key={msg.msgId}>
-        <ChatMsg msgId={msg.msgId} loginId={res.loginId} id={msg.userId} content={msg.content} userImg={user?.img} />
+        <ChatMsg msgId={msg.msgId} loginId={res.loginId} id={msg.userId} content={msg.content} userImg={user?.img} createdAt={msg.createdAt} />
       </div>]
     })
     setMsgList(list);
@@ -92,7 +92,7 @@ function ChatRoom() {
 
   function appendMsg(msg) {
     setSocketMsgList([...socketMsgList, (<div key={msg.msgId}>
-      <ChatMsg msgId={msg.msgId} loginId={loginId} id={msg.userId} content={msg.content} userImg={user.img} />
+      <ChatMsg msgId={msg.msgId} loginId={loginId} id={msg.userId} content={msg.content} userImg={user.img} createdAt={msg.createdAt} />
     </div>)])
     scrollBottom()
   }

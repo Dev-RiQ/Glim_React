@@ -10,14 +10,27 @@ function BoardComment(props) {
   const data = props.data;
   const [commentList, setCommentList] = useState([])
   const [offset, setOffset] = useState(0)
-  const [replyOffset, setReplyOffset] = useState(0)
   const [commentInput, setCommentInput] = useState('');
   const [replyId, setReplyId] = useState(0);
-  const [replyTarget, setReplyTarget] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [replyTarget, setReplyTarget] = useState(null)
 
   useEffect(() => {
     getBoardList();
   }, []);
+
+  async function scroll(e) {
+    if (offset === 0) return;
+    const rect = e.currentTarget.getBoundingClientRect()
+    console.log(rect.bottom)
+    console.log(window.innerHeight + 500)
+    if (rect.bottom < window.innerHeight + 1000) {
+      if (isLoaded) return;
+      setIsLoaded(true)
+      await getBoardList()
+      setIsLoaded(false)
+    }
+  }
 
   async function getBoardList() {
     const res = await api.get(`/comment/${data.id}` + (offset !== 0 ? `/${offset}` : ''))
@@ -29,28 +42,22 @@ function BoardComment(props) {
       commentBoxes = [...commentBoxes, setComment(element, true)];
     });
     res && setCommentList([...commentList, commentBoxes])
-    res && setOffset(offset + res[commentBoxes.length - 1].id)
+    res && setOffset(offset + res[commentBoxes.length - 2].id)
+    !res && offset === 0 && setCommentList([commentBoxes, (<div className='no-list'><p>작성된 댓글이 존재하지 않습니다.</p></div>)])
+    !res && setOffset(0)
   }
 
   function setComment(element, isComment) {
     return (<div className='comment-user-box' key={element.id}>
-      <UserComment data={element} isComment={isComment} addReply={addReply} loadReply={loadReply} />
+      <UserComment data={element} isComment={isComment} addReply={addReply} />
     </div>)
   }
 
-  function addReply(target, id, nickname) {
+  function addReply(target, id, nickname, setReply) {
     ShowToast('success', `@${nickname}님의 댓글에 답글 달기`)
     target.parentNode.parentNode.nextSibling.firstChild.focus()
     setReplyId(id)
-  }
-  async function loadReply(target, id) {
-    const res = await api.get(`/comment/reply/${id}` + replyOffset !== 0 ? `/${replyOffset}` : '')
-    res && (target.appendChild(res.forEach(element => setComment(element, true))))
-    if (replyOffset === 0) {
-      res && (target.parentNode.appendChild(<p onClick={() => loadReply(target, id)}>답글 더보기</p>))
-    }
-    res && setReplyOffset(res[res.length - 1].id)
-    res && setReplyTarget(target)
+    setReplyTarget(setReply())
   }
 
   function exitComment(e) {
@@ -75,7 +82,7 @@ function BoardComment(props) {
     const res = await api.post('/comment', body);
     if (res) {
       if (replyTarget) {
-        (replyTarget.appendChild(setComment(res, true)))
+        replyTarget(setComment(res, true))
       } else {
         setCommentList([...commentList, setComment(res, true)])
       }
@@ -98,7 +105,7 @@ function BoardComment(props) {
       <div className='comment-close' onClick={e => exitComment(e)} >
         <IconButton icon={faX} />
       </div>
-      <div className='comment-list-box'>
+      <div className='comment-list-box' onWheel={scroll} onTouchMove={scroll}>
         {commentList}
       </div>
       <div className='comment-footer'>

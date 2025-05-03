@@ -11,6 +11,7 @@ function AlarmList() {
   const [isLoading, setIsLoading] = useState(true)
   const [alarms, setAlarms] = useState([])
   const [offset, setOffset] = useState(0)
+  const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
     getAlarms()
@@ -25,7 +26,9 @@ function AlarmList() {
   async function getAlarms() {
     const res = await api.get('/sse/list' + (offset !== 0 ? `/${offset}` : ''));
     res && setAlarm(res)
-    !res && setAlarms([(<div className='no-alarm'><p>도착한 알림이 존재하지 않습니다.</p></div>)])
+    res && setOffset(res[res.length - 1].id)
+    !res && offset === 0 && setAlarms([(<div className='no-list'><p>도착한 알림이 존재하지 않습니다.</p></div>)])
+    !res && setOffset(0)
   }
 
   function setAlarm(res) {
@@ -57,9 +60,20 @@ function AlarmList() {
     setIsLoading(false);
   }
 
+  async function scroll(e) {
+    if (offset === 0) return;
+    const rect = e.currentTarget.getBoundingClientRect()
+    if (rect.bottom < window.innerHeight + 1000) {
+      if (isLoaded) return;
+      setIsLoaded(true)
+      await getAlarms()
+      setIsLoaded(false)
+    }
+  }
+
 
   return (
-    <div className="alarm-list-box">
+    <div className="alarm-list-box" onWheel={scroll} onTouchMove={scroll}>
       {alarms}
     </div>
   );

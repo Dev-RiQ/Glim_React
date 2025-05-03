@@ -13,6 +13,7 @@ function SearchInput() {
       setShowSearchUsers([])
       return
     }
+    console.log(e.target.value)
     const searchList = await api.post('/auth/search', { "nickname": e.target.value })
     let testShow = []
     searchList?.forEach(element => {
@@ -21,7 +22,7 @@ function SearchInput() {
           <div className='search-user-img-box'>
             <UserImage link={element.img} hasStory={element.isStory} />
           </div>
-          <div>
+          <div className='search-user-info-box'>
             <div>
               @{element.nickname}
             </div>

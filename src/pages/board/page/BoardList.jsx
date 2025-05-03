@@ -4,8 +4,9 @@ import BoardInfo from '../component/BoardInfo';
 import api from '../../../utils/api';
 
 function BoardList() {
-  const [boards, setBoards] = useState(null);
-  const [offset, setOffset] = useState(0)
+  const [boards, setBoards] = useState([]);
+  const [offset, setOffset] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     getBoardList();
@@ -17,8 +18,10 @@ function BoardList() {
     res?.forEach(element => {
       boardBoxes = [...boardBoxes, setBoardBox(element)];
     });
-    res && setBoards(boardBoxes)
+    res && setBoards([...boards, boardBoxes])
     res && setOffset(offset + res[boardBoxes.length - 1].id)
+    !res && offset === 0 && setBoards([(<div className='no-list'><p>업로드된 게시글이 존재하지 않습니다.</p></div>)])
+    !res && setOffset(0)
   }
 
   function setBoardBox(element) {
@@ -29,12 +32,19 @@ function BoardList() {
     )
   }
 
-  function scroll(e) {
-    console.log(e)
+  async function scroll(e) {
+    if (offset === 0) return
+    const rect = e.currentTarget.getBoundingClientRect()
+    if (rect.bottom < window.innerHeight + 1000) {
+      if (isLoading) return;
+      setIsLoading(true)
+      await getBoardList()
+      setIsLoading(false)
+    }
   }
 
   return (
-    <div className="board-list-box" onWheel={scroll} on={scroll}>
+    <div className="board-list-box" onWheel={scroll} onTouchMove={scroll}>
       {boards}
     </div>
   );

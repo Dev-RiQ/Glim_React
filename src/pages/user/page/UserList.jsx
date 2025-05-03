@@ -6,8 +6,8 @@ import api from '../../../utils/api';
 
 function UserList() {
   const location = useLocation()
-  const type = useState(location.state.type)
-  const userId = useState(location.state.userId)
+  const type = location.state.type
+  const userId = location.state.userId
   const [userList, setUserList] = useState([])
   const [offset, setOffset] = useState(0);
 
@@ -23,7 +23,7 @@ function UserList() {
       list = await api.get(`/follow/followings/${userId}` + (offset !== 0 ? `/${offset}` : ''))
     }
     let showUserList = []
-    list.forEach(element => {
+    list?.forEach(element => {
       showUserList = [...showUserList, (
         <div className='show-user-box'>
           <div className='show-user-img'>
@@ -40,8 +40,8 @@ function UserList() {
         </div>
       )]
     })
-    setOffset(list[list.length - 1].id)
-    setUserList([...userList, showUserList])
+    list && setOffset(list[list.length - 1].id)
+    list && setUserList([...userList, showUserList])
   }
 
   return (

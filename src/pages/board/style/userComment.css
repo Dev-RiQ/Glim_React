@@ -1,5 +1,5 @@
 .user-comment-box.inner {
-  margin-right: 40px;
+  margin-left: 40px;
 }
 
 .user-comment-box.none {
@@ -9,7 +9,11 @@
 .user-comment-box {
   display: flex;
   justify-content: space-between;
-  padding: 5px 5px;
+  padding: 8px 5px;
+}
+
+.none {
+  display: none;
 }
 
 .user-comment-left {
@@ -42,4 +46,20 @@
   font-size: 20px;
 }
 
-.comment-content {}
+.comment-content-data {
+  display: flex;
+  gap: 15px;
+}
+
+.reply-box>div>div {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.reply-box .user-comment-rigth {
+  width: 35px;
+}
+
+.user-img-box {
+  margin-right: 7px;
+}

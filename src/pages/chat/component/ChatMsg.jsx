@@ -18,7 +18,7 @@ function ChatMsg(props) {
       <div className='msg-box my' key={props.msgId}>
         <div className='msg-info'>
           <div className='date-text'>
-            <span className='msg-date'>{props.createAt}</span>
+            <span className='msg-date'>{props.createdAt}</span>
           </div>
           <div className='msg-text my'>
             <span className='msg-content'>{props.content}</span>
@@ -39,7 +39,7 @@ function ChatMsg(props) {
             <span className='msg-content'>{props.content}</span>
           </div>
           <div className='date-text'>
-            <span className='msg-date'>{props.createAt}</span>
+            <span className='msg-date'>{props.createdAt}</span>
           </div>
         </div>
       </div>
