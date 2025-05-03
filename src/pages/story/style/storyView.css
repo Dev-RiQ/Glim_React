@@ -39,6 +39,7 @@
   left: 100%;
   display: flex;
   margin: 0 10px;
+  justify-content: space-around;
 }
 
 .story-footer svg {

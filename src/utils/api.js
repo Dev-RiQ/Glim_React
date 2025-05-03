@@ -23,7 +23,6 @@ const api = axios.create({
 api.interceptors.response.use(
   (response) => {
     const data = response?.data?.data ? response?.data?.data : response?.data
-    console.log(data)
     if (data.token) {
       localStorage.setItem('accessToken', data.token)
       const originalRequest = response.config;
@@ -36,8 +35,9 @@ api.interceptors.response.use(
     return data
   },
   (error) => {
-    console.log(error.status)
-    if (error.status === 500) {
+    if (error.response?.data?.errors?.length > 0) {
+      useToast("error", error.response?.data?.errors[0]);
+    } else if (error.status === 500) {
       useToast("error", '서버와의 통신에 실패했습니다.');
     } else if (error.status === 404) {
       useToast("error", "해당하는 정보를 찾을 수 없습니다.")
@@ -46,7 +46,7 @@ api.interceptors.response.use(
     } else if (error.status === 400 || 405) {
       useToast("error", "잘못된 요청입니다.")
     } else {
-      useToast("error", error.response?.data?.errors?.length > 0 ? error.response?.data?.errors[0] : error.code);
+      useToast("error", error.code)
     }
     return null;
   }

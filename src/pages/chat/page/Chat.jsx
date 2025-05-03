@@ -5,6 +5,7 @@ import { faComments, faX } from '@fortawesome/free-solid-svg-icons';
 import ChatList from '../component/ChatList';
 import UserImage from '../../user/component/UserImage';
 import api from '../../../utils/api';
+import sseEvent from '../../../utils/sse';
 
 function Chat() {
   const [chatList, setChatList] = useState([])
@@ -12,22 +13,36 @@ function Chat() {
   const [userModal, setUserModal] = useState(false)
 
   useEffect(() => {
-    setChatList([...chatList, addChatList()]);
+    getSseChatList()
+    // setChatList([...chatList, addChatList()]);
   }, [])
 
   useEffect(() => {
     setShowSearchUsers([])
   }, [userModal])
 
-  async function addChatList() {
-    const res = await api.get('/chat')
-    let list = []
-    res?.forEach(room => {
-      list = [...list, <><ChatList data={room} /></>];
+  async function getSseChatList() {
+    const res = await sseEvent('/chat')
+    res.addEventListener('chat', async (e) => {
+      const data = JSON.parse(e.data)
+      let list = [];
+      data?.forEach(room => {
+        list = [...list, <><ChatList data={room} /></>];
+      })
+      setChatList([list])
+      // setChatList([list, ...chatList])
     })
-    setChatList([...chatList, list]);
-    return list;
   }
+
+  // async function addChatList() {
+  //   const res = await api.get('/chat')
+  //   let list = []
+  //   res?.forEach(room => {
+  //     list = [...list, <><ChatList data={room} /></>];
+  //   })
+  //   setChatList([...chatList, list]);
+  //   return list;
+  // }
 
   async function searchUser(e) {
     if (!e.target.value) {

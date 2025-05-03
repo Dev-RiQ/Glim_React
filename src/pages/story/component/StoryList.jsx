@@ -13,7 +13,6 @@ function StoryList(props) {
   async function getStoryList() {
     let storyList = await api.get(`/follow/story`)
     let storyBoxes = [await setMyStory()];
-    console.log(storyList)
     storyList?.forEach(element => {
       storyBoxes = [...storyBoxes, setStoryBox(element)];
     });
@@ -32,7 +31,7 @@ function StoryList(props) {
   function setStoryBox(element) {
     return (
       <div key={element.id}>
-        <UserStory link={element.img} name={element.nickname} hasStory={true} />
+        <UserStory id={element.userId} link={element.img} name={element.nickname} hasStory={true} />
       </div>
     )
   }

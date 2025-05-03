@@ -38,3 +38,29 @@ header {
   display: flex;
   padding-right: 5px;
 }
+
+.icon-box {
+  position: relative;
+}
+
+.has-alarm.alarm {
+  top: -2px;
+  right: -5px;
+}
+
+.has-alarm.chat {
+  top: -2px;
+  right: -10px;
+
+}
+
+.has-alarm {
+  position: absolute;
+  z-index: 10000;
+}
+
+.has-alarm.chat svg,
+.has-alarm.alarm svg {
+  color: royalblue;
+  font-size: 10px;
+}

@@ -21,8 +21,7 @@ function Ranking() {
       "criteria": criteria
     }
     const res = await api.post('/ranking-board/list', body)
-    res && getRankingPage(res)
-    return res;
+    getRankingPage(res)
   }
 
   function getRankingPage(res) {

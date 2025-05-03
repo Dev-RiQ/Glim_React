@@ -31,7 +31,7 @@ function RankingView(props) {
                 <>{props.rank}</>}</>}</>}
         </div>
         <div className='rank-board-img'>
-          <img src={data.link} alt="iamge" />
+          <img src={data.contentImgUrl} alt="rank-image" />
         </div>
         <div className='rank-info'>
           <div className='rank-board-content'>

@@ -16,7 +16,6 @@ function SearchInput() {
     const searchList = await api.post('/auth/search', { "nickname": e.target.value })
     let testShow = []
     searchList?.forEach(element => {
-      console.log("name", element.name)
       testShow = [...testShow, (
         <div className='show-search-user' onClick={() => window.location.href = '/myPage/' + element.userId} >
           <div className='search-user-img-box'>

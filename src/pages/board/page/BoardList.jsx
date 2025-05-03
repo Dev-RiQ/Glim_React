@@ -29,8 +29,12 @@ function BoardList() {
     )
   }
 
+  function scroll(e) {
+    console.log(e)
+  }
+
   return (
-    <div className="board-list-box">
+    <div className="board-list-box" onWheel={scroll} on={scroll}>
       {boards}
     </div>
   );

@@ -30,15 +30,17 @@ function StoryView(props) {
     setContent(e.target.value)
   }
 
-  async function sendMsg() {
+  async function sendMsg(e) {
+    const target = e.currentTarget
     if (!content) return;
     const roomId = await api.post(`/chat/room/${data.user.id}`)
     const body = {
-      "roomId": roomId,
+      "roomId": roomId.roomId,
       "content": content,
       "replyMsgId": 0
     }
     const res = await api.post('/chat/sendMsg', body)
+    res && (target.previousSibling.value = '');
     res && ShowToast('success', '메시지가 전송되었습니다.')
     !res && ShowToast('error', '메시지 전송에 실패하였습니다.')
   }
@@ -54,18 +56,21 @@ function StoryView(props) {
           <UserPortion user={data.user} storyDate={data.createdAt} id={data.id} type={'story'} />
         </div>
       </div>
-      <div className="story-footer">
-        <div onClick={storyLike}>
-          {isLike ?
-            <IconButton icon={faHeart} check="like" />
-            : <IconButton icon={faHeart} />
-          }
+      {data.user.isMine ?
+        <></> :
+        <div className="story-footer">
+          <div onClick={storyLike}>
+            {isLike ?
+              <IconButton icon={faHeart} check="like" />
+              : <IconButton icon={faHeart} />
+            }
+          </div>
+          <input className="story-reply-msg" type="text" onChange={inputContent} />
+          <div onClick={sendMsg}>
+            <IconButton icon={faPaperPlane} />
+          </div>
         </div>
-        <input className="story-reply-msg" type="text" onChange={inputContent} />
-        <div onClick={sendMsg}>
-          <IconButton icon={faPaperPlane} />
-        </div>
-      </div>
+      }
     </>
   )
 };

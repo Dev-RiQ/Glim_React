@@ -100,7 +100,7 @@ function UserMenu(props) {
 
   async function startChat() {
     const res = await api.post(`/chat/room/${props.userId}`)
-    res && (window.location.href = `/chatRoom/${res}`)
+    res && (window.location.href = `/chatRoom/${res.roomId}`)
   }
 
   async function chatOutAction() {
@@ -109,12 +109,10 @@ function UserMenu(props) {
   }
 
   function showSave() {
-    console.log('내 저장 목록 보기')
     window.location.href = '/mySave'
   }
 
   function showStory() {
-    console.log('내 스토리 기록보기')
     window.location.href = '/myStory'
   }
 

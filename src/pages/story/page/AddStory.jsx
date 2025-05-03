@@ -44,7 +44,6 @@ function AddStory() {
       ShowToast('error', '사진 업로드에 실패했습니다.')
       return
     }
-    console.log(filename)
 
     const res = await api.post('/story', { "fileName": filename })
     res && ShowToast('success', '스토리 등록이 완료되었습니다.')

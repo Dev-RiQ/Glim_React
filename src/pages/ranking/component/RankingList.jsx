@@ -11,7 +11,7 @@ function RankingList(props) {
 
   function getRanking() {
     let rankingList = [];
-    props.list.forEach((element, idx) => {
+    props.list?.forEach((element, idx) => {
       rankingList = [...rankingList, getRankBox(element, idx)]
     })
     setRanking(rankingList)

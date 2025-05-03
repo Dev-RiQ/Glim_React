@@ -24,9 +24,21 @@ function ChatRoom() {
   }, [])
 
   useEffect(() => {
-    setMenu(<UserMenu isMine={true} isChat={true} setMenuModal={setMenuModal} roomId={roomId} />)
-    getMsgList()
-  }, [])
+    if (user) {
+      setMenu(<UserMenu isMine={true} isChat={true} setMenuModal={setMenuModal} roomId={roomId} />)
+      getMsgList()
+    }
+  }, [user])
+
+  useEffect(() => {
+    user && msgList && getRoomSet()
+  }, [user, msgList])
+
+  useEffect(() => {
+    if (socketMsgList || msgList) {
+      api.put(`/chat/user/${roomId}`)
+    }
+  }, [socketMsgList, msgList])
 
   async function getUserInfo() {
     const res = await api.get(`/chat/users/${roomId}`)
@@ -43,7 +55,11 @@ function ChatRoom() {
       </div>]
     })
     setMsgList(list);
-    scrollBottom()
+  }
+  function getRoomSet() {
+    setTimeout(() => {
+      scrollBottom()
+    }, 100);
   }
 
   function checkMsg(e) {
@@ -75,9 +91,9 @@ function ChatRoom() {
   }
 
   function appendMsg(msg) {
-    setSocketMsgList([...socketMsgList, <div key={msg.msgId}>
+    setSocketMsgList([...socketMsgList, (<div key={msg.msgId}>
       <ChatMsg msgId={msg.msgId} loginId={loginId} id={msg.userId} content={msg.content} userImg={user.img} />
-    </div>])
+    </div>)])
     scrollBottom()
   }
 
@@ -94,55 +110,60 @@ function ChatRoom() {
   }
 
   return (
-    <div className="chat-room-box">
-      <SockJsClient
-        url={"http://localhost:8081/api/v1/chat-socket"}
-        topics={["/sub/" + roomId]}
-        onConnect={console.log("connected!")}
-        onDisconnect={console.log("disconnected!")}
-        onMessage={(msg) => appendMsg(msg)}
-        debug={false}
-      />
-      <div className='chat-title-box'>
-        <div className='chat-title'>
-          <div className='move-back' onClick={e => moveBack(e)}>
-            <IconButton icon={faChevronLeft} />
-          </div>
-          <div className='other-user-info'>
-            <div className='other-user-img'>
-              <UserImage link={user.img} />
+    <>
+      {user && msgList ?
+        <div className="chat-room-box">
+          <SockJsClient
+            url={"http://localhost:8081/api/v1/chat-socket"}
+            topics={["/sub/" + roomId]}
+            onConnect={console.log("connected!")}
+            onDisconnect={console.log("disconnected!")}
+            onMessage={(msg) => appendMsg(msg)}
+            debug={false}
+          />
+          <div className='chat-title-box'>
+            <div className='chat-title'>
+              <div className='move-back' onClick={e => moveBack(e)}>
+                <IconButton icon={faChevronLeft} />
+              </div>
+              <div className='other-user-info'>
+                <div className='other-user-img'>
+                  <UserImage id={user.id} link={user.img} hasStory={user.isStory} />
+                </div>
+                <div className='other-user-name' onClick={() => window.location.href = `/myPage/${user.id}`}>
+                  <span>{user.nickname}</span>
+                </div>
+              </div>
             </div>
-            <div className='other-user-name'>
-              <span>{user.nickname}</span>
+            <div className='other-user-menu' onClick={() => setMenuModal(!menuModal)}>
+              <IconButton icon={faEllipsis} />
             </div>
           </div>
-        </div>
-        <div className='other-user-menu' onClick={() => setMenuModal(!menuModal)}>
-          <IconButton icon={faEllipsis} />
-        </div>
-      </div>
-      <div className='chat-list-box'>
-        {msgList}
-        {socketMsgList}
-        <div className='empty-space'></div>
-      </div>
-      <div className='msg-input-box'>
-        <input className='msg-input' type="text" spellCheck="false" onKeyUp={sendMsgKeyUp} onChange={checkMsg} />
-        <div className='msg-send' onClick={e => sendMsgClick(e)}>
-          <IconButton icon={faLocationArrow} />
-        </div>
-      </div>
-      {menuModal ?
-        <>
-          <div className='menu-modal'>
+          <div className='chat-list-box'>
+            {msgList}
+            {socketMsgList}
+            <div className='empty-space'></div>
           </div>
-          <div className='menu-info'>
-            {menu}
+          <div className='msg-input-box'>
+            <input className='msg-input' type="text" spellCheck="false" onKeyUp={sendMsgKeyUp} onChange={checkMsg} />
+            <div className='msg-send' onClick={e => sendMsgClick(e)}>
+              <IconButton icon={faLocationArrow} />
+            </div>
           </div>
-        </>
+          {menuModal ?
+            <>
+              <div className='menu-modal'>
+              </div>
+              <div className='menu-info'>
+                {menu}
+              </div>
+            </>
+            : <></>
+          }
+        </div>
         : <></>
       }
-    </div>
+    </>
   );
 }
 
