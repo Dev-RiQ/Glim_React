@@ -1,0 +1,17 @@
+.my-story-box {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  height: max-content;
+}
+
+.my-story-box>div {
+  width: 33%;
+  aspect-ratio: 9/16;
+  margin-bottom: 3px;
+}
+
+.my-story-box img {
+  object-fit: contain;
+  background-color: black;
+}

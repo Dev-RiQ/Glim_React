@@ -1,5 +1,6 @@
 .add-board-box {
   margin: auto;
+  position: relative;
 }
 
 .add-board-box svg {
@@ -21,18 +22,18 @@
 .preview-board {
   width: 100%;
   max-width: 500px;
-  position: fixed;
-  height: 100%;
-  top: 50px;
+  position: absolute;
+  height: 100vh;
+  top: calc(-50vh + 100px);
   left: 0;
   overflow-y: scroll;
   background-color: #fff;
 }
 
 .redo-img {
-  position: fixed;
+  position: absolute;
   z-index: 100;
-  top: 60px;
+  top: 30px;
   left: 10px;
 }
 
@@ -46,9 +47,9 @@
 }
 
 .submit-story-add {
-  position: fixed;
+  position: absolute;
   right: 10px;
-  top: 60px;
+  top: 30px;
   font-size: 20px;
   z-index: 100;
   padding: 2px 15px;
@@ -101,6 +102,19 @@
   justify-content: center;
 }
 
+
+.sub-info-box.video>div {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.sub-info-box.video>div>div {
+  width: 35%;
+  margin: 10px 0;
+}
+
 .option-box {
   display: flex;
   align-items: center;
@@ -131,12 +145,13 @@
 }
 
 .board-option-modal {
-  position: fixed;
-  top: 50px;
+  position: absolute;
+  top: 0;
   width: 100%;
   height: calc(100vh - 100px);
   background-color: #fff;
   z-index: 10000;
+  padding-top: 50px;
 }
 
 .location-input-box {

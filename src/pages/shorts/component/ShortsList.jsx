@@ -10,12 +10,32 @@ function ShortsList() {
   const [comments, setComments] = useState(null);
   const [commentView, setCommentView] = useState('comment-box')
   const [offset, setOffset] = useState(0)
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [page, setPage] = useState(1)
+  const [totalPage, setTotalPage] = useState(0)
 
   useEffect(() => {
     if (commentView === 'comment-box') {
       setComments(null);
     }
   }, [commentView])
+  useEffect(() => {
+    if (totalPage - page === 2) {
+      scroll()
+    }
+  }, [offset, page, totalPage])
+
+
+
+  async function scroll() {
+    if (offset === 0) return;
+    if (isLoaded) return;
+    setIsLoaded(true)
+    console.log('다음 펭디지 로딩')
+    await getShortsList()
+    setIsLoaded(false)
+  }
+
 
   function shortsComment(e, data) {
     if (!data.commentable) {
@@ -36,10 +56,13 @@ function ShortsList() {
     const res = await api.get('/board/shorts' + (offset !== 0 ? `/${offset}` : ''))
     let shortsBoxes = [];
     res?.forEach((element, idx) => {
-      shortsBoxes = [...shortsBoxes, setShortsBox(element, shorts.length + idx)];
+      shortsBoxes = [...shortsBoxes, setShortsBox(element, shorts.length * 5 + idx)];
     });
+    res && setShorts([...shorts, shortsBoxes])
     res && setOffset(res[res.length - 1].id)
-    res && setShorts(shortsBoxes)
+    res && setTotalPage(totalPage + res.length);
+    !res && offset === 0 && setShorts([(<div className='no-list'><p>업로드된 숏츠가 존재하지 않습니다.</p></div>)])
+    !res && setOffset(0)
   }
 
   function pauseVideo(e) {
@@ -91,6 +114,7 @@ function ShortsList() {
       e.currentTarget.nextSibling.firstChild.firstChild.muted = true;
       e.currentTarget.nextSibling.firstChild.firstChild.play();
       e.currentTarget.nextSibling.firstChild.firstChild.muted = false;
+      setPage(parseInt(e.currentTarget.className) + 1)
     }
     section.style.overflowY = 'hidden'
     setTimeout(() => {
@@ -105,6 +129,7 @@ function ShortsList() {
       e.currentTarget.previousSibling.firstChild.firstChild.muted = true;
       e.currentTarget.previousSibling.firstChild.firstChild.play();
       e.currentTarget.previousSibling.firstChild.firstChild.muted = false;
+      setPage(parseInt(e.currentTarget.className) - 1)
     } else {
       section.scrollTop = parseInt(e.currentTarget.className) * height;
     }
@@ -131,7 +156,7 @@ function ShortsList() {
 
   return (
     <>
-      <div className="shorts-list-box">
+      <div className="shorts-list-box" >
         {shorts}
       </div>
       <div className={commentView}>

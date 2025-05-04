@@ -1,0 +1,51 @@
+@media (prefers-color-scheme: dark) {
+
+  body,
+  footer,
+  header,
+  section,
+  .header,
+  .footer,
+  .preview-board,
+  input,
+  textarea,
+  .board-option-modal,
+  .pay-info-box,
+  .comment-header,
+  .comment-box.show,
+  .chat-title-box,
+  .msg-input-box {
+    color: white !important;
+    background-color: #111 !important;
+  }
+
+  .menu-list-box,
+  .menu,
+  .login-change {
+    background-color: #333 !important;
+    border-radius: 15px !important;
+    color: #fff;
+  }
+
+  .icon-btn svg,
+  .board-option-modal button,
+  .user-btn,
+  .find-id-pw button {
+    color: white;
+  }
+
+  .add-file-btn svg,
+  .user-btn,
+  .user-add-btn {
+    border-color: #fff !important;
+  }
+
+  .filter-btn {
+    color: #111;
+  }
+
+  .pay-box {
+    background-color: #333 !important;
+  }
+
+}

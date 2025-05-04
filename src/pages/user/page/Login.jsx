@@ -1,14 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../style/login.css';
 import SocialLoginButton from '../component/SocialLoginButton';
 import { faGoogle, faKaggle, faNeos } from '@fortawesome/free-brands-svg-icons';
 import { faArrowRightToBracket, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import api from '../../../utils/api';
-import logo from '../../../assets/images/logo-light-mode.png'
+import logoLight from '../../../assets/images/logo-light-mode.png'
+import logoDark from '../../../assets/images/logo-dark-mode.png'
 
 function Login() {
   const [loginId, setLoginId] = useState('');
   const [loginPw, setLoginPw] = useState('');
+  const [logo, setLogo] = useState(logoLight);
+  const isBrowserDarkMode = window.matchMedia('(prefers-color-scheme: dark)')
+    .matches
+  useEffect(() => {
+    setLogo(isBrowserDarkMode ? logoDark : logoLight)
+  }, [])
 
   function inputId(e) {
     enterLogin(e)

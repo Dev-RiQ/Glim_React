@@ -1,5 +1,7 @@
 .add-board-box {
   margin: auto;
+  width: 100%;
+  max-width: 500px;
 }
 
 .add-board-box svg {
@@ -15,17 +17,21 @@
 }
 
 .view-story-img {
-  width: 100vw;
+  width: 100%;
+  max-width: 500px;
   height: 100%;
   object-fit: contain;
 }
+
+
 
 .preview-story {
   position: fixed;
   height: calc(100vh - 100px);
   background-color: black;
   top: 50px;
-  left: 0;
+  width: 100%;
+  max-width: 500px;
 }
 
 .redo-img {
@@ -58,4 +64,24 @@
 
 .submit-story-add button {
   color: #fff;
+}
+
+@media (max-width:500px) {
+  .preview-story {
+    left: 0;
+  }
+}
+
+@media (min-width:500px) {
+  .preview-story {
+    left: calc(50vw - 250px);
+  }
+
+  .redo-img {
+    left: calc(50vw - 240px);
+  }
+
+  .submit-story-add {
+    right: calc(50vw - 240px);
+  }
 }

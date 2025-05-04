@@ -18,6 +18,10 @@ function UserMenu(props) {
               스토리 이력 보기
             </button>
             <hr className='menu-hr' />
+            <button className='menu' onClick={() => window.location.href = '/pay'}>
+              결제정보
+            </button>
+            <hr className='menu-hr' />
             <button className='menu' onClick={logout}>
               로그아웃
             </button>
@@ -70,9 +74,11 @@ function UserMenu(props) {
           <button className='menu' onClick={() => window.location.href = `/myPage/${props.userId}`}>
             계정정보
           </button>
+          <hr className='menu-hr' />
           <button className='menu' onClick={startChat}>
             채팅하기
           </button>
+          <hr className='menu-hr' />
           <button className='menu' onClick={() => props.setMenuModal(false)}>
             취소
           </button>

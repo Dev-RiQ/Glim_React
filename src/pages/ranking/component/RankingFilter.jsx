@@ -1,10 +1,7 @@
 import React, { useEffect, useState, } from 'react';
 import '../style/rankingFilter.css';
 import IconButton from '../../../components/IconButton';
-import { faChevronDown, faClock, faEye, faHeart } from '@fortawesome/free-solid-svg-icons';
-import first from '../../../assets/images/1st.png'
-import second from '../../../assets/images/2nd.png'
-import third from '../../../assets/images/3rd.png'
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import FilterBox from './FilterBox';
 
 const periodes = ['realtime', 'day', 'week', 'month', 'year']

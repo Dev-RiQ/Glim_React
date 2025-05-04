@@ -4,4 +4,7 @@
   padding: 10px 0;
   display: flex;
   overflow-x: auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  transition: 0.2s;
 }

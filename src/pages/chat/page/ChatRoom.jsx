@@ -18,6 +18,9 @@ function ChatRoom() {
   const [menu, setMenu] = useState([])
   const [menuModal, setMenuModal] = useState(false)
   const [user, setUser] = useState(null)
+  const [offset, setOffset] = useState(0)
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [scrollTop, setScrollTop] = useState(true)
 
   useEffect(() => {
     getUserInfo()
@@ -31,7 +34,9 @@ function ChatRoom() {
   }, [user])
 
   useEffect(() => {
-    user && msgList && getRoomSet()
+    if (msgList && msgList.length === 1) {
+      getRoomSet()
+    }
   }, [user, msgList])
 
   useEffect(() => {
@@ -40,13 +45,37 @@ function ChatRoom() {
     }
   }, [socketMsgList, msgList])
 
+  async function scroll(e) {
+    if (offset === 0) return;
+    const rect = e.currentTarget.getBoundingClientRect()
+    setScrollTop(rect.bottom !== (window.innerHeight - 50))
+    if (rect.top > 0) {
+      if (isLoaded) return;
+      setIsLoaded(true)
+      const height = rect.height;
+      const target = e.currentTarget
+      await getMsgList()
+      setTimeout(() => {
+        const targetRect = target.getBoundingClientRect()
+        document.querySelector('section').style.scrollBehavior = 'auto';
+        document.querySelector('section').scrollTop = targetRect.height - height - 100;
+        document.querySelector('section').style.scrollBehavior = 'smooth';
+        setIsLoaded(false)
+      }, 100);
+    }
+  }
+
+
   async function getUserInfo() {
     const res = await api.get(`/chat/users/${roomId}`)
     res && setUser(res)
+    !res && setTimeout(() => {
+      (window.history.back())
+    }, 500);
   }
 
   async function getMsgList() {
-    let res = await api.get('/chat/' + roomId)
+    let res = await api.get('/chat/' + roomId + (offset !== 0 ? `/${offset}` : ''))
     let list = [];
     setLoginId(res?.loginId)
     res?.msgList?.forEach(msg => {
@@ -54,7 +83,10 @@ function ChatRoom() {
         <ChatMsg msgId={msg.msgId} loginId={res.loginId} id={msg.userId} content={msg.content} userImg={user?.img} createdAt={msg.createdAt} />
       </div>]
     })
-    setMsgList(list);
+    setMsgList([list, ...msgList]);
+    res.msgList[0] && setOffset(res.msgList[0].msgId)
+    !res && offset === 0 && setMsgList([(<div className='no-list'><p>전송된 채팅이 존재하지 않습니다.</p></div>)])
+    !res.msgList[0] && setOffset(0)
   }
   function getRoomSet() {
     setTimeout(() => {
@@ -94,7 +126,9 @@ function ChatRoom() {
     setSocketMsgList([...socketMsgList, (<div key={msg.msgId}>
       <ChatMsg msgId={msg.msgId} loginId={loginId} id={msg.userId} content={msg.content} userImg={user.img} createdAt={msg.createdAt} />
     </div>)])
-    scrollBottom()
+    if (!scrollTop) {
+      scrollBottom()
+    }
   }
 
   function scrollBottom() {
@@ -139,7 +173,7 @@ function ChatRoom() {
               <IconButton icon={faEllipsis} />
             </div>
           </div>
-          <div className='chat-list-box'>
+          <div className='chat-list-box' onWheel={scroll} onTouchMove={scroll}>
             {msgList}
             {socketMsgList}
             <div className='empty-space'></div>

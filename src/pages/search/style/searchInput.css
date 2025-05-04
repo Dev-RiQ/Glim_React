@@ -3,7 +3,7 @@
 }
 
 .search-input {
-  width: calc(100% - 20px);
+  width: calc(100% - 60px);
   padding: 10px;
   padding-left: 40px;
 }
@@ -43,10 +43,10 @@
 }
 
 .ranking-info {
-  position: fixed;
-  z-index: 1000;
+  position: absolute;
   right: 7px;
-  bottom: 55px;
+  bottom: calc(-100vh + 160px);
+  z-index: 1000;
   color: #fff;
   background-color: royalblue;
   padding: 2px 5px;
@@ -55,10 +55,10 @@
 }
 
 .ranking-btn {
-  position: fixed;
-  z-index: 1000;
+  position: absolute;
   right: 10px;
-  bottom: 80px;
+  bottom: calc(-100vh + 185px);
+  z-index: 1000;
   border-radius: 50%;
   background-color: royalblue;
 }

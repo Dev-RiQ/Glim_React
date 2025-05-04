@@ -29,3 +29,20 @@
   font-size: 14px;
   float: left;
 }
+
+.follow-list-box {}
+
+.back {
+  width: 100vw;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.back-btn {
+  width: 40px;
+}
+
+.type-title {
+  font-size: 18px;
+}

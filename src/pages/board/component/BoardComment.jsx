@@ -42,7 +42,7 @@ function BoardComment(props) {
       commentBoxes = [...commentBoxes, setComment(element, true)];
     });
     res && setCommentList([...commentList, commentBoxes])
-    res && setOffset(offset + res[commentBoxes.length - 2].id)
+    res && setOffset(res[commentBoxes.length - 2].id)
     !res && offset === 0 && setCommentList([commentBoxes, (<div className='no-list'><p>작성된 댓글이 존재하지 않습니다.</p></div>)])
     !res && setOffset(0)
   }

@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../style/join.css';
 import ShowToast from '../../main/hook/ShowToast';
 import IconButton from '../../../components/IconButton';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import logo from '../../../assets/images/logo-light-mode.png'
+import logoLight from '../../../assets/images/logo-light-mode.png'
+import logoDark from '../../../assets/images/logo-dark-mode.png'
 import apiFile from '../../../utils/apiFile';
 import api from '../../../utils/api';
 
@@ -19,6 +20,12 @@ function Join() {
   const [idOK, setIdOK] = useState(false)
   const [nicknameOK, setNicknameOK] = useState(false)
   const [codeOK, setCodeOK] = useState(false)
+  const [logo, setLogo] = useState(logoLight);
+  const isBrowserDarkMode = window.matchMedia('(prefers-color-scheme: dark)')
+    .matches
+  useEffect(() => {
+    setLogo(isBrowserDarkMode ? logoDark : logoLight)
+  }, [])
 
   function inputId(e) {
     if (e.target.value?.length > 16) {

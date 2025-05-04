@@ -14,7 +14,7 @@ function BoardMiddle(props) {
   useEffect(() => {
     showBoardMiddle();
     setLikeCount();
-  }, [isSave, props.isLike, like])
+  }, [isSave, props.isLike, like, props.commentView])
 
   async function boardSave(e) {
     const res = isSave ? await api.delete(`/boardSave/${data.id}`)

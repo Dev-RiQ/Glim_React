@@ -3,6 +3,7 @@ import "../style/myPage.css"
 import MyPageUserInfo from '../component/MyPageUserInfo';
 import { useParams } from 'react-router-dom';
 import api from '../../../utils/api';
+import ShowToast from '../../main/hook/ShowToast';
 
 function MyPage() {
   const userId = useParams().id;
@@ -18,12 +19,14 @@ function MyPage() {
 
   async function getUserInfo(id) {
     const user = (id ? await api.get(`/auth/${id}`) : await api.get('/auth/me'))
-
-    setMyPage(
+    user && setMyPage(
       <div className="mypage-box">
         <MyPageUserInfo user={user} isMine={user.isMine !== undefined ? user.isMine : true} />
       </div>
     )
+    !user && setTimeout(() => {
+      (window.history.back())
+    }, 500);
   }
 
   return (

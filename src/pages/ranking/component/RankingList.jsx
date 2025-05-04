@@ -14,7 +14,11 @@ function RankingList(props) {
     props.list?.forEach((element, idx) => {
       rankingList = [...rankingList, getRankBox(element, idx)]
     })
-    setRanking(rankingList)
+    if (!props.list) {
+      setRanking([(<div className='no-list'><p>랭킹 게시글 정보가 존재하지 않습니다.</p></div>)])
+    } else {
+      setRanking(rankingList)
+    }
   }
 
   function getRankBox(element, idx) {

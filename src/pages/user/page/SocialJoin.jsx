@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../style/join.css';
 import ShowToast from '../../main/hook/ShowToast';
-import IconButton from '../../../components/IconButton';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import logo from '../../../assets/images/logo-light-mode.png'
-import { useLocation, useParams } from 'react-router-dom';
+import logoLight from '../../../assets/images/logo-light-mode.png'
+import logoDark from '../../../assets/images/logo-dark-mode.png'
+import { useLocation } from 'react-router-dom';
 import api from '../../../utils/api';
-import apiFile from '../../../utils/apiFile';
 
 function SocialJoin() {
   const [phone, setPhone] = useState(null)
@@ -16,6 +14,12 @@ function SocialJoin() {
   const [codeOK, setCodeOK] = useState(false)
   const location = useLocation()
   const [token, setToken] = useState(location.state.accessToken)
+  const [logo, setLogo] = useState(location.state.accessToken)
+  const isBrowserDarkMode = window.matchMedia('(prefers-color-scheme: dark)')
+    .matches
+  useEffect(() => {
+    setLogo(isBrowserDarkMode ? logoDark : logoLight)
+  }, [])
 
   if (!(token.length > 100)) {
     window.location.href = "/login";

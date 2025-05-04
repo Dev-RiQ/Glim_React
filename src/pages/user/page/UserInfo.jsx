@@ -136,8 +136,8 @@ function UserInfo() {
   return (
     <div className="join-box">
       <div className='user-img-setting' onClick={e => inputFile(e)}>
-        {imgPre ?
-          <img className='view-user-img' src={imgPre} alt="logo" width="100px" height="100px" decoding="async" loading="lazy" />
+        {img ?
+          <img className='view-user-img' src={img} alt="logo" width="100px" height="100px" decoding="async" loading="lazy" />
           : (<><IconButton icon={faPlus} /><p>이미지 추가</p></>)}
 
       </div>

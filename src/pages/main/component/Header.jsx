@@ -10,12 +10,12 @@ function Header() {
   const [viewMode, changeMode] = useState(logoLightMode);
   const [hasAlarm, setHasAlarm] = useState(false)
   const [hasChat, setHasChat] = useState(false)
-  function changeViewMode() {
-    changeMode(viewMode === logoLightMode ? logoDarkMode : logoLightMode);
-  }
+  const isBrowserDarkMode = window.matchMedia('(prefers-color-scheme: dark)')
+    .matches
 
   useEffect(() => {
     getSse()
+    changeMode(isBrowserDarkMode ? logoDarkMode : logoLightMode);
   }, [])
 
   async function getSse() {

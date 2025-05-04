@@ -19,13 +19,25 @@
   margin-right: 5px;
 }
 
+@media (min-width:500px) {
+  .comment-box {
+    left: calc(50vw - 250px);
+  }
+}
+
+@media (max-width:500px) {
+  .comment-box {
+    left: 0;
+  }
+}
+
 .comment-box {
   background-color: #fff;
   width: 100%;
+  max-width: 500px;
   height: 100vh;
   position: fixed;
   top: 0;
-  left: 0;
   border-radius: 20px;
   z-index: 100;
   transition: 0.2s;

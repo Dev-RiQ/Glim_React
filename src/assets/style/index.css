@@ -187,23 +187,9 @@ section {
   scroll-behavior: smooth;
 }
 
-@media screen and (min-width:1024px) {
-  section>div {
-    width: 100%;
-    max-width: 500px;
-  }
-}
-
-@media screen and (min-width:768px) and (max-width: 1023px) {
-  section>div {
-    width: 100%;
-  }
-}
-
-@media screen and (max-width: 767px) {
-  section>div {
-    width: 100%;
-  }
+section>div {
+  width: 100%;
+  max-width: 500px;
 }
 
 svg {
@@ -239,6 +225,7 @@ a:active {
 }
 
 .no-list {
+  width: 100% !important;
   height: calc(100vh - 100px);
   display: flex;
   align-items: center;

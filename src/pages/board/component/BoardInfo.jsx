@@ -13,6 +13,7 @@ function BoardInfo(props) {
   const [commentView, setCommentView] = useState('comment-box')
   const [subTitle, setSubTitle] = useState('')
   const [isLike, setIsLike] = useState(data?.isLike)
+  const [target, setTarget] = useState(null)
 
   useEffect(() => {
     if (data?.isAd) {
@@ -27,6 +28,8 @@ function BoardInfo(props) {
   useEffect(() => {
     if (commentView === 'comment-box') {
       setComments(null);
+    } else {
+      target?.pause()
     }
   }, [commentView])
 
@@ -37,6 +40,7 @@ function BoardInfo(props) {
     }
     setComments(ShowComment(data, setCommentView))
     setCommentView('comment-box show')
+
   }
 
   async function boardLike() {
@@ -49,8 +53,31 @@ function BoardInfo(props) {
     res && setIsLike(!isLike)
   }
 
+  function musicStart(e) {
+    if (e.currentTarget.firstChild.toString().includes('Audio') && !comments) {
+      if (e.currentTarget.firstChild.paused) {
+        e.currentTarget.firstChild.volume = 0.3
+        e.currentTarget.firstChild.play()
+      }
+    }
+  }
+  function musicPlaying(e) {
+    const target = e.currentTarget;
+    setTarget(target);
+    const interval = setInterval(() => {
+      const rect = target.parentNode.getBoundingClientRect()
+      if (rect.top < -200 || rect.top > 500) {
+        target.pause()
+        clearInterval(interval);
+      }
+    }, 100);
+  }
+
   return (
-    <div className="board-box">
+    <div className="board-box" onTouchStart={musicStart} onWheel={musicStart}>
+      {data.bgm ?
+        <audio src={data.bgm.fileName} loop onPlaying={musicPlaying} />
+        : <></>}
       <UserPortion user={data?.user} subTitle={subTitle} type={'board'} />
       <BoardImage imgs={data?.img} boardLike={boardLike} />
       <BoardMiddle data={data} isLike={isLike} boardLike={boardLike} boardComment={boardComment} comments={comments} commentView={commentView} />

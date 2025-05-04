@@ -5,6 +5,9 @@ import api from '../../../utils/api';
 
 function StoryList(props) {
   const [stories, setStories] = useState(null);
+  const [isClick, setIsClick] = useState(false);
+  const [pointer, setPointer] = useState(0);
+  const [pointerAfter, setPointerAfter] = useState(0);
 
   useEffect(() => {
     setStories(getStoryList())
@@ -16,7 +19,12 @@ function StoryList(props) {
     storyList?.forEach(element => {
       storyBoxes = [...storyBoxes, setStoryBox(element)];
     });
+    storyBoxes = setTest(storyBoxes)
     return storyBoxes;
+  }
+
+  function setTest(storyList) {
+    return [storyList, storyList, storyList, storyList, storyList, storyList, storyList, storyList, storyList, storyList, storyList, storyList, storyList, storyList, storyList]
   }
 
   async function setMyStory() {
@@ -36,13 +44,24 @@ function StoryList(props) {
     )
   }
 
+  function click(e) {
+    setPointer(e.clientX)
+    setIsClick(true)
+  }
+  function clickOver(e) {
+    setIsClick(false)
+    e.currentTarget.scrollLeft += pointer - pointerAfter;
+    setPointer(0)
+    setPointerAfter(0)
+  }
   function clickDrag(e) {
-    console.log(e)
-    console.log(e.target)
+    if (isClick) {
+      setPointerAfter(e.clientX)
+    }
   }
 
   return (
-    <div className="story-list-box" onDragStart={e => clickDrag(e)}>
+    <div className="story-list-box" onMouseDown={e => click(e)} onMouseMove={e => clickDrag(e)} onMouseUp={e => clickOver(e)}>
       {stories}
     </div>
   )

@@ -3,6 +3,8 @@ import '../style/userList.css';
 import { useLocation } from 'react-router-dom';
 import UserImage from '../component/UserImage';
 import api from '../../../utils/api';
+import IconButton from '../../../components/IconButton';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
 function UserList() {
   const location = useLocation()
@@ -10,10 +12,23 @@ function UserList() {
   const userId = location.state.userId
   const [userList, setUserList] = useState([])
   const [offset, setOffset] = useState(0);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     moreUserList()
   }, [])
+
+  async function scroll(e) {
+    if (offset === 0) return;
+    const rect = e.currentTarget.getBoundingClientRect()
+    if (rect.bottom < window.innerHeight) {
+      if (isLoaded) return;
+      setIsLoaded(true)
+      await moreUserList()
+      setIsLoaded(false)
+    }
+  }
+
 
   async function moreUserList() {
     let list = []
@@ -40,13 +55,27 @@ function UserList() {
         </div>
       )]
     })
-    list && setOffset(list[list.length - 1].id)
     list && setUserList([...userList, showUserList])
+    list && setOffset(list[list.length - 1].id)
+    !list && offset === 0 && setUserList([(<div className='no-list'><p>도착한 알림이 존재하지 않습니다.</p></div>)])
+    !list && setOffset(0)
   }
 
   return (
-    <div className="user-list-box">
-      {userList}
+    <div className='follow-list-box'>
+      <div className='back'>
+        <div className='back-btn' onClick={() => window.history.back()}>
+          <IconButton icon={faChevronLeft} />
+        </div>
+        <div className='type-title'>
+          {type === 'follower' ?
+            '팔로워'
+            : '팔로잉'}
+        </div>
+      </div>
+      <div className="user-list-box" onWheel={scroll} onTouchMove={scroll}>
+        {userList}
+      </div>
     </div>
   );
 }

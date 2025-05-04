@@ -35,9 +35,12 @@ function UserImage(props) {
     if (e.currentTarget.className.includes('has-story')) {
       const res = await api.get(`/story/${id}`)
       res && setStoryList(res)
-      setStory(showStory(res[0], getStoryLine(res, 0), endStoryView))
-      setStoryPage(0)
-      setName(name + " show")
+      res && setStory(showStory(res[0], getStoryLine(res, 0), endStoryView))
+      res && setStoryPage(0)
+      res && setName(name + " show")
+      !res && setTimeout(() => {
+        (window.history.back())
+      }, 500);
     }
   }
 

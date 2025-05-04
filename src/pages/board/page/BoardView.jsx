@@ -15,6 +15,9 @@ function BoardView() {
   async function getData() {
     const res = await api.get(`/board/show/${id}`)
     res && setView(<BoardInfo data={res} />)
+    !res && setTimeout(() => {
+      (window.history.back())
+    }, 500);
   }
 
   return (

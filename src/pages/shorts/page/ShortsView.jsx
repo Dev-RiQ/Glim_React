@@ -36,6 +36,9 @@ function ShortsView(props) {
   async function getShorts() {
     const res = await api.get(`/board/shorts/show/${id}`)
     res && setShorts(setShortsBox(res))
+    !res && setTimeout(() => {
+      (window.history.back())
+    }, 500);
   }
 
   function pauseVideo(e) {

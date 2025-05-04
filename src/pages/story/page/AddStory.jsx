@@ -5,10 +5,13 @@ import { faAdd, faX } from '@fortawesome/free-solid-svg-icons';
 import api from '../../../utils/api';
 import ShowToast from '../../main/hook/ShowToast';
 import apiFile from '../../../utils/apiFile';
+import { render } from '@testing-library/react';
+import Toast from '../../../components/Toast';
 
 function AddStory() {
   const [img, setImg] = useState(null)
   const [file, setFile] = useState(null)
+  const [isUpLoading, setIsUpLoading] = useState(false)
 
   function uploadFile(e) {
     const target = e.currentTarget.lastChild;
@@ -31,6 +34,13 @@ function AddStory() {
   }
 
   async function addStory() {
+    if (isUpLoading) {
+      ShowToast('error', '업로드 중입니다.')
+      return;
+    }
+    setIsUpLoading(true)
+    const apiErrorToast = render(<Toast type={'success'} msg={'업로드 중입니다.'} />).container.firstChild;
+    document.querySelector('section').appendChild(apiErrorToast);
     let filename;
     if (file) {
       const sendFiles = {
@@ -41,12 +51,19 @@ function AddStory() {
     }
 
     if (!filename) {
-      ShowToast('error', '사진 업로드에 실패했습니다.')
+      document.querySelector('section').removeChild(apiErrorToast);
+      ShowToast('error', '파일 업로드 중 에러가 발생했습니다.')
+      setIsUpLoading(false)
       return
     }
 
     const res = await api.post('/story', { "fileName": filename })
+    setIsUpLoading(false)
+    document.querySelector('section').removeChild(apiErrorToast);
     res && ShowToast('success', '스토리 등록이 완료되었습니다.')
+    setTimeout(() => {
+      window.location.href = '/'
+    }, 500);
   }
 
   return (

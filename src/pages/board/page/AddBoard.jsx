@@ -9,6 +9,8 @@ import ShortsVideo from '../../shorts/component/ShortsVideo';
 import UserImage from '../../user/component/UserImage';
 import MusicPlay from '../component/MusicPlay';
 import apiFile from '../../../utils/apiFile';
+import { render } from '@testing-library/react';
+import Toast from '../../../components/Toast';
 
 function AddBoard() {
   const [files, setFiles] = useState(null)
@@ -33,6 +35,7 @@ function AddBoard() {
   const [like, setLike] = useState(true)
   const [comment, setComment] = useState(true)
   const [isAd, setIsAd] = useState(false)
+  const [isUpLoading, setIsUpLoading] = useState(false)
 
   useEffect(() => {
     setMusicList()
@@ -114,7 +117,7 @@ function AddBoard() {
       setImages(<BoardImage imgs={imageList} />)
       setBoardType('basic')
     } else if (videoList.length > 0) {
-      setVideo(<ShortsVideo video={video} pre="true" />)
+      setVideo(<ShortsVideo video={videoList[0]} pre="true" />)
       setBoardType('shorts')
     }
   }
@@ -126,32 +129,38 @@ function AddBoard() {
   }
 
   async function addBoard() {
+    if (isUpLoading) {
+      ShowToast('error', '업로드 중입니다.')
+      return;
+    }
     if (!content) {
       ShowToast('error', '내용을 입력해주세요.')
       return
     }
-
-    let filenames = []
-    if (boardType === "shorts") {
-      if (files) {
-        const sendFiles = {
-          "files": files,
-          "fileType": "VIDEO"
-        }
-        filenames = await apiFile.post('/file', sendFiles)
+    setIsUpLoading(true)
+    const apiErrorToast = render(<Toast type={'success'} msg={'업로드 중입니다.'} />).container.firstChild;
+    document.querySelector('section').appendChild(apiErrorToast);
+    let sendFiles = new FormData()
+    if (files) {
+      for (const file of files) {
+        sendFiles.append('files', file)
+      }
+      if (boardType === "shorts") {
+        sendFiles.append('fileType', "VIDEO")
+      } else {
+        sendFiles.append('fileType', "IMAGE")
       }
     } else {
-      if (files) {
-        const sendFiles = {
-          "files": files,
-          "fileType": "IMAGE"
-        }
-        filenames = await apiFile.post('/file', sendFiles)
-      }
-    }
-
-    if (filenames.length === 0) {
+      document.querySelector('section').removeChild(apiErrorToast);
       ShowToast('error', '파일 업로드 중 에러가 발생했습니다.')
+      setIsUpLoading(false)
+      return;
+    }
+    const filenames = await apiFile.post('/file', sendFiles)
+    if (!filenames) {
+      document.querySelector('section').removeChild(apiErrorToast);
+      ShowToast('error', '파일 업로드 중 에러가 발생했습니다.')
+      setIsUpLoading(false)
       return
     }
 
@@ -168,8 +177,13 @@ function AddBoard() {
     }
 
     const res = await api.post('/board', body)
+    setIsUpLoading(false)
+    document.querySelector('section').removeChild(apiErrorToast);
     !res && ShowToast('error', '게시글 등록에 실패했습니다.')
     res && ShowToast('success', '게시글 등록에 성공했습니다.')
+    setTimeout(() => {
+      res && (window.location.href = '/')
+    }, 500);
   }
 
   function inputContent(e) {
@@ -324,7 +338,7 @@ function AddBoard() {
             </div>
             <div>
               <textarea className='add-board-content' placeholder='내용 입력' spellCheck="false" onChange={e => inputContent(e)} />
-              <div className='sub-info-box'>
+              <div className={`sub-info-box ${boardType === 'shorts' ? 'video' : ''}`}>
                 <div>
                   <div className='add-board-sub-info' onClick={addUser}>
                     <IconButton icon={faUserTag} />
@@ -366,7 +380,7 @@ function AddBoard() {
                 </div>
                 {boardType !== 'shorts' ?
                   <div className='option-box none' onClick={e => optionAd(e)}>
-                    <span>광고로 등록하기기</span>
+                    <span>광고 등록 하기</span>
                     <IconButton icon={faCheckCircle} />
                     <input type="checkbox" />
                   </div>

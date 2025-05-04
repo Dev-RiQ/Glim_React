@@ -11,7 +11,7 @@ function ShortsVideo(props) {
   const [video, setVideo] = useState(null);
   const [videoDuration, setVideoDuration] = useState(0);
   const [interval, setTimeInterval] = useState(null);
-  const [isLike, setIsLike] = useState(data.isLike)
+  const [isLike, setIsLike] = useState(data?.isLike)
 
   let touchEnd = 0;
   let totalLength = 0;
@@ -69,43 +69,49 @@ function ShortsVideo(props) {
       api.post(`/boardView/${data.id}`)
     }
     res && setIsLike(!isLike)
+    res && (data.likeCount = parseInt(data.likeCount) + (isLike ? -1 : 1))
   }
 
   return (
     <>
-      <div className="shorts-video-box">
-        <video className='shorts-video' poster={data.img[1]} src={data.img[0]} playsInline loop width="100%" height="100%" decoding="async" loading="lazy" onClick={((e) => control(e))} onPlay={e => videoPlay(e)} onPause={e => videoPause(e)} />
-        <div className='shorts-info-box'>
-          <div className='shorts-user-box'>
-            <UserPortion user={data.user} id={data.id} subTitle={data.createdAt} type={'shorts'} />
+      {props.pre ?
+        <div className="shorts-video-box">
+          <video className='shorts-video' src={props.video} playsInline loop width="100%" height="100%" decoding="async" loading="lazy" onClick={((e) => control(e))} onPlay={e => videoPlay(e)} onPause={e => videoPause(e)} />
+        </div>
+        : <div className="shorts-video-box">
+          <video className='shorts-video' poster={data?.img[1]} src={data?.img[0]} playsInline loop width="100%" height="100%" decoding="async" loading="lazy" onClick={((e) => control(e))} onPlay={e => videoPlay(e)} onPause={e => videoPause(e)} />
+          <div className='shorts-info-box'>
+            <div className='shorts-user-box'>
+              <UserPortion user={data.user} id={data.id} subTitle={data.createdAt} type={'shorts'} />
+            </div>
+            <div className='shorts-content-box'>
+              <p className='shorts-content'>{data.content}</p>
+            </div>
+            <div className='shorts-controller' onMouseUp={e => endTouch(e)} onMouseDown={e => onTouch(e)} onTouchStart={e => onTouch(e)} onTouchEnd={e => endTouch(e)}>
+              <progress min="0" value={time} max="100" />
+            </div>
           </div>
-          <div className='shorts-content-box'>
-            <p className='shorts-content'>{data.content}</p>
-          </div>
-          <div className='shorts-controller' onMouseUp={e => endTouch(e)} onMouseDown={e => onTouch(e)} onTouchStart={e => onTouch(e)} onTouchEnd={e => endTouch(e)}>
-            <progress min="0" value={time} max="100" />
+          <div className='shorts-button-box'>
+            <div onClick={likeShorts}>
+              {isLike ?
+                <IconButton icon={faHeart} check="like" />
+                : <IconButton icon={faHeart} />
+              }
+              <p>{data.viewLikes ?
+                data.likeCount
+                : '좋아요'
+              }</p>
+            </div>
+            <div onClick={e => props.shortsComment(e, data)}>
+              <IconButton icon={faComment} />
+              <p>{data.commentable ?
+                data.commentCount
+                : '댓글 중지'
+              }</p>
+            </div>
           </div>
         </div>
-        <div className='shorts-button-box'>
-          <div onClick={likeShorts}>
-            {isLike ?
-              <IconButton icon={faHeart} check="like" />
-              : <IconButton icon={faHeart} />
-            }
-            <p>{data.viewLikes ?
-              data.likeCount
-              : '좋아요'
-            }</p>
-          </div>
-          <div onClick={e => props.shortsComment(e, data)}>
-            <IconButton icon={faComment} />
-            <p>{data.commentable ?
-              data.commentCount
-              : '댓글 중지'
-            }</p>
-          </div>
-        </div>
-      </div>
+      }
     </>
   );
 }

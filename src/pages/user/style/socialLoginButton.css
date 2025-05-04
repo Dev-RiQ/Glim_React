@@ -6,16 +6,16 @@
   align-items: center;
   margin: 5px 0;
   border-radius: 10px;
-  background-color: lightskyblue;
+  background-color: rgba(135, 206, 250, 0.877);
   gap: 10px;
 }
 
 .button-box.naver {
-  background-color: rgb(103, 214, 151);
+  background-color: rgba(103, 214, 151, 0.89);
 }
 
 .button-box.kakao {
-  background-color: yellow;
+  background-color: rgba(255, 255, 3, 0.836);
 }
 
 .button-box.google {

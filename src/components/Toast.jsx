@@ -36,9 +36,6 @@ function Toast(props) {
     setTimeout(() => {
       setShow('toast-box show');
     }, 100);
-    setTimeout(() => {
-      setShow('toast-box');
-    }, 1400);
   }
 
   return (

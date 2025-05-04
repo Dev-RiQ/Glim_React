@@ -26,10 +26,11 @@ const UserList = lazy(() => import('./user/page/UserList'));
 const Ranking = lazy(() => import('./ranking/page/Ranking'));
 const MySave = lazy(() => import('./board/page/MySave'));
 const MyStory = lazy(() => import('./story/page/MyStory'));
+const Pay = lazy(() => import('./pay/page/Pay'));
 
 function Routing() {
   useEffect(() => {
-    if ((!window.location.pathname.includes('/login') && window.location.pathname !== '/join') && !jwtToken.call()) {
+    if (!window.location.pathname.includes('/login') && !window.location.pathname.includes('/find') && !window.location.pathname.includes('join') && !jwtToken.call()) {
       window.location.href = '/login';
     }
   }, [])
@@ -44,7 +45,7 @@ function Routing() {
             <Route path='/findPw' element={<FindPw />} />
             <Route path='/changePhone' element={<ChangePhone />} />
             <Route path='/join' element={<Join />} />
-            <Route path='/socialJoin' element={<SocialJoin />} />
+            <Route path='/socialjoin' element={<SocialJoin />} />
             <Route path='/' element={<Main />} />
             <Route path='/alarm' element={<Alarm />} />
             <Route path='/login/:accessToken' element={<LoginPro />} />
@@ -64,6 +65,7 @@ function Routing() {
             <Route path='/chat/' element={<Chat />} />
             <Route path='/chatRoom/:id' element={<ChatRoom />} />
             <Route path='/ranking' element={<Ranking />} />
+            <Route path='/pay' element={<Pay />} />
             <Route path='*' element={<NotFoundPage />} />
           </Routes>
         </Suspense>
