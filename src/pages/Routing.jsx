@@ -26,6 +26,7 @@ const UserList = lazy(() => import('./user/page/UserList'));
 const Ranking = lazy(() => import('./ranking/page/Ranking'));
 const MySave = lazy(() => import('./board/page/MySave'));
 const MyStory = lazy(() => import('./story/page/MyStory'));
+const MyStoryView = lazy(() => import('./story/page/MyStoryView'));
 const Pay = lazy(() => import('./pay/page/Pay'));
 
 function Routing() {
@@ -54,6 +55,7 @@ function Routing() {
             <Route path='/shorts/' element={<Shorts />} />
             <Route path='/shorts/:id' element={<ShortsView />} />
             <Route path='/addStory' element={<AddStory />} />
+            <Route path='/story/:id' element={<MyStoryView />} />
             <Route path='/addBoard/' element={<AddBoard />} />
             <Route path='/board/:id' element={<BoardView />} />
             <Route path='/myPage/' element={<MyPage />} />

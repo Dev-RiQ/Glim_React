@@ -8,7 +8,7 @@ import api from '../../../utils/api';
 import sseEvent from '../../../utils/sse';
 
 function Chat() {
-  const [chatList, setChatList] = useState([])
+  const [chatList, setChatList] = useState([(<div className='no-list'><p>시작된 채팅이 존재하지 않습니다.</p></div>)])
   const [showSearchUsers, setShowSearchUsers] = useState([])
   const [userModal, setUserModal] = useState(false)
 
@@ -29,7 +29,7 @@ function Chat() {
       data?.forEach(room => {
         list = [...list, <><ChatList data={room} /></>];
       })
-      setChatList([list])
+      res && setChatList([list])
       // setChatList([list, ...chatList])
     })
   }

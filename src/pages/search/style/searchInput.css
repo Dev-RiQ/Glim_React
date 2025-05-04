@@ -42,10 +42,30 @@
   height: 40px;
 }
 
+@media (max-width: 500px) {
+  .ranking-info {
+    right: 7px;
+
+  }
+
+  .ranking-btn {
+    right: 10px;
+  }
+}
+
+@media (min-width: 500px) {
+  .ranking-info {
+    right: calc(50vw - 243px);
+  }
+
+  .ranking-btn {
+    right: calc(50vw - 240px);
+  }
+}
+
 .ranking-info {
-  position: absolute;
-  right: 7px;
-  bottom: calc(-100vh + 160px);
+  position: fixed;
+  bottom: 58px;
   z-index: 1000;
   color: #fff;
   background-color: royalblue;
@@ -55,9 +75,8 @@
 }
 
 .ranking-btn {
-  position: absolute;
-  right: 10px;
-  bottom: calc(-100vh + 185px);
+  position: fixed;
+  bottom: 80px;
   z-index: 1000;
   border-radius: 50%;
   background-color: royalblue;

@@ -10,6 +10,7 @@ function SearchList(props) {
   const [offset, setOffset] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasData, setHasData] = useState(false);
+  const [nums, setNum] = useState(0)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -50,8 +51,13 @@ function SearchList(props) {
     res?.forEach(element => {
       searchBoxes = [...searchBoxes, setSearchBox(element)];
     });
-    res && setSearchs(searchBoxes)
+    if (nums === num) {
+      res && setSearchs([...search, searchBoxes])
+    } else {
+      res && setSearchs([searchBoxes])
+    }
     res && setOffset(res[res.length - 1].id)
+    res && setNum(num)
     res && setHasData(true)
     !res && setOffset(0)
   }

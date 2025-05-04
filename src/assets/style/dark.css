@@ -30,14 +30,19 @@
   .icon-btn svg,
   .board-option-modal button,
   .user-btn,
-  .find-id-pw button {
-    color: white;
+  .find-id-pw button,
+  .no-list {
+    color: white !important;
   }
 
   .add-file-btn svg,
   .user-btn,
   .user-add-btn {
     border-color: #fff !important;
+  }
+
+  .icon-btn.true svg {
+    color: royalblue !important;
   }
 
   .filter-btn {

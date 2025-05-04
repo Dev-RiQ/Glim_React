@@ -19,13 +19,9 @@ function StoryList(props) {
     storyList?.forEach(element => {
       storyBoxes = [...storyBoxes, setStoryBox(element)];
     });
-    storyBoxes = setTest(storyBoxes)
     return storyBoxes;
   }
 
-  function setTest(storyList) {
-    return [storyList, storyList, storyList, storyList, storyList, storyList, storyList, storyList, storyList, storyList, storyList, storyList, storyList, storyList, storyList]
-  }
 
   async function setMyStory() {
     const myInfo = await api.get('/auth/me')
