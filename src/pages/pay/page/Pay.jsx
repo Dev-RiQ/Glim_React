@@ -14,7 +14,6 @@ function Pay() {
 
   async function checkPay() {
     const res = await api.get('/auth/rate')
-    console.log(res.data)
     res && setIsPay(res.data === 0 ? false : true)
   }
 

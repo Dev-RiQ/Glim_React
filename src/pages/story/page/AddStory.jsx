@@ -13,6 +13,7 @@ function AddStory() {
   const [img, setImg] = useState(null)
   const [file, setFile] = useState(null)
   const [isUpLoading, setIsUpLoading] = useState(false)
+  const [target, setTarget] = useState(null)
 
   function uploadFile(e) {
     const target = e.currentTarget.lastChild;
@@ -20,9 +21,16 @@ function AddStory() {
   }
 
   function inputImg(e) {
+    let fileSize = e.target.files[0].size / 1024 / 1024
+    if (fileSize > 100) {
+      ShowToast('error', `최대 100MB까지 업로드 가능합니다. (현재 파일 크기 : ${fileSize.toFixed(2)} MB`)
+      redo();
+      return;
+    }
     if (e.target.files[0].type.startsWith('image/')) {
       setImg(URL.createObjectURL(e.target.files[0]))
       setFile(e.target.files[0])
+      setTarget(e.target)
     } else {
       e.target.value = null;
       ShowToast('error', '이미지 파일만 업로드 가능합니다.')
@@ -32,6 +40,7 @@ function AddStory() {
   function redo() {
     setFile(null);
     setImg(null);
+    target.value = '';
   }
 
   async function addStory() {

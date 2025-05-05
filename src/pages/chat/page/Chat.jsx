@@ -57,7 +57,7 @@ function Chat() {
           <div className='search-user-img-box'>
             <UserImage link={element.img} />
           </div>
-          <div onClick={e => goChat(e, element.id)} >
+          <div onClick={e => goChat(e, element.userId)} >
             <div>
               @{element.nickname}
             </div>
@@ -73,7 +73,7 @@ function Chat() {
 
   async function goChat(e, userId) {
     const res = await api.post(`/chat/room/${userId}`)
-    res && (window.location.href = `/chatRoom/${res}`)
+    res && (window.location.href = `/chatRoom/${res.roomId}`)
   }
 
   return (

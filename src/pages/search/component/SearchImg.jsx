@@ -1,7 +1,7 @@
 import React from 'react';
 import '../style/searchImg.css';
 import IconButton from '../../../components/IconButton';
-import { faImage, faVideo } from '@fortawesome/free-solid-svg-icons';
+import { faAd, faImage, faVideo } from '@fortawesome/free-solid-svg-icons';
 
 function SearchImg(props) {
   return (
@@ -9,7 +9,9 @@ function SearchImg(props) {
       <div className='search-type-icon-box'>
         {props.type === "BASIC" ?
           <IconButton icon={faImage} />
-          : <IconButton icon={faVideo} />
+          : props.type === "SHORTS" ?
+            <IconButton icon={faVideo} />
+            : <IconButton icon={faAd} />
         }
       </div>
       <img className='search-img' src={props.link} alt="SEARCH-IMG" width="100%" height="100%" decoding="async" loading="lazy" />

@@ -13,7 +13,6 @@ function SearchInput() {
       setShowSearchUsers([])
       return
     }
-    console.log(e.target.value)
     const searchList = await api.post('/auth/search', { "nickname": e.target.value })
     let testShow = []
     searchList?.forEach(element => {

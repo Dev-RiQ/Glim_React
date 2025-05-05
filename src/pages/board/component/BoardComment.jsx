@@ -22,8 +22,6 @@ function BoardComment(props) {
   async function scroll(e) {
     if (offset === 0) return;
     const rect = e.currentTarget.getBoundingClientRect()
-    console.log(rect.bottom)
-    console.log(window.innerHeight + 500)
     if (rect.bottom < window.innerHeight + 1000) {
       if (isLoaded) return;
       setIsLoaded(true)

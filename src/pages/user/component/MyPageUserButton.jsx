@@ -42,6 +42,7 @@ function MyPageUserButton(props) {
         <Recommend user={element} followAdd={followAdd} followCancel={followCancel} />
       )]
     })
+    !recList && (list = [<p className='rec-no-list'>팔로우 기반 추천 현황이 없습니다.</p>])
     setRecommend(list)
   }
 

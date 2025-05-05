@@ -45,7 +45,6 @@ function MySave() {
   }
 
   function setSaveBox(element) {
-    console.log(element)
     return (
       <div key={element.id} onClick={() => movePage(element.id, element.type)}>
         <SearchImg link={element.img} type={element.type} />

@@ -85,13 +85,27 @@ function AddBoard() {
     if (e.target.files[0].type.startsWith('video/') && e.target.files.length !== 1) {
       e.target.value = null;
       ShowToast('error', '숏츠는 1개의 영상만 업로드 가능합니다.')
+      redo();
       return
     }
     if (e.target.files.length > 10) {
       e.target.value = null;
       ShowToast('error', '최대 10장까지만 가능합니다.')
+      redo();
       return
     }
+
+    let fileSize = 0;
+    Array.from(e.target.files).forEach(file => {
+      fileSize += (file.size / 1024 / 1024)
+    })
+    if (fileSize > 100) {
+      e.target.value = null;
+      ShowToast('error', `총합 100MB까지 업로드 가능합니다. (현재 파일 크기 : ${fileSize.toFixed(2)}MB)`)
+      redo();
+      return;
+    }
+
     let imageList = [];
     let videoList = [];
     if (e.target.files[0].type.startsWith('video/')) {
@@ -224,7 +238,7 @@ function AddBoard() {
     let tagsShow = []
     searchList?.forEach(element => {
       tagsShow = [...tagsShow, (
-        <div className='show-search-user' onClick={e => plusUser(e, element.id, element.nickname)} >
+        <div className='show-search-user' onClick={e => plusUser(e, element.userId, element.nickname)} >
           <div className='search-user-img-box'>
             <UserImage hasStory={element.isStory} />
           </div>

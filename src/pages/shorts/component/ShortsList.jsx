@@ -31,7 +31,6 @@ function ShortsList() {
     if (offset === 0) return;
     if (isLoaded) return;
     setIsLoaded(true)
-    console.log('다음 펭디지 로딩')
     await getShortsList()
     setIsLoaded(false)
   }

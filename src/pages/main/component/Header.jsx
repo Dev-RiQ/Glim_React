@@ -37,7 +37,6 @@ function Header() {
 
   async function getHeader() {
     const res = await api.get('/auth/role')
-    console.log(res)
     let headerIcon = [];
     if (res === 'ROLE_ADMIN') {
       (headerIcon = [...headerIcon, getButton(faUserTie, '/admin', uri === '/admin' ? true : '')]);

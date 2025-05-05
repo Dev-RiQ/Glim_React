@@ -11,7 +11,7 @@ function Alarm(props) {
 
   useEffect(() => {
     let name = 'alarm-box'
-    if (alarm) {
+    if (alarm.isRead) {
       name += ' read';
     }
     setName(name);

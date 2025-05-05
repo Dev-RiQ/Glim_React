@@ -17,7 +17,9 @@
   .msg-input-box,
   .loading-box,
   .admin-modal-box,
-  .ad-modal {
+  .ad-modal,
+  .alarm-box.read,
+  .alarm-box {
     color: white !important;
     background-color: #111 !important;
   }
