@@ -1,17 +1,27 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../style/pay.css';
 import IconButton from '../../../components/IconButton';
 import { faCreditCard } from '@fortawesome/free-solid-svg-icons';
 import api from '../../../utils/api';
+import ShowToast from '../../main/hook/ShowToast';
 
 function Pay() {
   const [isPay, setIsPay] = useState(false);
 
-  function pay() {
-    // const res = api.get('billing/info')
+  useEffect(() => {
+    checkPay()
+  }, [])
 
-    console.log(isPay ? '결제취소' : '결제완료')
-    setIsPay(!isPay)
+  async function checkPay() {
+    const res = await api.get('/auth/rate')
+    console.log(res.data)
+    res && setIsPay(res.data === 0 ? false : true)
+  }
+
+  async function pay() {
+    const res = await api.post('/auth/rate')
+    res && ShowToast('success', res)
+    res && setIsPay(!isPay)
   }
 
   return (
