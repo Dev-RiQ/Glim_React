@@ -1,0 +1,32 @@
+.music-box.delete {
+  display: none;
+}
+
+.music-box {
+  width: calc(100% - 20px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 10px;
+}
+
+.music-info-box {
+  display: flex;
+  gap: 10px;
+}
+
+.music-adjust-box {
+  display: flex;
+}
+
+.music-info-text>div:first-child {
+  font-weight: bold;
+}
+
+.music-info-text>div:last-child {
+  color: #888;
+}
+
+.music-info-text>div {
+  text-align: left;
+}

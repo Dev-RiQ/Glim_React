@@ -1,0 +1,99 @@
+.ad-list-box {}
+
+.ad-box {
+  padding: 5px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ad-preview-btn {
+  width: 40px;
+}
+
+
+.ad-num-box {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.ad-board-link {
+  background-color: rgba(235, 98, 223, 0.651);
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 10px;
+}
+
+.ad-status-box {
+  width: 105px;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background-color: rgba(130, 230, 37, 0.527);
+}
+
+.ad-status-box.reject {
+  background-color: #888;
+
+}
+
+.ad-status-box.submit {
+  width: 50px;
+  background-color: royalblue;
+}
+
+.ad-status-box.rejecting {
+  width: 50px;
+  background-color: rgb(218, 55, 55);
+  margin-left: 5px;
+}
+
+.btn-box {}
+
+@media (min-width:500px) {
+  .ad-modal {
+    left: calc(50vw - 250px);
+  }
+}
+
+@media (max-width:500px) {
+  .ad-modal {
+    left: 0;
+  }
+}
+
+.ad-modal {
+  position: fixed;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  max-width: 500px;
+  z-index: 5000;
+  background-color: #fff;
+}
+
+.ad-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ad-modal-left {
+  display: flex;
+  align-items: center;
+}
+
+.ad-modal-right {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.ad-modal-icon {
+  margin-right: 10px;
+}
+
+.ad-modal-title {
+  font-size: 18px;
+}
