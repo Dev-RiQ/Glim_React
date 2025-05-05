@@ -23,7 +23,7 @@ function Pay() {
           : <div className='pay-content-box'>
             <div>✔️ 월 ￦100</div>
             <div>✔️ 광고제거</div>
-            <div>✔️ 기분좋음</div>
+            <div>✔️ 기분좋음 (개발자가)</div>
           </div>
         }
         <div className={`pay-btn ${isPay ? 'none' : ''}`} onClick={pay}>

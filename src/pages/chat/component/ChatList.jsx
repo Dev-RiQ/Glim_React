@@ -8,6 +8,7 @@ function ChatList(props) {
   const data = props.data
   const user = props.data.user
   const [isRead, setRead] = useState('chat-unread');
+  const userImgDefault = 'https://s3.ap-northeast-2.amazonaws.com/glim-bucket/userimages/user-default-image_128x128.webp'
 
   useEffect(() => {
     if (data.hasRead) {
@@ -25,11 +26,11 @@ function ChatList(props) {
   return (
     <div className="single-chat-box">
       <div className='chat-user-img'>
-        <UserImage link={user.img} />
+        <UserImage link={user ? user.img : userImgDefault} />
       </div>
       <div className='chat-info' onClick={e => openChat(e)}>
         <div className='chat-user-name'>
-          <span className='chat-user-text'>{user.nickname}</span>
+          <span className='chat-user-text'>{user ? user.nickname : '알 수 없음'}</span>
         </div>
         <div className='chat-user-msg'>
           <span className='chat-msg-content'>{data.msg}</span>

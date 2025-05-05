@@ -11,6 +11,7 @@ import MusicPlay from '../component/MusicPlay';
 import apiFile from '../../../utils/apiFile';
 import { render } from '@testing-library/react';
 import Toast from '../../../components/Toast';
+import Loading from '../../loading/page/Loading';
 
 function AddBoard() {
   const [files, setFiles] = useState(null)
@@ -138,8 +139,10 @@ function AddBoard() {
       return
     }
     setIsUpLoading(true)
-    const apiErrorToast = render(<Toast type={'success'} msg={'업로드 중입니다.'} />).container.firstChild;
-    document.querySelector('section').appendChild(apiErrorToast);
+    const apiLoading = render(<Loading upload={true} />).container.firstChild;
+    const apiLoadingToast = render(<Toast type={'success'} msg={'업로드 중입니다.'} />).container.firstChild;
+    document.querySelector('section').appendChild(apiLoading);
+    document.querySelector('section').appendChild(apiLoadingToast);
     let sendFiles = new FormData()
     if (files) {
       for (const file of files) {
@@ -151,17 +154,22 @@ function AddBoard() {
         sendFiles.append('fileType', "IMAGE")
       }
     } else {
-      document.querySelector('section').removeChild(apiErrorToast);
+      document.querySelector('section').removeChild(apiLoading);
+      document.querySelector('section').removeChild(apiLoadingToast);
       ShowToast('error', '파일 업로드 중 에러가 발생했습니다.')
       setIsUpLoading(false)
       return;
     }
-    const filenames = await apiFile.post('/file', sendFiles)
+    let filenames = await apiFile.post('/file', sendFiles)
     if (!filenames) {
-      document.querySelector('section').removeChild(apiErrorToast);
+      document.querySelector('section').removeChild(apiLoading);
+      document.querySelector('section').removeChild(apiLoadingToast);
       ShowToast('error', '파일 업로드 중 에러가 발생했습니다.')
       setIsUpLoading(false)
       return
+    }
+    if (typeof filenames === 'string') {
+      filenames = [filenames]
     }
 
     const body = {
@@ -178,7 +186,8 @@ function AddBoard() {
 
     const res = await api.post('/board', body)
     setIsUpLoading(false)
-    document.querySelector('section').removeChild(apiErrorToast);
+    document.querySelector('section').removeChild(apiLoading);
+    document.querySelector('section').removeChild(apiLoadingToast);
     !res && ShowToast('error', '게시글 등록에 실패했습니다.')
     res && ShowToast('success', '게시글 등록에 성공했습니다.')
     setTimeout(() => {

@@ -14,7 +14,10 @@
   .comment-header,
   .comment-box.show,
   .chat-title-box,
-  .msg-input-box {
+  .msg-input-box,
+  .loading-box,
+  .admin-modal-box,
+  .ad-modal {
     color: white !important;
     background-color: #111 !important;
   }
@@ -37,7 +40,8 @@
 
   .add-file-btn svg,
   .user-btn,
-  .user-add-btn {
+  .user-add-btn,
+  .add-file-btn {
     border-color: #fff !important;
   }
 

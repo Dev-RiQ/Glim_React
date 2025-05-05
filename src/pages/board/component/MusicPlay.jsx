@@ -10,6 +10,7 @@ function MusicPlay(props) {
   useEffect(() => {
     if (musicPlay.length > 0) {
       if (musicPlay[0].paused) {
+        musicPlay[0].volume = 0.3;
         musicPlay[0].play()
         setMusicStatus(<IconButton icon={faPause} />)
       } else {

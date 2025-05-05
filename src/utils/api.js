@@ -23,6 +23,7 @@ const api = axios.create({
 api.interceptors.response.use(
   (response) => {
     const data = response?.data?.data ? response?.data?.data : response?.data
+    console.log(data)
     if (data.token) {
       localStorage.setItem('accessToken', data.token)
       const originalRequest = response.config;
@@ -32,7 +33,6 @@ api.interceptors.response.use(
     if (data.length === 0) {
       return null;
     }
-    console.log(data)
     return data
   },
   (error) => {

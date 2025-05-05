@@ -4,6 +4,7 @@ import UserImage from '../../user/component/UserImage';
 
 function ChatMsg(props) {
   const [msg, setMsg] = useState(null);
+  const userImgDefault = 'https://s3.ap-northeast-2.amazonaws.com/glim-bucket/userimages/user-default-image_128x128.webp'
 
   useEffect(() => {
     if (props.id === props.loginId) {
@@ -32,7 +33,7 @@ function ChatMsg(props) {
     return (
       <div className='msg-box' key={props.msgId}>
         <div className='msg-user-img'>
-          <UserImage link={props.userImg} />
+          <UserImage link={props.userImg ? props.userImg : userImgDefault} />
         </div>
         <div className='msg-info'>
           <div className='msg-text'>

@@ -12,6 +12,7 @@ import ShowToast from '../../main/hook/ShowToast';
 
 function ChatRoom() {
   const roomId = useParams().id;
+  const userImgDefault = 'https://s3.ap-northeast-2.amazonaws.com/glim-bucket/userimages/user-default-image_128x128.webp'
   const [msgList, setMsgList] = useState([]);
   const [socketMsgList, setSocketMsgList] = useState([]);
   const [loginId, setLoginId] = useState(0);
@@ -162,10 +163,13 @@ function ChatRoom() {
               </div>
               <div className='other-user-info'>
                 <div className='other-user-img'>
-                  <UserImage id={user.id} link={user.img} hasStory={user.isStory} />
+                  {user ?
+                    <UserImage id={user.id} link={user.img} hasStory={user.isStory} />
+                    : <UserImage link={userImgDefault} />
+                  }
                 </div>
-                <div className='other-user-name' onClick={() => window.location.href = `/myPage/${user.id}`}>
-                  <span>{user.nickname}</span>
+                <div className='other-user-name' onClick={() => { if (user) window.location.href = `/myPage/${user.id}` }}>
+                  <span>{user ? user.nickname : '알 수 없음'}</span>
                 </div>
               </div>
             </div>
@@ -179,8 +183,11 @@ function ChatRoom() {
             <div className='empty-space'></div>
           </div>
           <div className='msg-input-box'>
-            <input className='msg-input' type="text" spellCheck="false" onKeyUp={sendMsgKeyUp} onChange={checkMsg} />
-            <div className='msg-send' onClick={e => sendMsgClick(e)}>
+            {user ?
+              <input className='msg-input' type="text" spellCheck="false" onKeyUp={sendMsgKeyUp} onChange={checkMsg} />
+              : <input className='msg-input' type="text" spellCheck="false" placeholder='채팅 상대를 확인할 수 없습니다.' readOnly />
+            }
+            <div className='msg-send' onClick={e => { if (user) sendMsgClick(e) }}>
               <IconButton icon={faLocationArrow} />
             </div>
           </div>

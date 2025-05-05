@@ -7,6 +7,7 @@ import ShowToast from '../../main/hook/ShowToast';
 import apiFile from '../../../utils/apiFile';
 import { render } from '@testing-library/react';
 import Toast from '../../../components/Toast';
+import Loading from '../../loading/page/Loading';
 
 function AddStory() {
   const [img, setImg] = useState(null)
@@ -39,7 +40,9 @@ function AddStory() {
       return;
     }
     setIsUpLoading(true)
+    const apiLoading = render(<Loading upload={true} />).container.firstChild;
     const apiErrorToast = render(<Toast type={'success'} msg={'업로드 중입니다.'} />).container.firstChild;
+    document.querySelector('section').appendChild(apiLoading);
     document.querySelector('section').appendChild(apiErrorToast);
     let filename;
     if (file) {
@@ -51,6 +54,7 @@ function AddStory() {
     }
 
     if (!filename) {
+      document.querySelector('section').appendChild(apiLoading);
       document.querySelector('section').removeChild(apiErrorToast);
       ShowToast('error', '파일 업로드 중 에러가 발생했습니다.')
       setIsUpLoading(false)
@@ -59,6 +63,7 @@ function AddStory() {
 
     const res = await api.post('/story', { "fileName": filename })
     setIsUpLoading(false)
+    document.querySelector('section').appendChild(apiLoading);
     document.querySelector('section').removeChild(apiErrorToast);
     res && ShowToast('success', '스토리 등록이 완료되었습니다.')
     setTimeout(() => {

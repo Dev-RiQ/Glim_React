@@ -1,10 +1,11 @@
 import { React, useEffect, useState } from 'react';
 import '../style/header.css';
 import IconButton from '../../../components/IconButton';
-import { faBell, faCircle, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import { faBell, faCircle, faPaperPlane, faUserTie } from "@fortawesome/free-solid-svg-icons";
 import logoLightMode from "../../../assets/images/logo-light-mode.png";
 import logoDarkMode from "../../../assets/images/logo-dark-mode.png";
 import sseEvent from '../../../utils/sse';
+import api from '../../../utils/api';
 
 function Header() {
   const [viewMode, changeMode] = useState(logoLightMode);
@@ -28,15 +29,23 @@ function Header() {
   }
 
   const [header, setHeader] = useState(null);
-  const [modal, setModal] = useState(false);
   const uri = window.location.pathname;
 
   useEffect(() => {
+    getHeader()
+  }, [hasChat, hasAlarm])
+
+  async function getHeader() {
+    const res = await api.get('/auth/role')
+    console.log(res)
     let headerIcon = [];
+    if (res === 'ROLE_ADMIN') {
+      (headerIcon = [...headerIcon, getButton(faUserTie, '/admin', uri === '/admin' ? true : '')]);
+    }
     headerIcon = [...headerIcon, getButton(faBell, '/alarm', uri === '/alarm' ? true : '')];
     headerIcon = [...headerIcon, getButton(faPaperPlane, '/chat', uri === '/chat' ? true : '')];
     setHeader(headerIcon);
-  }, [modal, hasChat, hasAlarm])
+  }
 
   function buttonEvent(link) {
     link !== uri ? window.location.href = link : scrollToTop();

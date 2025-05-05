@@ -28,6 +28,7 @@ const MySave = lazy(() => import('./board/page/MySave'));
 const MyStory = lazy(() => import('./story/page/MyStory'));
 const MyStoryView = lazy(() => import('./story/page/MyStoryView'));
 const Pay = lazy(() => import('./pay/page/Pay'));
+const Admin = lazy(() => import('./admin/page/Admin'));
 
 function Routing() {
   useEffect(() => {
@@ -68,6 +69,7 @@ function Routing() {
             <Route path='/chatRoom/:id' element={<ChatRoom />} />
             <Route path='/ranking' element={<Ranking />} />
             <Route path='/pay' element={<Pay />} />
+            <Route path='/admin' element={<Admin />} />
             <Route path='*' element={<NotFoundPage />} />
           </Routes>
         </Suspense>

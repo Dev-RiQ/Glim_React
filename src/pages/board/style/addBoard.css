@@ -144,17 +144,30 @@
   display: none;
 }
 
+@media (max-width: 500px) {
+  .board-option-modal {
+    width: 100%;
+  }
+}
+
+@media (min-width: 500px) {
+  .board-option-modal {
+    width: 100%;
+    max-width: 500px;
+  }
+}
+
 .board-option-modal {
-  position: absolute;
-  top: 0;
-  width: 100%;
+  position: fixed;
   height: calc(100vh - 100px);
+  top: 0;
   background-color: #fff;
   z-index: 10000;
   padding-top: 50px;
 }
 
 .location-input-box {
+  position: relative;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -207,7 +220,7 @@
   max-height: 184px;
   overflow-y: scroll;
   flex-direction: column;
-  position: fixed;
+  position: absolute;
   bottom: calc(50% + 40px);
   opacity: 0.95;
   border-radius: 10px;
