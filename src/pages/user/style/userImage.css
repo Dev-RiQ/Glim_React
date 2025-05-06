@@ -40,7 +40,7 @@
 .story-view-box {
   position: fixed;
   top: 0;
-  width: 100%;
+  width: 100vw;
   max-width: 500px;
   height: 100vh;
   background-color: black;

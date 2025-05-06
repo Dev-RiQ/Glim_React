@@ -61,7 +61,7 @@
 
 .comment-input {
   border-radius: 30px;
-  width: 92%;
+  width: 80%;
   padding: 10px;
   padding-right: 35px;
 }
@@ -69,5 +69,9 @@
 .comment-enter {
   position: absolute;
   top: 3px;
-  right: 20px;
+  right: 30px;
+}
+
+.none {
+  display: none;
 }

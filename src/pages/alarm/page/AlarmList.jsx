@@ -1,14 +1,11 @@
 import React, { useEffect, useState, } from 'react';
 import '../style/alarmList.css';
-import IconButton from '../../../components/IconButton';
-import { faAdd } from '@fortawesome/free-solid-svg-icons';
 import Alarm from '../component/Alarm';
 import api from '../../../utils/api';
-import ShowToast from '../../main/hook/ShowToast';
 import sseEvent from '../../../utils/sse';
 
 function AlarmList() {
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
   const [alarms, setAlarms] = useState([])
   const [offset, setOffset] = useState(0)
   const [isLoaded, setIsLoaded] = useState(false)
@@ -29,6 +26,7 @@ function AlarmList() {
     res && setOffset(res[res.length - 1].id)
     !res && offset === 0 && setAlarms([(<div className='no-list'><p>도착한 알림이 존재하지 않습니다.</p></div>)])
     !res && setOffset(0)
+    setIsLoading(true)
   }
 
   function setAlarm(res) {
@@ -55,7 +53,7 @@ function AlarmList() {
           </div>
         ), ...list]
       })
-      setAlarms([list, ...alarms])
+      setAlarms([list, alarms])
     })
     setIsLoading(false);
   }

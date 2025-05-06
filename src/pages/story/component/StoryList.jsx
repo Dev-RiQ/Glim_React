@@ -8,6 +8,7 @@ function StoryList(props) {
   const [isClick, setIsClick] = useState(false);
   const [pointer, setPointer] = useState(0);
   const [pointerAfter, setPointerAfter] = useState(0);
+  const [isView, setIsView] = useState(false);
 
   useEffect(() => {
     setStories(getStoryList())
@@ -27,7 +28,7 @@ function StoryList(props) {
     const myInfo = await api.get('/auth/me')
     return (
       <div key={myInfo.nickname}>
-        <UserStory id={myInfo.id} link={myInfo.img} name={myInfo.nickname} isMine={true} hasStory={myInfo.isStory} />
+        <UserStory id={myInfo.id} link={myInfo.img} name={myInfo.nickname} isMine={true} hasStory={myInfo.isStory} setIsView={setIsView} />
       </div>
     )
   }
@@ -35,29 +36,47 @@ function StoryList(props) {
   function setStoryBox(element) {
     return (
       <div key={element.id}>
-        <UserStory id={element.userId} link={element.img} name={element.nickname} hasStory={true} />
+        <UserStory id={element.userId} link={element.img} name={element.nickname} hasStory={true} setIsView={setIsView} />
       </div>
     )
   }
 
   function click(e) {
     setPointer(e.clientX)
+    setPointerAfter(e.clientX)
     setIsClick(true)
   }
   function clickOver(e) {
+    if (isView) {
+      setPointer(0)
+      setPointerAfter(0)
+      return;
+    }
     setIsClick(false)
     e.currentTarget.scrollLeft += pointer - pointerAfter;
     setPointer(0)
     setPointerAfter(0)
   }
   function clickDrag(e) {
+    if (isView) {
+      setPointer(0)
+      setPointerAfter(0)
+      return;
+    }
     if (isClick) {
       setPointerAfter(e.clientX)
     }
   }
+  function storyShow(e) {
+    setTimeout(() => {
+      if (document.querySelector('.storyLine-box')) {
+        setIsView(true)
+      }
+    }, 100);
+  }
 
   return (
-    <div className="story-list-box" onMouseDown={e => click(e)} onMouseMove={e => clickDrag(e)} onMouseUp={e => clickOver(e)}>
+    <div className="story-list-box" onClick={storyShow} onMouseDown={e => click(e)} onMouseMove={e => clickDrag(e)} onMouseUp={e => clickOver(e)}>
       {stories}
     </div>
   )

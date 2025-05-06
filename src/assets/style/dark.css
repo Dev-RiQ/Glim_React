@@ -1,5 +1,6 @@
 @media (prefers-color-scheme: dark) {
 
+
   body,
   footer,
   header,
@@ -18,10 +19,19 @@
   .loading-box,
   .admin-modal-box,
   .ad-modal,
-  .alarm-box.read,
-  .alarm-box {
+  .alarm-box.read {
     color: white !important;
     background-color: #111 !important;
+  }
+
+  .alarm-box {
+    color: white !important;
+    background-color: #8888888f !important;
+  }
+
+  .rank-box {
+    color: white !important;
+    background-color: #333 !important;
   }
 
   .menu-list-box,
@@ -30,6 +40,21 @@
     background-color: #333 !important;
     border-radius: 15px !important;
     color: #fff;
+  }
+
+  .rank {
+    background-color: #aaa !important;
+    color: #fff !important;
+  }
+
+  .filter-btn {
+    background-color: #222 !important;
+    border-top: 1px solid #fff !important;
+    color: #fff !important;
+  }
+
+  .filter-btn.active {
+    background-color: royalblue !important;
   }
 
   .icon-btn svg,

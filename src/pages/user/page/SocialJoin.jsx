@@ -14,7 +14,7 @@ function SocialJoin() {
   const [codeOK, setCodeOK] = useState(false)
   const location = useLocation()
   const [token, setToken] = useState(location.state.accessToken)
-  const [logo, setLogo] = useState(location.state.accessToken)
+  const [logo, setLogo] = useState(null)
   const isBrowserDarkMode = window.matchMedia('(prefers-color-scheme: dark)')
     .matches
   useEffect(() => {
@@ -102,13 +102,14 @@ function SocialJoin() {
 
     const body = {
       "nickname": nickname,
-      "phone": phone
+      "phone": phone,
+      "accessToken": token
     }
-    const isJoin = await api.post('/auth/social-info', body)
+    const isJoin = await api.post('/user/social-info', body)
 
     if (isJoin) {
       localStorage.setItem("accessToken", token);
-      ShowToast('success', '회원가입에 성공하였습니다.')
+      ShowToast('success', '소셜 회원가입에 성공하였습니다.')
       window.location.href = "/"
     }
   }

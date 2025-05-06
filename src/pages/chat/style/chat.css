@@ -51,3 +51,16 @@
   width: calc(100% - 20px);
   padding: 10px;
 }
+
+.search-user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.search-user-info>div:first-child {
+  font-weight: bold;
+}
+
+.search-user-info>div {
+  text-align: left;
+}

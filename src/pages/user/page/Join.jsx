@@ -185,7 +185,8 @@ function Join() {
       "password": pw,
       "nickname": nickname,
       "img": filename,
-      "phone": phone
+      "phone": phone,
+      "name": name
     }
     const isJoin = await api.post('/auth/sign-up', body)
     if (isJoin) {

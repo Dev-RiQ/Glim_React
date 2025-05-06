@@ -13,14 +13,14 @@ function MyPageUserButton(props) {
 
 
 
-  async function followCancel() {
-    const res = await api.delete(`/follow/${props.id}`)
+  async function followCancel(userId) {
+    const res = await api.delete(`/follow/${userId}`)
     res && ShowToast('success', res.message)
     res && setIsFollow(!isFollow)
   }
 
-  async function followAdd() {
-    const res = await api.post(`/follow`, { "followingId": props.id })
+  async function followAdd(userId) {
+    const res = await api.post(`/follow`, { "followingId": userId })
     res && ShowToast('success', res.message)
     res && setIsFollow(!isFollow)
   }
@@ -52,8 +52,8 @@ function MyPageUserButton(props) {
         {isMine ?
           <button className='user-btn' onClick={() => window.location.href = '/userInfo'}>프로필 편집</button>
           : <>{isFollow ?
-            <button className='user-btn' onClick={followCancel}>팔로우 취소</button>
-            : <button className='user-btn' onClick={followAdd}>팔로우 하기</button>
+            <button className='user-btn' onClick={() => followCancel(props.id)}>팔로우 취소</button>
+            : <button className='user-btn' onClick={() => followAdd(props.id)}>팔로우 하기</button>
           }
           </>
         }

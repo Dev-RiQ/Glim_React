@@ -63,7 +63,7 @@ function FindPw() {
     }
     ShowToast('success', '전화번호 인증에 성공하였습니다.')
     setCodeOK(true)
-    setResetToken(token)
+    setResetToken(token.resetToken)
   }
 
   async function sendNewPw() {
@@ -78,6 +78,9 @@ function FindPw() {
     }
     const res = await api.post('/auth/reset-password', body)
     res && ShowToast('success', res)
+    res && setTimeout(() => {
+      window.location.href = '/login'
+    }, 500);
   }
 
   return (

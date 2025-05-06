@@ -12,13 +12,14 @@ function StoryView(props) {
   const [content, setContent] = useState('')
 
   useEffect(() => {
-    api.get(`/story/${data.id}`)
-  }, [])
+    setIsLike(data.isLike)
+  }, [data])
 
   async function storyLike() {
     const res = isLike ? await api.delete(`/storyLike/${data.id}`)
       : await api.post(`/storyLike/${data.id}`)
     res && setIsLike(!isLike)
+    res && (data.isLike = !isLike)
   }
 
   function inputContent(e) {

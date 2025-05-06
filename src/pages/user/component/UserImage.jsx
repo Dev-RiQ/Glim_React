@@ -29,6 +29,9 @@ function UserImage(props) {
     setStoryList([])
     setName('story-view-box')
     setStoryPage(0)
+    setTimeout(() => {
+      props.setIsView(false)
+    }, 300);
   }
 
   async function showStoryView(e) {
@@ -63,6 +66,7 @@ function UserImage(props) {
       setName('story-view-box')
       setTimeout(() => {
         setStory(null);
+        props.setIsView(false)
       }, 300);
       return
     }
@@ -77,10 +81,11 @@ function UserImage(props) {
       setName('story-view-box')
       setTimeout(() => {
         setStory(null);
+        props.setIsView(false)
       }, 300);
       return;
     }
-    if (e.pageX > e.target.clientWidth / 2) {
+    if (e.pageX - window.innerWidth / 2 + e.target.clientWidth / 2 > e.target.clientWidth / 2) {
       afterStory(e)
     } else {
       beforeStory(e)

@@ -43,11 +43,11 @@ function Pay() {
       buyer_name: "홍길동",
       buyer_tel: "01012345678",
       m_redirect_url: "http://localhost:3000/pay"
-    })
+    }, res => setPayResult(res.success))
   }
 
   function setPayResult(res) {
-    if (res === 'true') {
+    if (res === 'true' || res === true) {
       setMyPay()
     } else {
       ShowToast('error', '구독 신청에 실패하였습니다.')

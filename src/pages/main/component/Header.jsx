@@ -15,7 +15,9 @@ function Header() {
     .matches
 
   useEffect(() => {
-    getSse()
+    if (!window.location.pathname.includes('/login') && !window.location.pathname.includes('/find') && !window.location.pathname.includes('join')) {
+      getSse()
+    }
     changeMode(isBrowserDarkMode ? logoDarkMode : logoLightMode);
   }, [])
 
@@ -32,7 +34,9 @@ function Header() {
   const uri = window.location.pathname;
 
   useEffect(() => {
-    getHeader()
+    if (!window.location.pathname.includes('/login') && !window.location.pathname.includes('/find') && !window.location.pathname.includes('join')) {
+      getHeader()
+    }
   }, [hasChat, hasAlarm])
 
   async function getHeader() {

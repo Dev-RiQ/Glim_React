@@ -28,12 +28,17 @@ function AddStory() {
       return;
     }
     if (e.target.files[0].type.startsWith('image/')) {
+      if (!e.target.files[0].type.includes('jpg') && !e.target.files[0].type.includes('png') && !e.target.files[0].type.includes('jpeg')) {
+        ShowToast('error', 'jpg, png, jpeg 파일만 업로드 가능합니다.')
+        redo();
+        return
+      }
       setImg(URL.createObjectURL(e.target.files[0]))
       setFile(e.target.files[0])
       setTarget(e.target)
     } else {
-      e.target.value = null;
       ShowToast('error', '이미지 파일만 업로드 가능합니다.')
+      redo();
     }
   }
 
@@ -95,7 +100,7 @@ function AddStory() {
         : <></>}
       <div className="add-file-btn" onClick={e => uploadFile(e)}>
         <IconButton icon={faAdd} />
-        <input className="add-file-input" type="file" onChange={e => inputImg(e)} accept="image/*" />
+        <input className="add-file-input" type="file" onChange={e => inputImg(e)} accept=".jpg, .png, .jpeg" />
       </div>
       <p className="add-board-file">스토리에 추가할 파일을 선택하세요.</p>
     </div>

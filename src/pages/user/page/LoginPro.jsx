@@ -11,7 +11,7 @@ const LoginPro = () => {
         navigate('/socialjoin', { state: { accessToken: token } })
       } else {
         localStorage.setItem("accessToken", token);
-        navigate('/')
+        window.location.href = '/'
       }
     } else {
       navigate('/login')

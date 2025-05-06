@@ -42,6 +42,10 @@
   top: 0;
 }
 
+.admin-btn svg {
+  color: #fff;
+}
+
 .admin-modal-box {
   position: fixed;
   top: 100vh;

@@ -16,9 +16,11 @@ function UserComment(props) {
   const [reply, setReply] = useState([])
   const [replyMore, setReplyMore] = useState('none')
   const [replyOffset, setReplyOffset] = useState(0)
+  const [isRemove, setIsRemove] = useState('')
 
   useEffect(() => {
     showComment()
+    props.setReply(reply)
   }, [show, reply, isLike, replyMore])
 
   function goMyPage() {
@@ -36,6 +38,7 @@ function UserComment(props) {
     const res = await api.delete(`/comment/${data.id}`)
     res && ShowToast('seccess', '댓글이 삭제되었습니다.')
     res && setShow('none')
+    res && setIsRemove('none')
   }
 
   async function loadReply() {
@@ -67,11 +70,11 @@ function UserComment(props) {
 
   function showComment() {
     setComment(
-      <>
+      <div className={isRemove}>
         <div className={show + (data.replyCommentId === null && data.replyCommentId !== 0 ? ' inner' : '')}>
           <div className="user-comment-left">
             <div className="user-img-box">
-              <UserImage link={data.user.img} hasStory={data.user.isStory} />
+              <UserImage link={data.user.img} hasStory={data.user.isStory} id={data.user.id} />
             </div>
             <div className="user-comment-info">
               <p className="user-nickname" onClick={goMyPage}>{data.user.nickname}</p>
@@ -79,7 +82,7 @@ function UserComment(props) {
               {isComment ?
                 <p className='comment-content-data'>
                   <span>{data.createdAt}</span>
-                  <span onClick={(e) => props.addReply(e.target.parentNode.parentNode.parentNode.parentNode.nextSibling, data.id, data.nickname, setReply)}>답글 달기</span>
+                  <span onClick={(e) => props.addReply(e.target.parentNode.parentNode.parentNode.parentNode.nextSibling, data.id, data.nickname, setReply, reply)}>답글 달기</span>
                   {data.isReply ?
                     <span onClick={loadReply}>답글 더보기</span>
                     : <></>
@@ -103,7 +106,7 @@ function UserComment(props) {
         </div>
         {reply}
         <p className={replyMore} onClick={() => loadReply()}>답글 더보기</p>
-      </>
+      </div>
     )
   }
   return (

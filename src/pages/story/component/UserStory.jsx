@@ -24,7 +24,7 @@ function UserStory(props) {
   return (
     <div className="story-box" onClick={props.showStoryView}>
       <div className="story-user-img">
-        <UserImage id={props.id} link={props.link} hasStory={props.hasStory} />
+        <UserImage id={props.id} link={props.link} hasStory={props.hasStory} setIsView={props.setIsView} />
       </div>
       <p className="story-user-name">{props.name}</p>
       {myStory}

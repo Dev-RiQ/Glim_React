@@ -3,7 +3,7 @@ import '../style/rankingList.css';
 import RankingView from './RankingView';
 
 function RankingList(props) {
-  const [ranking, setRanking] = useState(props.list)
+  const [ranking, setRanking] = useState()
 
   useEffect(() => {
     getRanking()

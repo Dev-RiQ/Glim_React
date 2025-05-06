@@ -16,7 +16,7 @@ function Recommend(props) {
   return (
     <div className='user-recommend-box'>
       <div className='user-recommend-img'>
-        <UserImage link={user.img} />
+        <UserImage link={user.img} hasStory={user.isStory} />
       </div>
       <div className='user-recommend-name'>
         {user.nickname}

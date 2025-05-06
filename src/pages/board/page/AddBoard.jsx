@@ -120,6 +120,14 @@ function AddBoard() {
           setVideo(null);
           hasVideo = true
         }
+        if (!element.type.includes('jpg') && !element.type.includes('png') && !element.type.includes('jpeg')) {
+          ShowToast('error', 'jpg, png, jpeg 파일만 업로드 가능합니다.')
+          e.target.value = null;
+          setFiles(null)
+          setImages(null)
+          setVideo(null);
+          return
+        }
         imageList = [...imageList, URL.createObjectURL(element)]
       })
       if (hasVideo) {
@@ -240,7 +248,7 @@ function AddBoard() {
       tagsShow = [...tagsShow, (
         <div className='show-search-user' onClick={e => plusUser(e, element.userId, element.nickname)} >
           <div className='search-user-img-box'>
-            <UserImage hasStory={element.isStory} />
+            <UserImage link={element.img} hasStory={element.isStory} />
           </div>
           <div className='search-user-info-box'>
             <div>
@@ -491,7 +499,7 @@ function AddBoard() {
         : <></>}
       <div className="add-file-btn" onClick={e => uploadFile(e)}>
         <IconButton icon={faAdd} />
-        <input className="add-file-input" type="file" multiple onChange={e => inputImg(e)} accept="image/*, video/*" />
+        <input className="add-file-input" type="file" multiple onChange={e => inputImg(e)} accept=".jpg, .png, .jpeg, video/*" />
       </div>
       <p className="add-board-file">게시물에 업로드할 파일을 선택하세요.</p>
     </div>

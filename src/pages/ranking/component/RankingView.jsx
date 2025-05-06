@@ -22,7 +22,7 @@ function RankingView(props) {
 
 
   return (
-    <div className="rank" onClick={() => window.location.href = '/board/1'}>
+    <div className="rank" onClick={() => window.location.href = `/board/${data.boardId}`}>
       <div className={rankBox}>
         <div className='rank-no'>
           {props.rank === 1 ? <>{props.rank}<img className='rank-medal' src={first} alt="1st" width="40px" height="40px" decoding="async" loading="lazy" /></> :
@@ -48,7 +48,7 @@ function RankingView(props) {
             </div>
             <div className='rank-count-box'>
               <IconButton icon={faClock} />
-              {'3일 전'}
+              {data.createdAt}
             </div>
           </div>
         </div>

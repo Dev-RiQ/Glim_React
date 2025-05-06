@@ -55,9 +55,9 @@ function Chat() {
       list = [...list, (
         <div className='show-search-user'>
           <div className='search-user-img-box'>
-            <UserImage link={element.img} />
+            <UserImage link={element.img} hasStory={element.isStory} />
           </div>
-          <div onClick={e => goChat(e, element.userId)} >
+          <div className='search-user-info' onClick={e => goChat(e, element.userId)} >
             <div>
               @{element.nickname}
             </div>

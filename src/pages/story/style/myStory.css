@@ -1,8 +1,9 @@
 .my-story-box {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-start;
   height: max-content;
+  gap: 0.5%;
 }
 
 .my-story-box>div {

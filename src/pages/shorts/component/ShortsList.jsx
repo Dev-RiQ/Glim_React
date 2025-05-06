@@ -97,7 +97,7 @@ function ShortsList() {
     const diff = touchStart - touchEnd;
     if (diff > 50) scrollUp(e);
     else if (diff < -50) scrollDown(e);
-    else if (diff !== 0) reScroll();
+    else if (diff !== 0) reScroll(e);
   }
 
   const section = document.querySelector('section');

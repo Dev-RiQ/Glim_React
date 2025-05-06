@@ -51,8 +51,8 @@ function BgmList() {
   }
 
   async function deleteMusic(id, e) {
-    const res = await api.delete(`/admin/${id}`)
     const target = e.currentTarget.parentNode.parentNode
+    const res = await api.delete(`/admin/${id}`)
     res && ShowToast('success', res)
     res && target.classList.add('delete')
   }

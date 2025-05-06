@@ -5,6 +5,7 @@ import { faComment, faX } from '@fortawesome/free-solid-svg-icons';
 import UserComment from './UserComment';
 import api from '../../../utils/api';
 import ShowToast from '../../main/hook/ShowToast';
+import ReplyComment from './ReplyComment';
 
 function BoardComment(props) {
   const data = props.data;
@@ -13,7 +14,10 @@ function BoardComment(props) {
   const [commentInput, setCommentInput] = useState('');
   const [replyId, setReplyId] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [replyTarget, setReplyTarget] = useState(null)
+  const [reply, setReply] = useState([])
+  const [replyTarget, setReplyTarget] = useState(() => { })
+  const [hasComment, setHasComment] = useState(false);
+  const [myComment, setMyComment] = useState(null)
 
   useEffect(() => {
     getBoardList();
@@ -35,27 +39,28 @@ function BoardComment(props) {
     let commentBoxes = [];
     if (commentList.length === 0) {
       commentBoxes = [...commentBoxes, setComment(data, false)]
+      setMyComment(setComment(data, false))
     }
     res?.forEach(element => {
       commentBoxes = [...commentBoxes, setComment(element, true)];
     });
     res && setCommentList([...commentList, commentBoxes])
     res && setOffset(res[commentBoxes.length - 2].id)
+    res && setHasComment(true)
     !res && offset === 0 && setCommentList([commentBoxes, (<div className='no-list'><p>작성된 댓글이 존재하지 않습니다.</p></div>)])
     !res && setOffset(0)
   }
 
   function setComment(element, isComment) {
     return (<div className='comment-user-box' key={element.id}>
-      <UserComment data={element} isComment={isComment} addReply={addReply} />
+      <UserComment data={element} isComment={isComment} addReply={addReply} setReply={setReply} />
     </div>)
   }
 
   function addReply(target, id, nickname, setReply) {
     ShowToast('success', `@${nickname}님의 댓글에 답글 달기`)
-    target.parentNode.parentNode.nextSibling.firstChild.focus()
     setReplyId(id)
-    setReplyTarget(setReply())
+    setReplyTarget(() => (e) => setReply(e))
   }
 
   function exitComment(e) {
@@ -72,6 +77,7 @@ function BoardComment(props) {
   }
 
   async function addComment(e) {
+    console.log(replyTarget)
     const body = {
       "boardId": data.id,
       "content": commentInput,
@@ -82,9 +88,14 @@ function BoardComment(props) {
     if (res) {
       value.previousSibling.value = ''
       if (replyTarget) {
-        replyTarget(setComment(res, true))
+        replyTarget([...reply, <ReplyComment data={res} />])
       } else {
-        setCommentList([...commentList, setComment(res, true)])
+        if (!hasComment) {
+          setCommentList([myComment, setComment(res, true)])
+          setHasComment(true);
+        } else {
+          setCommentList([...commentList, setComment(res, true)])
+        }
       }
       setReplyId(0)
       setReplyTarget(null)
