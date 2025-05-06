@@ -4,12 +4,17 @@ import IconButton from '../../../components/IconButton';
 import { faCreditCard } from '@fortawesome/free-solid-svg-icons';
 import api from '../../../utils/api';
 import ShowToast from '../../main/hook/ShowToast';
+import { useSearchParams } from 'react-router-dom';
 
 function Pay() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [isPay, setIsPay] = useState(false);
 
   useEffect(() => {
     checkPay()
+    if (searchParams.get('imp_success') !== null) {
+      setPayResult(searchParams.get('imp_success'));
+    }
   }, [])
 
   async function checkPay() {
@@ -18,6 +23,38 @@ function Pay() {
   }
 
   async function pay() {
+    if (!isPay) {
+      getPay();
+    } else {
+      setMyPay()
+    }
+  }
+
+  async function getPay() {
+    const { IMP } = window;
+    IMP.init("imp77335438")
+    await IMP.request_pay({
+      pg: "tosspayments.iamporttest_4",
+      pay_method: "card",
+      customer_uid: "user_001",
+      name: "정기결제 카드 등록",
+      amount: 100,
+      buyer_email: "test@test.com",
+      buyer_name: "홍길동",
+      buyer_tel: "01012345678",
+      m_redirect_url: "http://localhost:3000/pay"
+    })
+  }
+
+  function setPayResult(res) {
+    if (res === 'true') {
+      setMyPay()
+    } else {
+      ShowToast('error', '구독 신청에 실패하였습니다.')
+    }
+  }
+
+  async function setMyPay() {
     const res = await api.post('/auth/rate')
     res && ShowToast('success', res)
     res && setIsPay(!isPay)
