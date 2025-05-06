@@ -33,7 +33,7 @@
 }
 
 .toast-icon.error svg {
-  color: rgb(196, 17, 53);
+  color: rgb(196, 17, 53) !important;
 }
 
 .toast-msg {}

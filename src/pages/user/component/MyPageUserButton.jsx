@@ -14,7 +14,7 @@ function MyPageUserButton(props) {
 
 
   async function followCancel() {
-    const res = await api.delete(`/follow`, { "followingId": props.id })
+    const res = await api.delete(`/follow/${props.id}`)
     res && ShowToast('success', res.message)
     res && setIsFollow(!isFollow)
   }

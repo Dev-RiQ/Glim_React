@@ -19,5 +19,5 @@
 }
 
 .icon-btn.like svg {
-  color: rgb(233, 32, 72);
+  color: rgb(233, 32, 72) !important;
 }

@@ -46,3 +46,13 @@
 .type-title {
   font-size: 18px;
 }
+
+.show-user-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.show-user-info>div {
+  text-align: left;
+}

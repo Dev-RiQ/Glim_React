@@ -19,7 +19,7 @@ function UserComment(props) {
 
   useEffect(() => {
     showComment()
-  }, [reply, isLike, replyMore])
+  }, [show, reply, isLike, replyMore])
 
   function goMyPage() {
     window.location.href = "/mypage/" + data.user.id;
@@ -35,7 +35,7 @@ function UserComment(props) {
   async function deleteComment() {
     const res = await api.delete(`/comment/${data.id}`)
     res && ShowToast('seccess', '댓글이 삭제되었습니다.')
-    res && setShow('user-comment-box none')
+    res && setShow('none')
   }
 
   async function loadReply() {

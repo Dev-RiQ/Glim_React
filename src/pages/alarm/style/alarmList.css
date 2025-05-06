@@ -1,3 +1,10 @@
 .alarm-list-box {
   width: 100%;
 }
+
+.alarm-title {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: left;
+  padding: 10px;
+}

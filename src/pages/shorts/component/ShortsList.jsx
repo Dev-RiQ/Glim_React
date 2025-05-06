@@ -142,10 +142,10 @@ function ShortsList() {
   function wheelScroll(e) {
     if (!isWheel) {
       setWheel(true);
-      switch (e.nativeEvent.deltaY) {
-        case 100: scrollUp(e); break;
-        case -100: scrollDown(e); break;
-        default: break;
+      if (e.nativeEvent.deltaY > 1) {
+        scrollUp(e);
+      } else if (e.nativeEvent.deltaY < -1) {
+        scrollDown(e);
       }
       setTimeout(() => {
         setWheel(false)

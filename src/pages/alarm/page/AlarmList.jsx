@@ -74,6 +74,7 @@ function AlarmList() {
 
   return (
     <div className="alarm-list-box" onWheel={scroll} onTouchMove={scroll}>
+      <div className='alarm-title'>알람</div>
       {alarms}
     </div>
   );

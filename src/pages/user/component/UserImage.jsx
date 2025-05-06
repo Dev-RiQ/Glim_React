@@ -92,9 +92,9 @@ function UserImage(props) {
       <div className={
         props.hasStory ? 'user-image has-story' : 'user-image'
       } onClick={e => showStoryView(e, { id })}>
-        <button className="user-img-btn">
+        <div className="user-img-btn">
           <img className='user-img' src={props.link} alt="USER_IMG" width="100%" height="100%" decoding="async" loading="lazy" />
-        </button>
+        </div>
       </div>
       <div className={name} onClick={e => storyClickEvents(e)}>
         {story}

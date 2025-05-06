@@ -34,18 +34,19 @@ function SearchList(props) {
   async function getSearchList(enter) {
     let res;
     const next = enter ? 0 : offset;
+    let noList;
     if (!num) {
       res = await api.get('/board/search' + (next !== 0 ? `/${next}` : ''))
-      !res && offset === 0 && setSearchs([(<div className='no-list'><p>추천 게시글이 존재하지 않습니다.</p></div>)])
+      !res && nums !== num && (noList = (<div className='no-list'><p>추천 게시글이 존재하지 않습니다.</p></div>))
     } else if (num === 1) {
       res = await api.get(`/board/my/${props.id}` + (next !== 0 ? `/${next}` : ''))
-      !res && offset === 0 && setSearchs([(<div className='no-list'><p>작성한 게시글이 존재하지 않습니다.</p></div>)])
+      !res && nums !== num && (noList = ((<div className='no-list'><p>작성한 게시글이 존재하지 않습니다.</p></div>)))
     } else if (num === 2) {
       res = await api.get(`/board/myShorts/${props.id}` + (next !== 0 ? `/${next}` : ''))
-      !res && offset === 0 && setSearchs([(<div className='no-list'><p>작성한 게시글이 존재하지 않습니다.</p></div>)])
+      !res && nums !== num && (noList = ((<div className='no-list'><p>작성한 숏츠가 존재하지 않습니다.</p></div>)))
     } else if (num === 3) {
       res = await api.get(`/board/tag/${props.id}` + (next !== 0 ? `/${next}` : ''))
-      !res && offset === 0 && setSearchs([(<div className='no-list'><p>태그된 게시글이 존재하지 않습니다.</p></div>)])
+      !res && nums !== num && (noList = ((<div className='no-list'><p>태그된 게시글이 존재하지 않습니다.</p></div>)))
     }
     let searchBoxes = [];
     res?.forEach(element => {
@@ -54,10 +55,10 @@ function SearchList(props) {
     if (nums === num) {
       res && setSearchs([...search, searchBoxes])
     } else {
-      res && setSearchs([searchBoxes])
+      setSearchs([noList, searchBoxes])
     }
+    setNum(num)
     res && setOffset(res[res.length - 1].id)
-    res && setNum(num)
     res && setHasData(true)
     !res && setOffset(0)
   }

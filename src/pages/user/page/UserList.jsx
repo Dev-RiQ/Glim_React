@@ -44,7 +44,7 @@ function UserList() {
           <div className='show-user-img'>
             <UserImage link={element.img} />
           </div>
-          <div className='show-user-info' onClick={() => window.location.href = `/myPage/${element.id}`}>
+          <div className='show-user-info' onClick={() => window.location.href = `/myPage/${element.userId}`}>
             <div className='show-user-nickname'>
               {element.nickname}
             </div>
@@ -57,7 +57,7 @@ function UserList() {
     })
     list && setUserList([...userList, showUserList])
     list && setOffset(list[list.length - 1].id)
-    !list && offset === 0 && setUserList([(<div className='no-list'><p>도착한 알림이 존재하지 않습니다.</p></div>)])
+    !list && offset === 0 && setUserList([(<div className='no-list'><p>유저 정보가 존재하지 않습니다.</p></div>)])
     !list && setOffset(0)
   }
 

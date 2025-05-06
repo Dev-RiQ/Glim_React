@@ -13,7 +13,7 @@ function UserInfo() {
   const [content, setContent] = useState(null)
   const [img, setImg] = useState(null)
   const [imgPre, setImgPre] = useState(null)
-  const [imgPreBefore, setImgPreBefore] = useState(null)
+  const [imgBefore, setImgBefore] = useState(null)
   const [file, setFile] = useState(null)
   const [nicknameOK, setNicknameOK] = useState(true)
 
@@ -29,8 +29,8 @@ function UserInfo() {
       setName(res.name)
       setContent(res.content)
       setImg(res.img)
-      setImgPre(res.file)
-      setImgPreBefore(res.file)
+      setImgPre(res.img)
+      setImgBefore(res.semiImg)
     }
   }
 
@@ -64,7 +64,7 @@ function UserInfo() {
 
   function inputImg(e) {
     if (e.target.files.length === 0) {
-      setImgPre(imgPre)
+      setImgPre(img)
       setFile(null)
       return
     }
@@ -109,7 +109,7 @@ function UserInfo() {
       return
     }
 
-    let filename = img
+    let filename = imgBefore
     if (file) {
       const sendFiles = {
         files: file,
@@ -136,8 +136,8 @@ function UserInfo() {
   return (
     <div className="join-box">
       <div className='user-img-setting' onClick={e => inputFile(e)}>
-        {img ?
-          <img className='view-user-img' src={img} alt="logo" width="100px" height="100px" decoding="async" loading="lazy" />
+        {imgPre ?
+          <img className='view-user-img' src={imgPre} alt="logo" width="100px" height="100px" decoding="async" loading="lazy" />
           : (<><IconButton icon={faPlus} /><p>이미지 추가</p></>)}
 
       </div>

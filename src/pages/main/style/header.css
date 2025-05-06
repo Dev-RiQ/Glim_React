@@ -61,6 +61,6 @@ header {
 
 .has-alarm.chat svg,
 .has-alarm.alarm svg {
-  color: royalblue;
+  color: royalblue !important;
   font-size: 10px;
 }

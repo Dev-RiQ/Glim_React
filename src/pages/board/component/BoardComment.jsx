@@ -77,8 +77,10 @@ function BoardComment(props) {
       "content": commentInput,
       "replyId": replyId
     }
+    const value = e.currentTarget;
     const res = await api.post('/comment', body);
     if (res) {
+      value.previousSibling.value = ''
       if (replyTarget) {
         replyTarget(setComment(res, true))
       } else {

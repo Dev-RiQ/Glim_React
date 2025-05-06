@@ -78,7 +78,7 @@ function BoardInfo(props) {
       {data.bgm ?
         <audio src={data.bgm.fileName} loop onPlaying={musicPlaying} />
         : <></>}
-      <UserPortion user={data?.user} subTitle={subTitle} type={'board'} />
+      <UserPortion user={data?.user} subTitle={subTitle} type={'board'} id={data.id} />
       <BoardImage imgs={data?.img} boardLike={boardLike} />
       <BoardMiddle data={data} isLike={isLike} boardLike={boardLike} boardComment={boardComment} comments={comments} commentView={commentView} />
       <BoardContent data={data} boardComment={boardComment} />
