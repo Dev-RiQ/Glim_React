@@ -19,7 +19,13 @@ function BoardList() {
       boardBoxes = [...boardBoxes, setBoardBox(element)];
     });
     res && setBoards([...boards, boardBoxes])
-    res && setOffset(res[boardBoxes.length - 1].id)
+    if (res) {
+      if (res.length === 10) {
+        res && setOffset(res[boardBoxes.length - 1].id)
+      } else {
+        res && setOffset(res[boardBoxes.length - 2].id)
+      }
+    }
     !res && offset === 0 && setBoards([(<div className='no-list'><p>업로드된 게시글이 존재하지 않습니다.</p></div>)])
     !res && setOffset(0)
   }

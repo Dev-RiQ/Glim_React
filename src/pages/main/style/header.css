@@ -56,7 +56,6 @@ header {
 
 .has-alarm {
   position: absolute;
-  z-index: 10000;
 }
 
 .has-alarm.chat svg,

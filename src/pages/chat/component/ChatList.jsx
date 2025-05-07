@@ -26,7 +26,7 @@ function ChatList(props) {
   return (
     <div className="single-chat-box">
       <div className='chat-user-img'>
-        <UserImage link={user ? user.img : userImgDefault} hasStory={user.isStory} />
+        <UserImage link={user ? user.img : userImgDefault} hasStory={user.isStory} id={user.id} />
       </div>
       <div className='chat-info' onClick={e => openChat(e)}>
         <div className='chat-user-name'>

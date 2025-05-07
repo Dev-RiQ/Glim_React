@@ -53,6 +53,7 @@
 }
 
 .search-user-info {
+  width: calc(100% - 50px);
   display: flex;
   flex-direction: column;
 }

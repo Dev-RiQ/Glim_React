@@ -18,12 +18,12 @@ function ShortsView(props) {
     }
   }, [commentView])
 
-  function shortsComment(e) {
-    if (!shorts.commentable) {
+  function shortsComment(e, data) {
+    if (!data?.commentable) {
       ShowToast('error', '댓글 사용이 중지된 게시글입니다.')
       return;
     }
-    setComments(ShowComment(1, setCommentView))
+    setComments(ShowComment(data, setCommentView))
     setCommentView('comment-box show')
     pauseVideo(e)
   }

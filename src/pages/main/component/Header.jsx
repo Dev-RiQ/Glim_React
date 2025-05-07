@@ -64,6 +64,7 @@ function Header() {
 
   function getButton(type, link, checked) {
     return (<div className="icon-box" key={link} onClick={() => buttonEvent(link)}>
+      <IconButton icon={type} check={checked ? checked : ''} />
       <>
         {(link === '/alarm' && hasAlarm) || (link === '/chat' && hasChat) ?
           <div className={`has-alarm ${link.substring(1, link.length)}`}>
@@ -72,7 +73,6 @@ function Header() {
           : <></>
         }
       </>
-      <IconButton icon={type} check={checked ? checked : ''} />
     </ div>)
   }
 

@@ -30,19 +30,8 @@ function Chat() {
         list = [...list, <><ChatList data={room} /></>];
       })
       res && setChatList([list])
-      // setChatList([list, ...chatList])
     })
   }
-
-  // async function addChatList() {
-  //   const res = await api.get('/chat')
-  //   let list = []
-  //   res?.forEach(room => {
-  //     list = [...list, <><ChatList data={room} /></>];
-  //   })
-  //   setChatList([...chatList, list]);
-  //   return list;
-  // }
 
   async function searchUser(e) {
     if (!e.target.value) {
@@ -55,7 +44,7 @@ function Chat() {
       list = [...list, (
         <div className='show-search-user'>
           <div className='search-user-img-box'>
-            <UserImage link={element.img} hasStory={element.isStory} />
+            <UserImage link={element.img} hasStory={element.isStory} id={element.userId} />
           </div>
           <div className='search-user-info' onClick={e => goChat(e, element.userId)} >
             <div>

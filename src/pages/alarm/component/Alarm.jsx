@@ -30,7 +30,7 @@ function Alarm(props) {
   return (
     <div className={name}>
       <div className='alarm-user-img-box'>
-        <UserImage link={alarm.userImg} />
+        <UserImage link={alarm.userImg} hasStory={alarm.isStory} id={alarm.userId} />
       </div>
       <div className='alarm-content-link-box' onClick={e => movePage(e)}>
         <div className='alarm-content-box'>

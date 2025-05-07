@@ -246,11 +246,11 @@ function AddBoard() {
     let tagsShow = []
     searchList?.forEach(element => {
       tagsShow = [...tagsShow, (
-        <div className='show-search-user' onClick={e => plusUser(e, element.userId, element.nickname)} >
+        <div className='show-search-user' >
           <div className='search-user-img-box'>
-            <UserImage link={element.img} hasStory={element.isStory} />
+            <UserImage link={element.img} hasStory={element.isStory} id={element.userId} />
           </div>
-          <div className='search-user-info-box'>
+          <div className='search-user-info-box' onClick={e => plusUser(e, element.userId, element.nickname)}>
             <div>
               @{element.nickname}
             </div>

@@ -17,11 +17,11 @@ function SearchInput() {
     let testShow = []
     searchList?.forEach(element => {
       testShow = [...testShow, (
-        <div className='show-search-user' onClick={() => window.location.href = '/myPage/' + element.userId} >
+        <div className='show-search-user' >
           <div className='search-user-img-box'>
-            <UserImage link={element.img} hasStory={element.isStory} />
+            <UserImage link={element.img} hasStory={element.isStory} id={element.userId} />
           </div>
-          <div className='search-user-info-box'>
+          <div className='search-user-info-box' onClick={() => window.location.href = '/myPage/' + element.userId}>
             <div>
               @{element.nickname}
             </div>
