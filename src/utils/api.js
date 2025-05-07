@@ -17,7 +17,7 @@ if (window.location.pathname.includes('/find') || window.location.pathname.inclu
 }
 // Axios 인스턴스 생성
 const api = axios.create({
-  baseURL: "http://localhost:8081/api/v1",
+  baseURL: "http://192.168.0.2:8081/api/v1",
   headers: header,
 });
 api.interceptors.response.use(

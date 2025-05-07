@@ -80,3 +80,13 @@ section {
 .view-user-img {
   object-fit: cover;
 }
+
+.true {
+  background-color: #888 !important;
+}
+
+.timer {
+  position: absolute;
+  top: 20px;
+  right: 110px;
+}

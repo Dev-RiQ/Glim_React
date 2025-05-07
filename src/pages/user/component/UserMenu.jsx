@@ -97,7 +97,7 @@ function UserMenu(props) {
   }
 
   async function userExit() {
-    const exit = await api.post(`/auth/delete`)
+    const exit = await api.delete(`/auth/delete`)
     if (exit) {
       localStorage.removeItem('accessToken')
       window.location.href = '/login'

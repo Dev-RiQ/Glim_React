@@ -6,6 +6,7 @@
   transition: 0.3s;
   opacity: 0;
   z-index: -100;
+  word-break: keep-all;
 }
 
 .toast-box.show {

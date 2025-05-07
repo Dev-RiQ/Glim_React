@@ -22,6 +22,10 @@ function Join() {
   const [nicknameOK, setNicknameOK] = useState(false)
   const [codeOK, setCodeOK] = useState(false)
   const [logo, setLogo] = useState(logoLight);
+  const [sendOK, setSendOK] = useState(false)
+  const [timer, setTimer] = useState('')
+  const [showCodeOK, setShowCodeOK] = useState('인증번호 확인')
+
   const isBrowserDarkMode = window.matchMedia('(prefers-color-scheme: dark)')
     .matches
   useEffect(() => {
@@ -115,8 +119,8 @@ function Join() {
 
   async function idValid(e) {
     if (idOK) return;
-    if (!id || id.length < 6 || id.length > 16) {
-      ShowToast('error', 'ID는 6~16자 사이로 입력해주세요.')
+    if (!/^[A-Z|a-z|0-9]{6,16}$/.test(id)) {
+      ShowToast('error', 'ID는 6~16자 사이의 영문, 숫자만 입력해주세요.')
       return
     }
     const isValidId = await api.post('/auth/check-username', { "username": id })
@@ -131,8 +135,8 @@ function Join() {
 
   async function nicknameValid(e) {
     if (nicknameOK) return;
-    if (!nickname || nickname.length < 6 || nickname.length > 16) {
-      ShowToast('error', '닉네임은 6~16자 사이로 입력해주세요.')
+    if (!/^[A-Z|a-z|0-9|가-힣]{6,12}$/.test(nickname)) {
+      ShowToast('error', '닉네임은 6~12자 사이의 한글, 영문, 숫자만 입력해주세요.')
       return
     }
     const isValidNickname = await api.post('/auth/check-nickname', { "nickname": nickname })
@@ -146,14 +150,39 @@ function Join() {
   }
 
   async function getCode(e) {
+    if (sendOK) return;
+    if (!/^[0-9]{10,11}$/.test(phone)) {
+      ShowToast('error', '전화번호는 -을 제외한 숫자만 입력해주세요.')
+      return
+    }
     const responseCode = await api.post('/verify/request', { "phone": phone })
     if (responseCode) {
       ShowToast('success', '인증코드가 전송되었습니다.')
+      setSendOK(true)
+      let time = 180
+      const interval = setInterval(() => {
+        const minute = parseInt(time / 60);
+        const second = time - 60 * minute;
+        const showTime = `${minute}:${second < 10 ? `0${second}` : second}`
+        if (second === -1) {
+          clearInterval(interval);
+          if (!codeOK) {
+            setShowCodeOK('인증번호 만료')
+          }
+        } else {
+          setTimer(showTime)
+          time -= 1;
+        }
+      }, 1000);
     }
   }
 
   async function codeValid(e) {
-    if (codeOK) return;
+    if (codeOK || showCodeOK === '인증번호 만료') return;
+    if (!/^[0-9]{6}$/.test(code)) {
+      ShowToast('error', '인증번호는 6자리의 숫자로 입력해주세요.')
+      return
+    }
     const isValidCode = await api.post('/verify/verifyCode', { "phone": phone, "code": code })
     if (!isValidCode) {
       ShowToast('error', '인증번호가 일치하지 않습니다.')
@@ -177,16 +206,16 @@ function Join() {
       ShowToast('error', '전화번호 인증이 필요합니다.')
       return
     }
-    if (!pw || pw.length < 8 || pw.length > 16) {
-      ShowToast('error', 'PW는 8~16자 사이로 입력해주세요.')
+    if (!/^[A-Z|a-z|0-9]{8,16}$/.test(pw)) {
+      ShowToast('error', 'PW는 8~16자 사이의 영문, 숫자만 입력해주세요.')
       return
     }
     if (!pwCheck) {
       ShowToast('error', 'PW가 일치하지 않습니다.')
       return
     }
-    if (!name || name.length < 2 || name.length > 20) {
-      ShowToast('error', '이름은 2~20자 사이로 입력해주세요.')
+    if (!/^[A-Z|a-z|가-힣]{2,20}$/.test(name)) {
+      ShowToast('error', '이름은 2~20자 사이의 영문, 한글만 입력해주세요.')
       return
     }
     let filename = "userimages/user-default-image"
@@ -234,12 +263,13 @@ function Join() {
       <input type="password" placeholder='PW' spellCheck="false" onChange={e => inputPw(e)} />
       <input type="password" placeholder='PW Check' spellCheck="false" onChange={e => inputPwCheck(e)} />
       <div className='valid-check-box'>
-        <input type="text" placeholder='01012341234' spellCheck="false" onChange={e => inputPhone(e)} />
-        <button onClick={e => getCode(e)}>인증번호 받기</button>
+        <input type="text" placeholder='01012341234' spellCheck="false" onChange={e => inputPhone(e)} readOnly={sendOK} />
+        <button className={sendOK ? 'true' : ''} onClick={e => getCode(e)}>인증번호 받기</button>
       </div>
       <div className='valid-check-box'>
-        <input type="text" placeholder='인증번호 입력' spellCheck="false" onChange={e => inputCode(e)} />
-        <button onClick={e => codeValid(e)}>인증번호 확인</button>
+        <input type="text" placeholder='인증번호 입력' spellCheck="false" onChange={e => inputCode(e)} readOnly={codeOK} />
+        <div className='timer'>{timer}</div>
+        <button className={codeOK ? 'true' : showCodeOK === '인증번호 만료' ? 'true' : ''} onClick={e => codeValid(e)}>{showCodeOK}</button>
       </div>
       <div className='valid-check-box'>
         <input type="text" placeholder='nickname' spellCheck="false" onChange={e => inputNickname(e)} />

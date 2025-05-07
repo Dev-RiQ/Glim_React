@@ -60,3 +60,13 @@ section {
   font-size: 30px;
   margin-bottom: 20px;
 }
+
+.true {
+  background-color: #888 !important;
+}
+
+.timer {
+  position: absolute;
+  top: 20px;
+  right: 110px;
+}

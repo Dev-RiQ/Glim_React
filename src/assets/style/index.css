@@ -195,12 +195,12 @@ section>div {
 svg {
   padding: 10px;
   color: black;
-  border-radius: 50%;
 }
+
 
 @media (hover: hover) and (pointer: fine) {
   svg:hover {
-    background-color: skyblue;
+    color: skyblue;
   }
 
   button:hover {
@@ -213,7 +213,7 @@ svg {
 }
 
 svg:active {
-  background-color: deepskyblue;
+  color: deepskyblue;
 }
 
 button:active {

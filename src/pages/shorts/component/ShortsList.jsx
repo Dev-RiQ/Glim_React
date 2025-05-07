@@ -95,6 +95,7 @@ function ShortsList() {
     else
       touchEnd = e.clientY;
     const diff = touchStart - touchEnd;
+    section.style.overflowY = 'hidden'
     if (diff > 50) scrollUp(e);
     else if (diff < -50) scrollDown(e);
     else if (diff !== 0) reScroll(e);
@@ -115,10 +116,6 @@ function ShortsList() {
       e.currentTarget.nextSibling.firstChild.firstChild.muted = false;
       setPage(parseInt(e.currentTarget.className) + 1)
     }
-    section.style.overflowY = 'hidden'
-    setTimeout(() => {
-      section.style.overflowY = 'scroll'
-    }, 100);
   }
 
   function scrollDown(e) {
@@ -132,10 +129,6 @@ function ShortsList() {
     } else {
       section.scrollTop = parseInt(e.currentTarget.className) * height;
     }
-    section.style.overflowY = 'hidden'
-    setTimeout(() => {
-      section.style.overflowY = 'scroll'
-    }, 100);
   }
 
   let [isWheel, setWheel] = useState(false);
