@@ -19,7 +19,9 @@ if (window.location.pathname === '/login' || window.location.pathname === '/join
 }
 // Axios 인스턴스 생성
 const apiFile = axios.create({
-  baseURL: "http://localhost:8081/api/v1",
+  // baseURL: "http://localhost:8081/api/v1",
+  // baseURL: "http://192.168.10.89:8081/api/v1",
+  baseURL: "http://192.168.0.2:8081/api/v1",
   headers: header,
 });
 apiFile.interceptors.response.use(

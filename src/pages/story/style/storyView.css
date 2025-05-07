@@ -1,7 +1,7 @@
 .story-view-img {
   object-fit: contain;
   width: 100% !important;
-  height: calc(100% - 50px);
+  height: 100%;
 }
 
 .story-header {

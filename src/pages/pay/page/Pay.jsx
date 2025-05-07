@@ -42,7 +42,9 @@ function Pay() {
       buyer_email: "test@test.com",
       buyer_name: "홍길동",
       buyer_tel: "01012345678",
-      m_redirect_url: "http://localhost:3000/pay"
+      m_redirect_url: "http://192.168.0.2:3000/pay"
+      // m_redirect_url: "http://192.168.10.89:3000/pay"
+      // m_redirect_url: "http://localhost:3000/pay"
     }, res => setPayResult(res.success))
   }
 

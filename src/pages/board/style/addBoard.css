@@ -23,8 +23,8 @@
   width: 100%;
   max-width: 500px;
   position: absolute;
-  height: 100vh;
-  top: calc(-50vh + 100px);
+  height: 100dvh;
+  top: calc(-50dvh + 100px);
   left: 0;
   overflow-y: scroll;
   background-color: #fff;
@@ -161,7 +161,7 @@
 
 .board-option-modal {
   position: fixed;
-  height: calc(100vh - 100px);
+  height: calc(100dvh - 100px);
   top: 0;
   background-color: #fff;
   z-index: 10000;
@@ -245,7 +245,7 @@
 
 .music-option-box {
 
-  height: calc(100vh - 100px);
+  height: calc(100dvh - 100px);
   overflow-y: scroll;
 }
 

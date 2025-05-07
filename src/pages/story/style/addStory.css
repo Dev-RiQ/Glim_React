@@ -27,7 +27,7 @@
 
 .preview-story {
   position: fixed;
-  height: calc(100vh - 100px);
+  height: calc(100dvh - 100px);
   background-color: black;
   top: 50px;
   width: 100%;

@@ -1,7 +1,7 @@
 .my-story {
   width: 100%;
   max-width: 500px;
-  height: calc(100vh - 100px);
+  height: calc(100dvh - 100px);
 }
 
 header {

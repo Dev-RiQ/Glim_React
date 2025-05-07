@@ -48,9 +48,9 @@
 
 .admin-modal-box {
   position: fixed;
-  top: 100vh;
+  top: 100dvh;
   width: 100vw;
-  height: 100vh;
+  height: 100dvh;
   max-width: 500px;
   z-index: 5000;
   background-color: #fff;

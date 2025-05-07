@@ -179,7 +179,7 @@ button {
 
 section {
   width: 100%;
-  height: calc(100vh - 100px);
+  height: calc(100dvh - 100px);
   margin: 50px 0;
   overflow-y: scroll;
   display: flex;
@@ -226,7 +226,7 @@ a:active {
 
 .no-list {
   width: 100% !important;
-  height: calc(100vh - 100px);
+  height: calc(100dvh - 100px);
   display: flex;
   align-items: center;
   justify-content: center;

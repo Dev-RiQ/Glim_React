@@ -149,7 +149,9 @@ function ChatRoom() {
       {user && msgList ?
         <div className="chat-room-box">
           <SockJsClient
-            url={"http://localhost:8081/api/v1/chat-socket"}
+            // url={"http://localhost:8081/api/v1/chat-socket"}
+            // url={"http://192.168.10.89:8081/api/v1/chat-socket"}
+            url={"http://192.168.0.2:8081/api/v1/chat-socket"}
             topics={["/sub/" + roomId]}
             onConnect={console.log("connected!")}
             onDisconnect={console.log("disconnected!")}

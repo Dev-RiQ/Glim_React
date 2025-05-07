@@ -13,6 +13,6 @@ header {
 }
 
 section {
-  height: calc(100vh - 50px);
+  height: calc(100dvh - 50px);
   margin-top: 0;
 }

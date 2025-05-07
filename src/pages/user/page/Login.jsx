@@ -45,13 +45,19 @@ function Login() {
     window.location.href = '/join';
   }
   function naverLogin() {
-    window.location.href = 'http://localhost:8081/api/v1/oauth2/authorization/naver';
+    // window.location.href = 'http://localhost:8081/api/v1/oauth2/authorization/naver';
+    // window.location.href = 'http://192.168.10.89:8081/api/v1/oauth2/authorization/naver';
+    window.location.href = 'http://192.168.0.2:8081/api/v1/oauth2/authorization/naver';
   }
   function kakaoLogin() {
-    window.location.href = 'http://localhost:8081/api/v1/oauth2/authorization/kakao';
+    // window.location.href = 'http://localhost:8081/api/v1/oauth2/authorization/kakao';
+    // window.location.href = 'http://192.168.10.89:8081/api/v1/oauth2/authorization/kakao';
+    window.location.href = 'http://192.168.0.2:8081/api/v1/oauth2/authorization/kakao';
   }
   function googleLogin() {
-    window.location.href = 'http://localhost:8081/api/v1/oauth2/authorization/google';
+    // window.location.href = 'http://localhost:8081/api/v1/oauth2/authorization/google';
+    // window.location.href = 'http://192.168.10.89:8081/api/v1/oauth2/authorization/google';
+    window.location.href = 'http://192.168.0.2:8081/api/v1/oauth2/authorization/google';
   }
 
   function findId() {
