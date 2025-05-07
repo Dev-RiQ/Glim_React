@@ -116,7 +116,7 @@ function FindPw() {
         <button onClick={e => codeValid(e)}>인증번호 확인</button>
       </div>
       <input type="password" placeholder='새 비밀번호 입력' spellCheck="false" onChange={e => inputNewPw(e)} />
-      <input type="password" placeholder='새 비밀번호 확인인' spellCheck="false" onChange={e => inputPwCheck(e)} />
+      <input type="password" placeholder='새 비밀번호 확인' spellCheck="false" onChange={e => inputPwCheck(e)} />
       <button className='join-submit-btn' onClick={sendNewPw}>비밀번호 변경</button>
     </div>
   );
