@@ -25,9 +25,9 @@ function ShortsVideo(props) {
   function endTouch(e) {
     if (e.currentTarget?.parentNode?.parentNode?.firstChild?.paused) {
       if (e.touches)
-        touchEnd = e.changedTouches[0].clientX;
+        touchEnd = e.changedTouches[0].clientX - window.innerWidth / 2 + e.target.clientWidth / 2;
       else
-        touchEnd = e.clientX;
+        touchEnd = e.clientX - window.innerWidth / 2 + e.target.clientWidth / 2;
       setTime(videoDuration * (touchEnd / e.currentTarget.clientWidth));
       totalLength = videoDuration * (touchEnd / e.currentTarget.clientWidth);
       setVideo(e.currentTarget.parentNode.parentNode.firstChild);

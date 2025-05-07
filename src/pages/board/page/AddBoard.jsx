@@ -401,18 +401,24 @@ function AddBoard() {
               <div className='add-board-option' >
                 <div className='option-box' onClick={e => optionLike(e)}>
                   <span>좋아요 수 보기</span>
-                  <IconButton icon={faCheckCircle} />
+                  <div className='check-btn-box'>
+                    <IconButton icon={faCheckCircle} />
+                  </div>
                   <input type="checkbox" />
                 </div>
                 <div className='option-box' onClick={e => optionComment(e)}>
                   <span>댓글 등록 사용</span>
-                  <IconButton icon={faCheckCircle} />
+                  <div className='check-btn-box'>
+                    <IconButton icon={faCheckCircle} />
+                  </div>
                   <input type="checkbox" />
                 </div>
                 {boardType !== 'shorts' ?
                   <div className='option-box none' onClick={e => optionAd(e)}>
                     <span>광고 등록 하기</span>
-                    <IconButton icon={faCheckCircle} />
+                    <div className='check-btn-box'>
+                      <IconButton icon={faCheckCircle} />
+                    </div>
                     <input type="checkbox" />
                   </div>
                   : <></>

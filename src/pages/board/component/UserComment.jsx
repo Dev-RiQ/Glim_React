@@ -82,7 +82,7 @@ function UserComment(props) {
               {isComment ?
                 <p className='comment-content-data'>
                   <span>{data.createdAt}</span>
-                  <span onClick={(e) => props.addReply(e.target.parentNode.parentNode.parentNode.parentNode.nextSibling, data.id, data.nickname, setReply, reply)}>답글 달기</span>
+                  <span onClick={(e) => props.addReply(e.target.parentNode.parentNode.parentNode.parentNode.nextSibling, data.id, data.user.nickname, setReply, reply)}>답글 달기</span>
                   {data.isReply ?
                     <span onClick={loadReply}>답글 더보기</span>
                     : <></>

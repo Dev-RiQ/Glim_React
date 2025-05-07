@@ -30,7 +30,9 @@ function UserImage(props) {
     setName('story-view-box')
     setStoryPage(0)
     setTimeout(() => {
-      props.setIsView(false)
+      if (props.setIsView) {
+        props.setIsView(false)
+      }
     }, 300);
   }
 
@@ -81,7 +83,9 @@ function UserImage(props) {
       setName('story-view-box')
       setTimeout(() => {
         setStory(null);
-        props.setIsView(false)
+        if (props.setIsView) {
+          props.setIsView(false)
+        }
       }, 300);
       return;
     }
