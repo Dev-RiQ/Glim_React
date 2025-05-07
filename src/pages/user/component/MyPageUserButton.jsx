@@ -46,14 +46,53 @@ function MyPageUserButton(props) {
     setRecommend(list)
   }
 
+  const [isClick, setIsClick] = useState(false);
+  const [pointer, setPointer] = useState(0);
+  const [pointerAfter, setPointerAfter] = useState(0);
+  const [isView, setIsView] = useState(false);
+
+  function click(e) {
+    setPointer(e.clientX)
+    setPointerAfter(e.clientX)
+    setIsClick(true)
+  }
+  function clickOver(e) {
+    if (isView) {
+      setPointer(0)
+      setPointerAfter(0)
+      return;
+    }
+    setIsClick(false)
+    setPointer(0)
+    setPointerAfter(0)
+  }
+  function clickDrag(e) {
+    if (isView) {
+      setPointer(0)
+      setPointerAfter(0)
+      return;
+    }
+    if (isClick) {
+      e.currentTarget.scrollLeft += pointer - pointerAfter;
+      setPointerAfter(e.clientX)
+    }
+  }
+  function storyShow(e) {
+    setTimeout(() => {
+      if (document.querySelector('.storyLine-box')) {
+        setIsView(true)
+      }
+    }, 100);
+  }
+
   return (
     <>
       <div className="user-button-box">
         {isMine ?
           <button className='user-btn' onClick={() => window.location.href = '/userInfo'}>프로필 편집</button>
           : <>{isFollow ?
-            <button className='user-btn' onClick={() => followCancel(props.id)}>팔로우 취소</button>
-            : <button className='user-btn' onClick={() => followAdd(props.id)}>팔로우 하기</button>
+            <button className='user-btn cancel' onClick={() => followCancel(props.id)}>팔로우 취소</button>
+            : <button className='user-btn submit' onClick={() => followAdd(props.id)}>팔로우 하기</button>
           }
           </>
         }
@@ -66,7 +105,7 @@ function MyPageUserButton(props) {
           <IconButton icon={faUserPlus} />
         </div>
       </div >
-      <div className='recommend-list-box'>
+      <div className='recommend-list-box' onClick={storyShow} onMouseDown={e => click(e)} onMouseMove={e => clickDrag(e)} onMouseUp={e => clickOver(e)}>
         {recommend}
       </div>
 

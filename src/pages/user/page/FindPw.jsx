@@ -10,6 +10,7 @@ function FindPw() {
   const [codeOK, setCodeOK] = useState(false)
   const [resetToken, setResetToken] = useState(null)
   const [newPw, setNewPw] = useState(null)
+  const [pwCheck, setPwCheck] = useState(null)
 
   function inputId(e) {
     if (e.target.value?.length > 16) {
@@ -36,6 +37,19 @@ function FindPw() {
       return
     }
     setNewPw(e.target.value)
+  }
+
+  function inputPwCheck(e) {
+    if (e.target.value?.length >= newPw.length) {
+      if (e.target.value === newPw) {
+        ShowToast('success', 'PW가 일치합니다.')
+        setPwCheck(e.target.value)
+        return
+      } else {
+        ShowToast('error', 'PW가 일치하지 않습니다.')
+      }
+    }
+    setPwCheck(null)
   }
 
   function inputCode(e) {
@@ -71,6 +85,10 @@ function FindPw() {
       ShowToast('error', '인증번호 확인이 되지 않습니다.')
       return
     }
+    if (!pwCheck) {
+      ShowToast('error', 'PW가 일치하지 않습니다.')
+      return
+    }
     const body = {
       "resetToken": resetToken,
       "username": id,
@@ -98,6 +116,7 @@ function FindPw() {
         <button onClick={e => codeValid(e)}>인증번호 확인</button>
       </div>
       <input type="password" placeholder='새 비밀번호 입력' spellCheck="false" onChange={e => inputNewPw(e)} />
+      <input type="password" placeholder='새 비밀번호 확인인' spellCheck="false" onChange={e => inputPwCheck(e)} />
       <button className='join-submit-btn' onClick={sendNewPw}>비밀번호 변경</button>
     </div>
   );

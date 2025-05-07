@@ -11,6 +11,7 @@ import api from '../../../utils/api';
 function Join() {
   const [id, setId] = useState(null)
   const [pw, setPw] = useState(null)
+  const [pwCheck, setPwCheck] = useState(null)
   const [phone, setPhone] = useState(null)
   const [code, setCode] = useState(null)
   const [nickname, setNickname] = useState(null)
@@ -44,6 +45,19 @@ function Join() {
       return
     }
     setPw(e.target.value)
+  }
+
+  function inputPwCheck(e) {
+    if (e.target.value?.length >= pw.length) {
+      if (e.target.value === pw) {
+        ShowToast('success', 'PW가 일치합니다.')
+        setPwCheck(e.target.value)
+        return
+      } else {
+        ShowToast('error', 'PW가 일치하지 않습니다.')
+      }
+    }
+    setPwCheck(null)
   }
 
   function inputPhone(e) {
@@ -167,6 +181,10 @@ function Join() {
       ShowToast('error', 'PW는 8~16자 사이로 입력해주세요.')
       return
     }
+    if (!pwCheck) {
+      ShowToast('error', 'PW가 일치하지 않습니다.')
+      return
+    }
     if (!name || name.length < 2 || name.length > 20) {
       ShowToast('error', '이름은 2~20자 사이로 입력해주세요.')
       return
@@ -214,6 +232,7 @@ function Join() {
         <button onClick={e => idValid(e)}>중복체크</button>
       </div>
       <input type="password" placeholder='PW' spellCheck="false" onChange={e => inputPw(e)} />
+      <input type="password" placeholder='PW Check' spellCheck="false" onChange={e => inputPwCheck(e)} />
       <div className='valid-check-box'>
         <input type="text" placeholder='01012341234' spellCheck="false" onChange={e => inputPhone(e)} />
         <button onClick={e => getCode(e)}>인증번호 받기</button>

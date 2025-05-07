@@ -53,7 +53,6 @@ function StoryList(props) {
       return;
     }
     setIsClick(false)
-    e.currentTarget.scrollLeft += pointer - pointerAfter;
     setPointer(0)
     setPointerAfter(0)
   }
@@ -63,7 +62,8 @@ function StoryList(props) {
       setPointerAfter(0)
       return;
     }
-    if (isClick) {
+    if (isClick && pointer !== 0) {
+      e.currentTarget.scrollLeft += pointer - pointerAfter;
       setPointerAfter(e.clientX)
     }
   }

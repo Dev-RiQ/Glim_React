@@ -5,6 +5,16 @@
   padding-top: 10px;
 }
 
+.user-btn.cancel {
+  border: none !important;
+  background-color: #888 !important;
+}
+
+.user-btn.submit {
+  border: none !important;
+  background-color: royalblue !important;
+}
+
 .user-btn {
   border: 1px solid black;
   border-radius: 10px;

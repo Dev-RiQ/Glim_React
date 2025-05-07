@@ -1,8 +1,10 @@
 .join-box {
+  margin-top: 50px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  height: 120%;
+  overflow-y: auto;
 }
 
 .user-img-setting {
