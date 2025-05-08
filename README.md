@@ -1,5 +1,5 @@
 
-![StoryView](https://private-user-images.githubusercontent.com/195076481/441787531-cafccacc-1a4d-4f94-855d-def2b5798bcb.gif)
+<img src="https://private-user-images.githubusercontent.com/195076481/441787531-cafccacc-1a4d-4f94-855d-def2b5798bcb.gif"/>
 
 ---
 
