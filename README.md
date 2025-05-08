@@ -6,10 +6,10 @@
 
 # <img style="width:40px;" src="https://github.com/user-attachments/assets/3b8eaa31-214a-4608-bdbf-a3c6ef35ebe1"/> Glim (2025.04.15 ~ 2025.05.09 / 25 Days)
 
-<div align="center">
+
   <img src="https://github.com/user-attachments/assets/2bbdb696-d14f-4de7-87db-eadf1ca06ca8" width="150"/>
   <img src="https://github.com/user-attachments/assets/c5b6213c-7d1d-40de-b9ee-cf20b774b429" width="150"/>
-</div>
+
 
 Glim 서비스는 SNS 플랫폼으로 가입된 회원들과 일상과 관심사를 공유할 수 있으며,  
 팔로우 시스템을 이용해 원하는 회원의 정보를 우선적으로 확인할 수 있습니다.
