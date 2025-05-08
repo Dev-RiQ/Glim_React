@@ -142,7 +142,7 @@ src/
 > 
 > 추억의 장소, 함께한 사람들, 관련된 태그, 적절한 배경음악도 설정할 수 있어요.
 
- <img style="" src="https://private-user-images.githubusercontent.com/195076481/441775120-446a0d8c-8a5f-4ef0-a787-66f5e3812d1f.gif"/>
+ <img style="" src="https://github.com/user-attachments/assets/446a0d8c-8a5f-4ef0-a787-66f5e3812d1f"/>
 
 
 </details>
@@ -156,7 +156,7 @@ src/
 > 게시글과 Shorts에 해시태그를 통해  
 더 많은 회원과 관심사가 비슷한 회원에게 공유될 수 있게 해줘요.
 
- <img style="" src="https://private-user-images.githubusercontent.com/195076481/441775299-04bb7233-b5b5-4e78-b489-cd65efdcec96.gif"/>
+ <img style="" src="https://github.com/user-attachments/assets/04bb7233-b5b5-4e78-b489-cd65efdcec96"/>
 </details>
 
 ---
@@ -169,7 +169,7 @@ src/
 >
 > 추억의 장소, 함께한 사람들, 관련된 태그, 적절한 배경음악도 설정할 수 있어요.
 
- <img style="" src="https://private-user-images.githubusercontent.com/195076481/441642058-243aeccb-4539-43d6-937e-5a4375ce5613.gif"/>
+ <img style="" src="https://github.com/user-attachments/assets/243aeccb-4539-43d6-937e-5a4375ce5613"/>
  
 </details>
 
@@ -183,7 +183,7 @@ src/
 >
 > 마찬가지로 추억의 장소, 함께한 사람들, 관련된 태그도 설정할 수 있어요.
 
- <img style="" src="https://private-user-images.githubusercontent.com/195076481/441789518-0024eae9-8fc2-4776-9bf9-ca5ad7a2b389.gif"/>
+ <img style="" src="https://github.com/user-attachments/assets/0024eae9-8fc2-4776-9bf9-ca5ad7a2b389"/>
 </details>
 
 ---
@@ -196,7 +196,7 @@ src/
 > 
 > 24시간이 지나도 저장된 스토리를 마이페이지에서 확인할 수 있어요.
 
- <img style="" src="https://private-user-images.githubusercontent.com/195076481/441775991-1f999d17-31ad-4eb0-bd62-6080c1b46e70.gif"/>
+ <img style="" src="https://github.com/user-attachments/assets/1f999d17-31ad-4eb0-bd62-6080c1b46e70"/>
  
 </details>
 
@@ -208,7 +208,7 @@ src/
 
 > 댓글의 한계를 넘어 어느 순간에나 소통이 필요할 때 실시간 채팅을 이용해요.
 
- <img style="" src="https://private-user-images.githubusercontent.com/195076481/441774502-ddd48d4e-9f22-462a-a287-47fcf1d96a9f.gif"/>
+ <img style="" src="https://github.com/user-attachments/assets/ddd48d4e-9f22-462a-a287-47fcf1d96a9f"/>
 </details>
 
 ---
@@ -219,8 +219,7 @@ src/
 
 > 내 게시물의 변동사항과 팔로우 추가 등 궁금한 소식을 전달해드려요.
 
- <img style="" src="[https://private-user-images.githubusercontent.com/195076481/441774502-ddd48d4e-9f22-462a-a287-47fcf1d96a9f.gif](https://private-user-images.githubusercontent.com/195076481/441775450-06f507b5-565f-475e-9281-228566ec7643.gif
-)"/>
+ <img style="" src="https://github.com/user-attachments/assets/06f507b5-565f-475e-9281-228566ec7643"/>
 </details>
 
 
