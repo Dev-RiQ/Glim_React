@@ -49,7 +49,7 @@ Glim 서비스는 SNS 플랫폼으로 가입된 회원들과 일상과 관심사
 ## 📑 Table of Contents
 - [🎯 기획 배경 & 목표](#-기획-배경--목표)
 - [🛠️ Tech Stacks](#-tech-stacks)
-- [🪛 개발 환경](#-개발-환경)
+- [💻 개발 환경](#-개발-환경)
 - [🔧 사용 라이브러리](#-사용-api-및-라이브러리)
 - [📁 프로젝트 구조](#-프로젝트-구조)
 - [🔗 REST API 연동](#-rest-api-연동)
@@ -80,7 +80,7 @@ Glim 서비스는 SNS 플랫폼으로 가입된 회원들과 일상과 관심사
 
 ---
 
-## 🪛 개발 환경
+## 💻 개발 환경
 - JavaScript 
 - HTML / CSS
 - React 19.1.0 (react-router-dom, axios 등)
