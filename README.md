@@ -127,7 +127,7 @@ src/
 
 > 소식을 받고 싶은 회원을 팔로우하여 공유되는 일상을 항상 확인하고 소통해요.
 
- <img style="" src="https://private-user-images.githubusercontent.com/195076481/441774845-dae6f20c-765a-48c8-b259-289406edd756.gif"/>
+ <img style="" src="https://github.com/user-attachments/assets/dae6f20c-765a-48c8-b259-289406edd756"/>
 
 
 </details>
