@@ -236,7 +236,9 @@ src/
 
 - **라우팅 새로고침 시 404**
     - 해결: React Router 설정에서 `BrowserRouter` → `HashRouter`로 변경 가능
- 
+
+---
+
 ## 🧪 백엔드 트러블슈팅
 
 - ** 제목 **
