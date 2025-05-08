@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../style/userMenu.css';
 import api from '../../../utils/api';
+import ShowToast from '../../main/hook/ShowToast';
 
 function UserMenu(props) {
   const [menu, setMenu] = useState(null)
@@ -130,9 +131,12 @@ function UserMenu(props) {
     window.location.href = '/changePhone'
   }
 
-  function deleteAction() {
-    let res = api.delete(`/${props.type}/${props.id}`)
-    res && (window.location.href = '/')
+  async function deleteAction() {
+    let res = await api.delete(`/${props.type}/${props.id}`)
+    res && ShowToast('success', '삭제가 완료되었습니다.')
+    setTimeout(() => {
+      res && (window.location.href = '/')
+    }, 500);
   }
 
   return (

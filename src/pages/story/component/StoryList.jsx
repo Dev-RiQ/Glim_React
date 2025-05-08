@@ -35,7 +35,7 @@ function StoryList(props) {
 
   function setStoryBox(element) {
     return (
-      <div key={element.id}>
+      <div key={element.userId}>
         <UserStory id={element.userId} link={element.img} name={element.nickname} hasStory={true} setIsView={setIsView} />
       </div>
     )
