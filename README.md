@@ -223,28 +223,9 @@ src/
 </details>
 
 
-
-## 🛠️ 실행 방법
-
-```bash
-# 1. 저장소 클론
-git clone https://github.com/your-id/Glim_React.git
-
-# 2. 디렉토리 이동
-cd Glim_React
-
-# 3. 패키지 설치
-npm install
-
-# 4. 개발 서버 실행
-npm start
-```
-
-> ⚠️ 백엔드 API는 별도로 실행 필요. `http://localhost:8081` 기준으로 설정되어 있습니다.
-
 ---
 
-## 🧪 트러블슈팅
+## 🧪 프론트엔드 트러블슈팅
 
 - **CORS 오류**
     - 원인: 프론트와 백엔드 포트가 다를 때 발생
@@ -255,6 +236,20 @@ npm start
 
 - **라우팅 새로고침 시 404**
     - 해결: React Router 설정에서 `BrowserRouter` → `HashRouter`로 변경 가능
+ 
+## 🧪 백엔드 트러블슈팅
+
+- ** 제목 **
+    - 원인: 
+    - 해결: 
+
+- ** 제목 **
+    - 원인: 
+    - 해결: 
+
+- ** 제목 **
+    - 원인: 
+    - 해결: 
 
 ---
 
