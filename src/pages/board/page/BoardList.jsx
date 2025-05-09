@@ -14,19 +14,29 @@ function BoardList() {
 
   async function getBoardList() {
     const res = await api.get('/board' + (offset !== 0 ? `/${offset}` : ''))
+    if (offset === 0 && (!res || res.length === 0)) {
+      setBoards([(<div className='no-list'><p>업로드된 게시글이 존재하지 않습니다.</p></div>)])
+      return
+    }
+
     let boardBoxes = [];
     res?.forEach(element => {
       boardBoxes = [...boardBoxes, setBoardBox(element)];
     });
     res && setBoards([...boards, boardBoxes])
     if (res) {
-      if (res.length === 10) {
+      let isAd = false;
+      res?.forEach(element => {
+        if (element.isAd) {
+          isAd = true;
+        }
+      })
+      if (!isAd || res?.length === 1) {
         res && setOffset(res[boardBoxes.length - 1].id)
-      } else {
+      } else if (isAd) {
         res && setOffset(res[boardBoxes.length - 2].id)
       }
     }
-    !res && offset === 0 && setBoards([(<div className='no-list'><p>업로드된 게시글이 존재하지 않습니다.</p></div>)])
     !res && setOffset(0)
   }
 

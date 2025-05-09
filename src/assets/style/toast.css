@@ -1,5 +1,6 @@
 .toast-box {
   width: 100%;
+  max-width: 500px;
   position: fixed;
   bottom: 100px;
   justify-content: center;

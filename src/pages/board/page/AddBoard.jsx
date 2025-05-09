@@ -1,3 +1,4 @@
+import { createRoot } from 'react-dom/client'
 import React, { useEffect, useState, } from 'react';
 import '../style/addBoard.css';
 import IconButton from '../../../components/IconButton';
@@ -9,7 +10,6 @@ import ShortsVideo from '../../shorts/component/ShortsVideo';
 import UserImage from '../../user/component/UserImage';
 import MusicPlay from '../component/MusicPlay';
 import apiFile from '../../../utils/apiFile';
-import { render } from '@testing-library/react';
 import Toast from '../../../components/Toast';
 import Loading from '../../loading/page/Loading';
 
@@ -161,10 +161,20 @@ function AddBoard() {
       return
     }
     setIsUpLoading(true)
-    const apiLoading = render(<Loading upload={true} />).container.firstChild;
-    const apiLoadingToast = render(<Toast type={'success'} msg={'업로드 중입니다.'} />).container.firstChild;
-    document.querySelector('section').appendChild(apiLoading);
-    document.querySelector('section').appendChild(apiLoadingToast);
+    const loadingContainer = document.createElement('div')
+    loadingContainer.classList.add('no-loading-box')
+    document.querySelector('section').appendChild(loadingContainer);
+
+    const apiLoading = createRoot(loadingContainer)
+    apiLoading.render(<Loading upload={true} />)
+
+    const toastContainer = document.createElement('div')
+    toastContainer.classList.add('no-box')
+    document.querySelector('section').appendChild(toastContainer);
+
+    const apiLoadingToast = createRoot(toastContainer)
+    apiLoadingToast.render(<Toast type={'success'} msg={'업로드 중입니다.'} />)
+
     let sendFiles = new FormData()
     if (files) {
       for (const file of files) {
@@ -176,16 +186,20 @@ function AddBoard() {
         sendFiles.append('fileType', "IMAGE")
       }
     } else {
-      document.querySelector('section').removeChild(apiLoading);
-      document.querySelector('section').removeChild(apiLoadingToast);
+      document.querySelector('section').removeChild(loadingContainer);
+      document.querySelector('section').removeChild(toastContainer);
+      apiLoading.unmount()
+      apiLoadingToast.unmount()
       ShowToast('error', '파일 업로드 중 에러가 발생했습니다.')
       setIsUpLoading(false)
       return;
     }
     let filenames = await apiFile.post('/file', sendFiles)
     if (!filenames) {
-      document.querySelector('section').removeChild(apiLoading);
-      document.querySelector('section').removeChild(apiLoadingToast);
+      document.querySelector('section').removeChild(loadingContainer);
+      document.querySelector('section').removeChild(toastContainer);
+      apiLoading.unmount()
+      apiLoadingToast.unmount()
       ShowToast('error', '파일 업로드 중 에러가 발생했습니다.')
       setIsUpLoading(false)
       return
@@ -208,8 +222,10 @@ function AddBoard() {
 
     const res = await api.post('/board', body)
     setIsUpLoading(false)
-    document.querySelector('section').removeChild(apiLoading);
-    document.querySelector('section').removeChild(apiLoadingToast);
+    document.querySelector('section').removeChild(loadingContainer);
+    document.querySelector('section').removeChild(toastContainer);
+    apiLoading.unmount()
+    apiLoadingToast.unmount()
     !res && ShowToast('error', '게시글 등록에 실패했습니다.')
     res && ShowToast('success', '게시글 등록에 성공했습니다.')
     setTimeout(() => {
@@ -265,8 +281,8 @@ function AddBoard() {
     setTempUser(e.target.value)
   }
   function plusUser(e, id, name) {
-    e.currentTarget.parentNode.nextSibling.value = ''
-    e.currentTarget.parentNode.nextSibling.focus()
+    e.currentTarget.parentNode.parentNode.nextSibling.value = ''
+    e.currentTarget.parentNode.parentNode.nextSibling.focus()
     setShowSearchUsers([])
     if (user.length >= 10) {
       ShowToast('error', '사람 태그는 최대 10개까지 입력가능합니다.')

@@ -14,7 +14,6 @@ function BoardComment(props) {
   const [commentInput, setCommentInput] = useState('');
   const [replyId, setReplyId] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [reply, setReply] = useState([])
   const [replyTarget, setReplyTarget] = useState(() => { })
   const [hasComment, setHasComment] = useState(false);
   const [myComment, setMyComment] = useState(null)
@@ -53,14 +52,14 @@ function BoardComment(props) {
 
   function setComment(element, isComment) {
     return (<div className='comment-user-box' key={element.id}>
-      <UserComment data={element} isComment={isComment} addReply={addReply} setReply={setReply} />
+      <UserComment data={element} isComment={isComment} addReply={addReply} />
     </div>)
   }
 
-  function addReply(target, id, nickname, setReply) {
+  function addReply(target, id, nickname, setReply, reply) {
     ShowToast('success', `@${nickname}님의 댓글에 답글 달기`)
     setReplyId(id)
-    setReplyTarget(() => (e) => setReply(e))
+    setReplyTarget(() => (e) => setReply([...reply, e]))
   }
 
   function exitComment(e) {
@@ -88,7 +87,7 @@ function BoardComment(props) {
     if (res) {
       value.previousSibling.value = ''
       if (replyTarget) {
-        replyTarget([...reply, <ReplyComment data={res} />])
+        replyTarget(<ReplyComment data={res} />)
       } else {
         if (!hasComment) {
           setCommentList([myComment, setComment(res, true)])
@@ -98,7 +97,7 @@ function BoardComment(props) {
         }
       }
       setReplyId(0)
-      setReplyTarget(null)
+      setReplyTarget(() => { })
       api.post('/tags/view', data.tags)
       api.post(`/boardView/${data.id}`)
 

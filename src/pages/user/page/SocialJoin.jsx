@@ -82,10 +82,11 @@ function SocialJoin() {
       return
     }
 
+    setSendOK(true)
     const responseCode = await api.post('/verify/request', { "phone": phone })
     if (responseCode) {
+      console.log(responseCode)
       ShowToast('success', '인증코드가 전송되었습니다.')
-      setSendOK(true)
       let time = 180
       const interval = setInterval(() => {
         const minute = parseInt(time / 60);

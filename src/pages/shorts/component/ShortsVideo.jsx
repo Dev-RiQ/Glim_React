@@ -12,9 +12,14 @@ function ShortsVideo(props) {
   const [videoDuration, setVideoDuration] = useState(0);
   const [interval, setTimeInterval] = useState(null);
   const [isLike, setIsLike] = useState(data?.isLike)
+  const [mouseDown, setMouseDown] = useState(0)
 
   let touchEnd = 0;
   let totalLength = 0;
+
+  function onClickStart(e) {
+    setMouseDown(e.nativeEvent.clientY)
+  }
 
   function onTouch(e) {
     if (!e.currentTarget?.parentNode?.parentNode?.firstChild?.paused) {
@@ -39,6 +44,7 @@ function ShortsVideo(props) {
   }
 
   function control(e) {
+    if (mouseDown !== e.nativeEvent.clientY) return;
     if (e.target.className !== 'shorts-video') return;
     if (e.target?.paused) {
       e.target.play();
@@ -76,10 +82,10 @@ function ShortsVideo(props) {
     <>
       {props.pre ?
         <div className="shorts-video-box">
-          <video className='shorts-video' src={props.video} playsInline loop width="100%" height="100%" decoding="async" loading="lazy" onClick={((e) => control(e))} onPlay={e => videoPlay(e)} onPause={e => videoPause(e)} />
+          <video className='shorts-video' src={props.video} playsInline loop width="100%" height="100%" decoding="async" loading="lazy" onMouseDown={e => onClickStart(e)} onTouchStart={e => onClickStart(e)} onClick={((e) => control(e))} onPlay={e => videoPlay(e)} onPause={e => videoPause(e)} />
         </div>
         : <div className="shorts-video-box">
-          <video className='shorts-video' poster={data?.img[1]} src={data?.img[0]} playsInline loop width="100%" height="100%" decoding="async" loading="lazy" onClick={((e) => control(e))} onPlay={e => videoPlay(e)} onPause={e => videoPause(e)} />
+          <video className='shorts-video' poster={data?.img[1]} src={data?.img[0]} playsInline loop width="100%" height="100%" decoding="async" loading="lazy" onMouseDown={e => onClickStart(e)} onTouchStart={e => onClickStart(e)} onClick={((e) => control(e))} onPlay={e => videoPlay(e)} onPause={e => videoPause(e)} />
           <div className='shorts-info-box'>
             <div className='shorts-user-box'>
               <UserPortion user={data.user} id={data.id} subTitle={data.createdAt} type={'board'} />

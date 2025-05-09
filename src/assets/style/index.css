@@ -231,3 +231,55 @@ a:active {
   align-items: center;
   justify-content: center;
 }
+
+@media (max-width:500px) {
+
+  .no-loading-box,
+  .no-box {
+    left: 0;
+  }
+}
+
+@media (min-width:500px) {
+
+  .no-loading-box,
+  .no-box {
+    left: calc(50vw - 250px);
+  }
+}
+
+.no-box {
+  width: 100%;
+  position: fixed;
+  bottom: 100px;
+  z-index: 100000;
+}
+
+.no-loading-box {
+  width: 100%;
+  position: fixed;
+  bottom: 100px;
+  z-index: 99000;
+}
+
+.user-img,
+.story-user-name,
+.user-nickname,
+.board-content,
+.logo-img,
+.sub-title,
+.search-img,
+.search-user-info-box,
+.rank-box,
+.filter-btn,
+.add-board-sub-info,
+.option-box,
+.music-info-box,
+.comment-content-data>span,
+.my-follower-count,
+.my-following-count,
+.pay-btn,
+.alarm-content-link-box,
+.chat-info {
+  cursor: pointer;
+}

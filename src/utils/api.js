@@ -17,9 +17,9 @@ if (window.location.pathname.includes('/find') || window.location.pathname.inclu
 }
 // Axios 인스턴스 생성
 const api = axios.create({
-  // baseURL: "http://localhost:8081/api/v1",
+  baseURL: "/api/v1",
   // baseURL: "http://192.168.10.89:8081/api/v1",
-  baseURL: "http://192.168.0.2:8081/api/v1",
+  // baseURL: "http://192.168.0.2:8081/api/v1",
   headers: header,
 });
 api.interceptors.response.use(
@@ -37,6 +37,7 @@ api.interceptors.response.use(
     return data
   },
   (error) => {
+    console.log(error)
     if (error.response?.data?.errors?.length > 0) {
       useToast("error", error.response?.data?.errors[0]);
     } else if (error.status === 500) {

@@ -20,7 +20,6 @@ function UserComment(props) {
 
   useEffect(() => {
     showComment()
-    props.setReply(reply)
   }, [show, reply, isLike, replyMore])
 
   function goMyPage() {

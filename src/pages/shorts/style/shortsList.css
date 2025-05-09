@@ -16,3 +16,7 @@ section {
   height: calc(100dvh - 50px);
   margin-top: 0;
 }
+
+.shorts-list-box * {
+  color: #E4E4E4 !important;
+}

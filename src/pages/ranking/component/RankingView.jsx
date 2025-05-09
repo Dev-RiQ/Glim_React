@@ -20,9 +20,17 @@ function RankingView(props) {
     }
   }, [])
 
+  function goURL() {
+    if (props.type === 'BASIC') {
+      window.location.href = `/board/${data.boardId}`
+    } else {
+      window.location.href = `/shorts/${data.boardId}`
+    }
+  }
+
 
   return (
-    <div className="rank" onClick={() => window.location.href = `/board/${data.boardId}`}>
+    <div className="rank" onClick={goURL}>
       <div className={rankBox}>
         <div className='rank-no'>
           {props.rank === 1 ? <>{props.rank}<img className='rank-medal' src={first} alt="1st" width="40px" height="40px" decoding="async" loading="lazy" /></> :

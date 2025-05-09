@@ -1,3 +1,4 @@
+import { createRoot } from 'react-dom/client'
 import React, { useEffect, useState, } from 'react';
 import '../style/addStory.css';
 import IconButton from '../../../components/IconButton';
@@ -5,7 +6,6 @@ import { faAdd, faX } from '@fortawesome/free-solid-svg-icons';
 import api from '../../../utils/api';
 import ShowToast from '../../main/hook/ShowToast';
 import apiFile from '../../../utils/apiFile';
-import { render } from '@testing-library/react';
 import Toast from '../../../components/Toast';
 import Loading from '../../loading/page/Loading';
 
@@ -54,10 +54,19 @@ function AddStory() {
       return;
     }
     setIsUpLoading(true)
-    const apiLoading = render(<Loading upload={true} />).container.firstChild;
-    const apiErrorToast = render(<Toast type={'success'} msg={'업로드 중입니다.'} />).container.firstChild;
-    document.querySelector('section').appendChild(apiLoading);
-    document.querySelector('section').appendChild(apiErrorToast);
+    const loadingContainer = document.createElement('div')
+    loadingContainer.classList.add('no-box')
+    document.querySelector('section').appendChild(loadingContainer);
+
+    const apiLoading = createRoot(loadingContainer)
+    apiLoading.render(<Loading upload={true} />)
+
+    const toastContainer = document.createElement('div')
+    toastContainer.classList.add('no-box')
+    document.querySelector('section').appendChild(toastContainer);
+
+    const apiLoadingToast = createRoot(toastContainer)
+    apiLoadingToast.render(<Toast type={'success'} msg={'업로드 중입니다.'} />)
     let filename;
     if (file) {
       const sendFiles = {
@@ -68,8 +77,10 @@ function AddStory() {
     }
 
     if (!filename) {
-      document.querySelector('section').appendChild(apiLoading);
-      document.querySelector('section').removeChild(apiErrorToast);
+      document.querySelector('section').removeChild(loadingContainer);
+      document.querySelector('section').removeChild(toastContainer);
+      apiLoading.unmount()
+      apiLoadingToast.unmount()
       ShowToast('error', '파일 업로드 중 에러가 발생했습니다.')
       setIsUpLoading(false)
       return
@@ -77,8 +88,10 @@ function AddStory() {
 
     const res = await api.post('/story', { "fileName": filename })
     setIsUpLoading(false)
-    document.querySelector('section').appendChild(apiLoading);
-    document.querySelector('section').removeChild(apiErrorToast);
+    document.querySelector('section').removeChild(loadingContainer);
+    document.querySelector('section').removeChild(toastContainer);
+    apiLoading.unmount()
+    apiLoadingToast.unmount()
     res && ShowToast('success', '스토리 등록이 완료되었습니다.')
     setTimeout(() => {
       window.location.href = '/'

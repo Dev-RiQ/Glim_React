@@ -4,14 +4,15 @@ import UserStory from './UserStory';
 import api from '../../../utils/api';
 
 function StoryList(props) {
-  const [stories, setStories] = useState(null);
+  const [stories, setStories] = useState([]);
   const [isClick, setIsClick] = useState(false);
   const [pointer, setPointer] = useState(0);
   const [pointerAfter, setPointerAfter] = useState(0);
   const [isView, setIsView] = useState(false);
 
   useEffect(() => {
-    setStories(getStoryList())
+    getStoryList()
+
   }, []);
 
   async function getStoryList() {
@@ -20,7 +21,7 @@ function StoryList(props) {
     storyList?.forEach(element => {
       storyBoxes = [...storyBoxes, setStoryBox(element)];
     });
-    return storyBoxes;
+    setStories(storyBoxes)
   }
 
 

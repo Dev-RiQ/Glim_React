@@ -23,7 +23,7 @@ function RankingList(props) {
 
   function getRankBox(element, idx) {
     return (<div>
-      <RankingView data={element} rank={idx + 1} />
+      <RankingView data={element} rank={idx + 1} type={props.type} />
     </div>)
   }
 

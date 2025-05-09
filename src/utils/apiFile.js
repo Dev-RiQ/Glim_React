@@ -19,9 +19,9 @@ if (window.location.pathname === '/login' || window.location.pathname === '/join
 }
 // Axios 인스턴스 생성
 const apiFile = axios.create({
-  // baseURL: "http://localhost:8081/api/v1",
+  baseURL: "/api/v1",
   // baseURL: "http://192.168.10.89:8081/api/v1",
-  baseURL: "http://192.168.0.2:8081/api/v1",
+  // baseURL: "http://192.168.0.2:8081/api/v1",
   headers: header,
 });
 apiFile.interceptors.response.use(
@@ -33,13 +33,10 @@ apiFile.interceptors.response.use(
     return data;
   },
   (error) => {
-    if (error.code === 'ERR_NETWORK' || error.code === 'ERR_BAD_RESPONSE') {
-      useToast("error", '로그인 정보가 정확하지 않습니다.');
-      setTimeout(() => {
-        window.location.href = "/login"
-      }, 500);
-    } else {
+    if (error.response?.data?.errors[0]) {
       useToast("error", error.response?.data?.errors[0]);
+    } else {
+      useToast("error", error.response?.data?.errors);
     }
   }
 );

@@ -2,7 +2,6 @@
   "name": "glim_front",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://192.168.0.2:8081/",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
     "@fortawesome/free-brands-svg-icons": "^6.7.2",
@@ -15,8 +14,8 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.9.0",
     "event-source-polyfill": "^1.0.31",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-error-boundary": "^5.0.0",
     "react-loading-skeleton": "^3.5.0",
     "react-router-dom": "^7.5.1",

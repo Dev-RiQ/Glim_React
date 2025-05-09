@@ -28,7 +28,7 @@ function Ranking() {
     setRankingPage((
       <div className='ranking-box'>
         <RankingFilter period={period} setPeriod={setPeriod} type={type} setType={setType} criteria={criteria} setCriteria={setCriteria} />
-        <RankingList list={res} />
+        <RankingList list={res} type={type} />
       </div>
     ));
   }

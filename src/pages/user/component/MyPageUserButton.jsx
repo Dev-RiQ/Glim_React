@@ -27,7 +27,7 @@ function MyPageUserButton(props) {
 
   async function sendChat() {
     const res = await api.post(`/chat/room/${props.id}`)
-    window.location.href = `/chatRoom/${res}`
+    res && (window.location.href = `/chatRoom/${res.roomId}`)
   }
 
   async function recommendShow() {
